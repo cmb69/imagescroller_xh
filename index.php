@@ -1,6 +1,24 @@
 <?php
 
 
+function imagescroller_images_size($imgs) {
+    global $e, $adm;
+
+    foreach ($imgs as $img) {
+	$fn = is_array($img) ? $img[0] : $img;
+	$size = getimagesize($fn);
+	if (!isset($width)) {
+	    list($width, $height) = $size;
+	} else {
+	    if (($size[0] != $width || $size[1] != $height) && $adm) {
+		$e .= '<li><strong>IMAGE SIZE ERROR</strong></li>'."\n"; // TODO
+	    }
+	}
+    }
+    return array($imgs, $width, $height);
+}
+
+
 /**
  * Returns the sorted list of images in $dir.
  *
@@ -9,29 +27,45 @@
  * @return array
  */
 function imagescroller_images($dir) {
-    global $adm, $e;
-
     $imgs = array();
     if (($dh = opendir($dir)) !== FALSE) {
 	while (($fn = readdir($dh)) !== FALSE) {
 	    $ffn = $dir.$fn;
-	    if (is_file($ffn) && ($size = getimagesize($ffn))) {
-		if (!isset($width)) {
-		    list($width, $height) = $size;
-		} else {
-		    if (($size[0] != $width || $size[1] != $height) && $adm) {
-			$e .= '<li><strong>IMAGE SIZE ERROR</strong></li>'."\n"; // TODO
-		    }
-		}
-		$imgs[] = $fn;
+	    if (is_file($ffn) && getimagesize($ffn)) {
+		$imgs[] = $ffn;
 	    }
 	}
 	closedir($dh);
     }
     natcasesort($imgs);
-    return array($imgs, $width, $height);
+    return imagescroller_images_size($imgs);
 }
 
+
+function imagescroller_images_from_file($fn) {
+    $dir = dirname($fn).'/';
+    //$lines = file($fn);
+    //var_dump($lines);
+    //$recs = array(); $rec = array();
+//    foreach ($lines as $line) {
+//	$line = rtrim($line);
+//	if (empty($line)) {
+//	    $recs[] = $rec; $rec = array();
+//	} else {
+//	    $rec[] = (empty($rec) ? $dir.'/' : '').$line;
+//	}
+//    }
+//    var_dump($recs);
+    $data = file_get_contents($fn);
+    $data = str_replace(array("\r\n", "\r"), "\n", $data);
+    $recs = explode("\n\n", $data);
+    foreach ($recs as $rec) {
+	$rec = explode("\n", $rec);
+	$rec[0] = $dir.$rec[0];
+	$res[] = $rec;
+    }
+    return imagescroller_images_size($res);
+}
 
 /**
  * Includes the necessary JS.
@@ -83,21 +117,29 @@ SCRIPT;
 function imagescroller($dir) {
     global $pth;
 
-    $dir .= '/'; // TODO: general
-    list($imgs, $width, $height) = imagescroller_images($dir);
+    //$dir .= '/'; // TODO: general
+    list($imgs, $width, $height) = is_dir($dir) ? imagescroller_images($dir) : imagescroller_images_from_file($dir);
     imagescroller_js();
     $o = '<div id="imagescroller_container" style="width: '.$width.'px; height: '.$height.'px">'."\n"
 	    .'<div id="imagescroller" style="width: '.$width.'px; height: '.$height.'px">'."\n"
 	    .'<ul style="width: '.count($imgs) * $width.'px; height: '.$height.'px">'."\n";
     foreach ($imgs as $img) {
-	$url = 'http://www.google.de';
-	$title = 'Title';
-	$desc = 'This is the description for this image.';
-	$o .= '<li><a href="'.$url.'">'.tag('img src="'.$dir.$img.'" alt="" width="'.$width.'" height="'.$height.'"').'</a>'
-		.'<div class="imagescroller_info"><h6><a href="'.$url.'">'.$title.'</a></h6>'
-		.'<p>'.$desc.'</p>'
-		.'</div>'."\n"
-		.'</li>'."\n";
+	if (is_array($img)) {
+	    list($fn, $url, $title, $desc) = $img;
+	} else {
+	    $fn = $img; $url = $title = $desc = NULL;
+	}
+	$o .= '<li>'
+		.(!is_null($url) ? '<a href="'.$url.'">' : '')
+		.tag('img src="'.$fn.'" alt="" width="'.$width.'" height="'.$height.'"')
+		.(!is_null($url) ? '</a>' : '');
+	if (!is_null($title) || !is_null($desc)) {
+	    $o .= '<div class="imagescroller_info">'
+		    .'<h6><a href="'.$url.'">'.$title.'</a></h6>'
+		    .'<p>'.$desc.'</p>'
+		    .'</div>'."\n";
+	}
+	$o .= '</li>'."\n";
     }
     $o .= '</ul>'."\n";
     $o .= '</div>'."\n";
