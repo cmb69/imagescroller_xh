@@ -23,7 +23,7 @@ define('IMAGESCROLLER_VERSION', '1beta1');
  */
 function imagescroller_version() {
     global $pth;
-    
+
     return '<h1><a href="http://3-magi.net/?CMSimple_XH/Imagescroller_XH">Imagescroller_XH</a></h1>'."\n"
 	    .tag('img src="'.$pth['folder']['plugins'].'imagescroller/imagescroller.png" class="imagescroller_plugin_icon"')
 	    .'<p>Version: '.IMAGESCROLLER_VERSION.'</p>'."\n"

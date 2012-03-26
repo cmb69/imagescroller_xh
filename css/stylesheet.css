@@ -1,19 +1,22 @@
-#imagescroller {position: relative; overflow: hidden}
-#imagescroller ul {list-style: none; padding: 0; margin: 0}
-#imagescroller li {position: relative; float:left; padding: 0; margin: 0}
-#imagescroller a img {border: 0}
+div.imagescroller_container {position: relative}
 
-#imagescroller_container {position: relative}
+div.imagescroller {position: relative; overflow: hidden}
+div.imagescroller ul {list-style: none; padding: 0; margin: 0}
+div.imagescroller li {position: relative; float:left; padding: 0; margin: 0}
+div.imagescroller a img {border: 0}
+
+/* "media" buttons */
 img.imagescroller_prev {position: absolute; left: 10px; cursor: pointer; display: none}
-img.imagescroller_play {position: absolute; left: 100px; cursor: pointer; display: none; visibility: hidden}
-img.imagescroller_stop {position: absolute; left: 100px; cursor: pointer; display: none}
+img.imagescroller_play {position: absolute; cursor: pointer; display: none; visibility: hidden}
+img.imagescroller_stop {position: absolute; cursor: pointer; display: none}
 img.imagescroller_next {position: absolute; right: 10px; cursor: pointer; display: none}
 
+/* info box */
 div.imagescroller_info {position: absolute; bottom: 50px; left: 70px; width: 30%; background: #333; opacity: 0.8; padding: 0.5em}
 div.imagescroller_info h6 {margin: 0}
 div.imagescroller_info h6 a {color: #ff0; font-weight: bold}
 div.imagescroller_info p {color: #fff}
 
 /* back-end */
-img.imagescroller_plugin_icon {display: block; float: left; margin: -5px 20px 10px 0}
+img.imagescroller_plugin_icon {display: block; float: left; margin: -10px 10px 0 0}
 p.imagescroller_license {clear: both; text-align: justify}
