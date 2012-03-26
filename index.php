@@ -52,7 +52,6 @@ function imagescroller_images_from_file($fn) {
 	$rec[0] = $dir.$rec[0];
 	$res[] = $rec;
     }
-    var_dump($res);
     return $res;
 }
 
