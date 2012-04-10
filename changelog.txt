@@ -1,3 +1,6 @@
+Version 1beta3 - released TODO
+cmb	added images with different dimensions (suggested by Joe)
+
 Version 1beta2 - internally released 2012-03-27
 cmb	added config option controls_dynamic (suggested by oldnema)
 cmb	added opacity fallback for IE (contributed by oldnema)

@@ -13,7 +13,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('IMAGESCROLLER_VERSION', '1beta2');
+define('IMAGESCROLLER_VERSION', '1beta3');
 
 
 /**
