@@ -18,7 +18,7 @@ $plugin_tx['imagescroller']['error_image_size']="Image size %1dx%2d (expected %3
 
 $plugin_tx['imagescroller']['cf_scroll_interval']="The interval between two scroll processes in milliseconds.";
 $plugin_tx['imagescroller']['cf_scroll_duration']="The duration of scrolling to the next image in milliseconds.";
-$plugin_tx['imagescroller']['cf_controls_dynamic']="Wether to display the controls only, when hovering over the image: 1 (yes) or 0 (no). If set to 0, the play/pause control is not available.";
-$plugin_tx['imagescroller']['cf_autoload']="Wether to autoload the necessary JS: 1 (yes) or 0 (no). Set to 1, if used from the template.";
+$plugin_tx['imagescroller']['cf_controls_dynamic']="Whether to display the controls only, when hovering over the image: 1 (yes) or 0 (no). If set to 0, the play/pause control is not available.";
+$plugin_tx['imagescroller']['cf_autoload']="Whether to autoload the necessary JS: 1 (yes) or 0 (no). Set to 1, if used from the template.";
 
 ?>
