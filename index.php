@@ -140,7 +140,7 @@ function imagescroller_js() {
     include_once $pth['folder']['plugins'].'jquery/jquery.inc.php';
     include_jquery();
     include_jqueryplugin('scrollTo', $pth['folder']['plugins']
-	    .'imagescroller/lib/jquery.scrollTo-1.4.2-min.js');
+	    .'imagescroller/lib/jquery.scrollTo-1.4.3.1-min.js');
     include_jqueryplugin('serialScroll', $pth['folder']['plugins']
 	    .'imagescroller/lib/jquery.serialScroll-1.2.2-min.js');
     $dynctrls = $pcf['controls_dynamic'] ? 'true' : 'false';
