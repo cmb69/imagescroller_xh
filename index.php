@@ -153,6 +153,7 @@ function Imagescroller_js()
         . 'imagescroller/lib/jquery.scrollTo-1.4.3.1-min.js');
     include_jqueryplugin('serialScroll', $pth['folder']['plugins']
         . 'imagescroller/lib/jquery.serialScroll-1.2.2-min.js');
+    $fastRewind = $pcf['rewind_fast'] ? 'false' : 'true';
     $dynctrls = $pcf['controls_dynamic'] ? 'true' : 'false';
     $hjs .= <<<SCRIPT
 <script type="text/javascript">
@@ -167,15 +168,13 @@ function Imagescroller_js()
             axis: 'xy',
             duration: $pcf[scroll_duration],
             interval: $pcf[scroll_interval],
-            constant: false
+            constant: $fastRewind
         });
         if ($dynctrls) {
             $('div.imagescroller_container').mouseenter(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next,
-			      img.imagescroller_play, img.imagescroller_stop').show();
+                $(this).find('img.imagescroller_prev, img.imagescroller_next, img.imagescroller_play, img.imagescroller_stop').show();
             }).mouseleave(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next,
-			      img.imagescroller_play, img.imagescroller_stop').hide();
+                $(this).find('img.imagescroller_prev, img.imagescroller_next, img.imagescroller_play, img.imagescroller_stop').hide();
             });
             $('img.imagescroller_stop').click(function() {
                 $('div.imagescroller').trigger('stop');
