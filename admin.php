@@ -81,15 +81,120 @@ function Imagescroller_systemCheck() // RELEASE-TODO
 }
 
 
+function Imagescroller_galleries()
+{
+    global $pth;
+
+    $galleries = array();
+    $dh = opendir($pth['folder']['images']);
+    while (($fn = readdir($dh)) !== false) {
+	if ($fn{0} != '.' && is_dir("{$pth['folder']['images']}$fn")) {
+	    $galleries[] = $fn;
+	}
+    }
+    closedir($dh);
+    natcasesort($galleries);
+    return $galleries;
+}
+
+
+function Imagescroller_gallerySelectbox()
+{
+    global $sn;
+
+    $onchange = "window.document.location.href = '$sn?&imagescroller&amp;admin=plugin_main&amp;imagescroller_gallery='+this.value";
+    $o = "<select onchange=\"$onchange\">";
+    $galleries = Imagescroller_galleries();
+    foreach ($galleries as $gallerie) {
+	$sel = isset($_GET['imagescroller_gallery']) && $gallerie == $_GET['imagescroller_gallery'] ? ' selected="selected"' : '';
+	$o .= "<option value=\"$gallerie\"$sel>$gallerie</option>";
+    }
+    $o .= '</select>';
+    return $o;
+}
+
+
+function Imagescroller_galleryAdmin()
+{
+    global $sn;
+
+    $o = Imagescroller_gallerySelectbox();
+    $o .= Imagescroller_editGallery();
+    return $o;
+
+}
+
+
+function Imagescroller_galleryData($gallery)
+{
+    global $pth;
+
+    //$fn = 
+
+}
+
+
+function Imagescroller_editGallery()
+{
+    global $pth, $sn;
+
+    $dn = "{$pth['folder']['images']}$_GET[imagescroller_gallery]";
+    $imgs = Imagescroller_imagesFromDir("$dn/");
+    $url = "$sn?imagescroller&amp;admin=plugin_main";
+    $o = "<form action=\"$url\" method=\"POST\"><table><tbody>";
+    foreach ($imgs as $img) {
+	$o .= '<tr><td>' . tag("img src=\"$img\" width=\"200\" height=\"\" alt=\"\"")
+	    . tag("input type=\"hidden\" name=\"imagescroller_image[]\" value=\"$img\"")
+	    . '</td>'
+	    . '<td>'
+	    . tag("input type=\"text\" name=\"imagescroller_title[]\"")
+	    . tag("input type=\"text\" name=\"imagescroller_desc[]\"")
+	    . tag("input type=\"text\" name=\"imagescroller_link[]\"")
+	    . '</td>'
+	    . '</tr>';
+    }
+    $o .= '</tbody></table>'
+	. tag('input type="hidden" name="action" value="save"')
+	. tag('input type="submit" class="submit"') . '</form>';
+    return $o;
+}
+
+
+function Imagescroller_saveGallery()
+{
+    $gallery = array();
+    foreach (array_keys($_POST['imagescroller_image']) as $i) {
+	$image = array();
+	foreach (array('image', 'title', 'desc', 'link') as $key) {
+	    $image[$key] = stsl($_POST["imagescroller_$key"][$i]);
+	}
+	$gallery[] = $image;
+    }
+    var_dump($gallery);
+}
+
+
 /**
  * Handle the plugin administration.
  */
 if (isset($imagescroller) && $imagescroller == 'true') {
-    $o .= print_plugin_admin('off');
+    $o .= print_plugin_admin('on');
     switch ($admin) {
         case '':
             $o .= Imagescroller_version() . tag('hr') . Imagescroller_systemCheck();
             break;
+	case 'plugin_main':
+	    switch ($action) {
+	    case 'edit_gallery':
+		$o .= Imagescroller_editGallery();
+		break;
+	    case 'save':
+		$o .= Imagescroller_saveGallery();
+		break;
+	    default:
+		$o .= Imagescroller_galleryAdmin();
+	    }
+	    break;
         default:
             $o .= plugin_admin_common($action, $admin, $plugin);
     }

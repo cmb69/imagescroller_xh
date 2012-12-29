@@ -16,6 +16,13 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('IMAGESCROLLER_VERSION', '1beta3');
 
 
+function Imagescroller_dataFolder()
+{
+    global $pth;
+
+    return $pth['folder']['plugins'] . 'imagescroller/data/';
+}
+
 /**
  * Returns the sorted array of images in $dir.
  *
