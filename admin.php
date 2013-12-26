@@ -83,7 +83,7 @@ function Imagescroller_systemCheck()
     global $pth, $tx, $plugin_tx;
 
     $ptx = $plugin_tx['imagescroller'];
-    $phpVersion = '4.0.7';
+    $phpVersion = '4.3.0';
     $imgdir = $pth['folder']['plugins'] . 'imagescroller/images/';
     $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
     $warn = tag('img src="' . $imgdir . 'warn.png" alt="warning"');
