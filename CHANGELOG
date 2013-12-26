@@ -1,0 +1,9 @@
+Version 1beta3 - released TODO
+* added images with different dimensions (suggested by Joe)
+
+Version 1beta2 - internally released 2012-03-27
+* added config option controls_dynamic (suggested by oldnema)
+* added opacity fallback for IE (contributed by oldnema)
+
+Version 1beta1 - released 2012-03-26
+* initial release
