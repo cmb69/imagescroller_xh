@@ -3,19 +3,37 @@
 /**
  * Front-End of Imagescroller_XH.
  *
- * Copyright (c) 2012 Christoph M. Becker (see license.txt)
+ * PHP version 5
+ *
+ * @category  CMSimple_XH
+ * @package   Imagescroller
+ * @author    Christoph M. Becker <cmbecker69@gmx.de>
+ * @copyright 2012-2013 Christoph M. Becker <http://3-magi.net>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version   SVN: $Id$
+ * @link      http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
 
-
+/*
+ * Prevent direct access.
+ */
 if (!defined('CMSIMPLE_XH_VERSION')) {
     header('HTTP/1.0 403 Forbidden');
     exit;
 }
 
-
+/**
+ * The version number.
+ */
 define('IMAGESCROLLER_VERSION', '1beta3');
 
-
+/**
+ * Returns the path of the data folder.
+ *
+ * @return string
+ *
+ * @global array The paths of system files and folders.
+ */
 function Imagescroller_dataFolder()
 {
     global $pth;
@@ -24,17 +42,18 @@ function Imagescroller_dataFolder()
 }
 
 /**
- * Returns the sorted array of images in $dir.
+ * Returns the sorted array of images in a folder.
  *
- * @param string $dir
+ * @param string $dir A folder path.
+ *
  * @return array
  */
 function Imagescroller_imagesFromDir($dir)
 {
     $dir = rtrim($dir, '/') . '/';
     $imgs = array();
-    if (($dh = opendir($dir)) !== FALSE) {
-        while (($fn = readdir($dh)) !== FALSE) {
+    if (($dh = opendir($dir)) !== false) {
+        while (($fn = readdir($dh)) !== false) {
             $ffn = $dir . $fn;
             if (is_file($ffn) && getimagesize($ffn)) {
                 $imgs[] = $ffn;
@@ -46,11 +65,11 @@ function Imagescroller_imagesFromDir($dir)
     return $imgs;
 }
 
-
 /**
- * Returns the array of images in the info file $fn.
+ * Returns the array of images in an info file.
  *
- * @param string $fn
+ * @param string $fn An info file name.
+ *
  * @return array
  */
 function Imagescroller_imagesFromFile($fn)
@@ -67,14 +86,18 @@ function Imagescroller_imagesFromFile($fn)
     return $res;
 }
 
-
 /**
  * Returns the dimensions of the $imgs.
+ *
  * If the dimensions differ, this will be reported through $e in admin mode.
  *
- * @global string $e
- * @param array $images
- * @returns array
+ * @param array $imgs A list of images.
+ *
+ * @return array
+ *
+ * @global string The (X)HTML containing error messages.
+ * @global bool   Whether we're in admin mode.
+ * @global array  The localization of the plugins.
  */
 function Imagescroller_imagesSize($imgs)
 {
@@ -93,8 +116,10 @@ function Imagescroller_imagesSize($imgs)
         } else {
             if (($size[0] != $width || $size[1] != $height) && $adm) {
                 $e .= '<li><strong>'
-                    . sprintf($ptx['error_image_size'],
-                              $size[0], $size[1], $width, $height)
+                    . sprintf(
+                        $ptx['error_image_size'],
+                        $size[0], $size[1], $width, $height
+                    )
                     . '</strong>' . tag('br') . "$fn</li>";
             }
         }
@@ -102,21 +127,21 @@ function Imagescroller_imagesSize($imgs)
     return array($width, $height);
 }
 
-
 /**
  * Returns the <li> containing the image.
  *
- * @param mixed $img
- * @param int $width
- * @param int $height
- * @return string  The (X)HTML.
+ * @param mixed $img    An image.
+ * @param int   $width  An image width.
+ * @param int   $height An image height.
+ *
+ * @return string (X)HTML.
  */
 function Imagescroller_imageLi($img, $width, $height)
 {
     if (is_array($img)) {
         list($fn, $url, $title, $desc) = $img;
     } else {
-        $fn = $img; $url = $title = $desc = NULL;
+        $fn = $img; $url = $title = $desc = null;
     }
     $o = '<li>'
         . (!empty($url) ? "<a href=\"$url\">" : '')
@@ -136,13 +161,16 @@ function Imagescroller_imageLi($img, $width, $height)
     return $o;
 }
 
-
 /**
  * Includes the necessary JS.
  *
- * @access public
- * @global $hjs
  * @return void
+ *
+ * @global array  The paths of system files and folders.
+ * @global string The (X)HTML to insert in the HEAD element.
+ * @global array  The configuration of the plugins.
+ *
+ * @staticvar bool $again Whether the function is called again.
  */
 function Imagescroller_js()
 {
@@ -156,10 +184,14 @@ function Imagescroller_js()
     $pcf = $plugin_cf['imagescroller'];
     include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
     include_jquery();
-    include_jqueryplugin('scrollTo', $pth['folder']['plugins']
-        . 'imagescroller/lib/jquery.scrollTo-1.4.3.1-min.js');
-    include_jqueryplugin('serialScroll', $pth['folder']['plugins']
-        . 'imagescroller/lib/jquery.serialScroll-1.2.2-min.js');
+    include_jqueryplugin(
+        'scrollTo', $pth['folder']['plugins']
+        . 'imagescroller/lib/jquery.scrollTo-1.4.3.1-min.js'
+    );
+    include_jqueryplugin(
+        'serialScroll', $pth['folder']['plugins']
+        . 'imagescroller/lib/jquery.serialScroll-1.2.2-min.js'
+    );
     $fastRewind = $pcf['rewind_fast'] ? 'false' : 'true';
     $dynctrls = $pcf['controls_dynamic'] ? 'true' : 'false';
     $hjs .= <<<SCRIPT
@@ -179,9 +211,11 @@ function Imagescroller_js()
         });
         if ($dynctrls) {
             $('div.imagescroller_container').mouseenter(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next, img.imagescroller_play, img.imagescroller_stop').show();
+                $(this).find('img.imagescroller_prev, img.imagescroller_next,
+                        img.imagescroller_play, img.imagescroller_stop').show();
             }).mouseleave(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next, img.imagescroller_play, img.imagescroller_stop').hide();
+                $(this).find('img.imagescroller_prev, img.imagescroller_next,
+                        img.imagescroller_play, img.imagescroller_stop').hide();
             });
             $('img.imagescroller_stop').click(function() {
                 $('div.imagescroller').trigger('stop');
@@ -204,26 +238,32 @@ function Imagescroller_js()
 SCRIPT;
 }
 
-
 /**
  * Returns the imagescroller for the images in $path.
  *
- * @access public
- * @param string $path  A directory of info file.
- * @return string  The (X)HTML.
+ * @param string $path A directory or info file path.
+ *
+ * @return string (X)HTML.
+ *
+ * @global array The paths of system files and folders.
+ * @global array The localization of the plugins.
  */
 function imagescroller($path)
 {
     global $pth, $plugin_tx;
 
     $imgs = is_dir($path)
-	? imagescroller_imagesFromDir($path)
-	: imagescroller_imagesFromFile($path);
+        ? imagescroller_imagesFromDir($path)
+        : imagescroller_imagesFromFile($path);
     list($width, $height) = Imagescroller_imagesSize($imgs);
     Imagescroller_js();
-    $o = "<div class=\"imagescroller_container\" style=\"width:${width}px; height:${height}px\">"
-        . "<div class=\"imagescroller\" style=\"width:${width}px; height:${height}px\">"
-        . '<ul style="width:' . count($imgs) * $width . "px; height:${height}px\">";
+    $totalWidth = count($imgs) * $width;
+    $o = <<<EOT
+<div class="imagescroller_container" style="width:{$width}px; height:{$height}px">
+    <div class="imagescroller" style="width:{$width}px; height:{$height}px">
+        <ul style="width:{$totalWidth}px; height:{$height}px\">
+
+EOT;
     foreach ($imgs as $img) {
         $o .= Imagescroller_imageLi($img, $width, $height);
     }
@@ -235,16 +275,20 @@ function imagescroller($path)
         $img = "{$pth['folder']['plugins']}imagescroller/images/$name.png";
         list($w, $h) = getimagesize($img);
         $top = 'top:' . intval(($height - $h) / 2) . 'px;';
-        $left = $btn == 'play' || $btn == 'stop' ? 'left:' . intval(($width - $w) / 2) . 'px' : '';
-        $o .= tag("img class=\"imagescroller_$btn\" src=\"$img\" alt=\"$alt\""
-		  . " style=\"$top$left\"");
+        $left = ($btn == 'play' || $btn == 'stop')
+            ? 'left:' . intval(($width - $w) / 2) . 'px'
+            : '';
+        $o .= tag(
+            "img class=\"imagescroller_$btn\" src=\"$img\" alt=\"$alt\""
+            . " style=\"$top$left\""
+        );
     }
     $o .= '</div>';
     return $o;
 }
 
 
-/**
+/*
  * Handle autoloading of necessary JS.
  */
 if ($plugin_cf['imagescroller']['autoload']) {
