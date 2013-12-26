@@ -25,7 +25,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 /**
  * The version number.
  */
-define('IMAGESCROLLER_VERSION', '1beta3');
+define('IMAGESCROLLER_VERSION', '@IMAGESCROLLER_VERSION@');
 
 /**
  * Returns the path of the data folder.
