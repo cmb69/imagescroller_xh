@@ -267,11 +267,11 @@ class Imagescroller_Controller
         });
         if ($dynctrls) {
             $('div.imagescroller_container').mouseenter(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next,
-                        img.imagescroller_play, img.imagescroller_stop').show();
+                $(this).find('img.imagescroller_prev, img.imagescroller_next,' +
+                        'img.imagescroller_play, img.imagescroller_stop').show();
             }).mouseleave(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next,
-                        img.imagescroller_play, img.imagescroller_stop').hide();
+                $(this).find('img.imagescroller_prev, img.imagescroller_next,' +
+                        'img.imagescroller_play, img.imagescroller_stop').hide();
             });
             $('img.imagescroller_stop').click(function() {
                 $('div.imagescroller').trigger('stop');
