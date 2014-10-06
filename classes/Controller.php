@@ -98,126 +98,6 @@ class Imagescroller_Controller
     }
 
     /**
-     * Returns the sorted array of images in a folder.
-     *
-     * @param string $dir A folder path.
-     *
-     * @return array
-     */
-    protected function imagesFromDir($dir)
-    {
-        $dir = rtrim($dir, '/') . '/';
-        $imgs = array();
-        if (($dh = opendir($dir)) !== false) {
-            while (($fn = readdir($dh)) !== false) {
-                $ffn = $dir . $fn;
-                if (is_file($ffn) && getimagesize($ffn)) {
-                    $imgs[] = $ffn;
-                }
-            }
-            closedir($dh);
-        }
-        natcasesort($imgs);
-        return $imgs;
-    }
-
-    /**
-     * Returns the array of images in an info file.
-     *
-     * @param string $fn An info file name.
-     *
-     * @return array
-     */
-    protected function imagesFromFile($fn)
-    {
-        $dir = dirname($fn) . '/';
-        $data = file_get_contents($fn);
-        $data = str_replace(array("\r\n", "\r"), "\n", $data);
-        $recs = explode("\n\n", $data);
-        foreach ($recs as $rec) {
-            $rec = array_map('trim', explode("\n", $rec));
-            $rec[0] = $dir . $rec[0];
-            $res[] = $rec;
-        }
-        return $res;
-    }
-
-    /**
-     * Returns the dimensions of the $imgs.
-     *
-     * If the dimensions differ, this will be reported through $e in admin mode.
-     *
-     * @param array $imgs A list of images.
-     *
-     * @return array
-     *
-     * @global string The (X)HTML containing error messages.
-     * @global bool   Whether we're in admin mode.
-     * @global array  The localization of the plugins.
-     */
-    protected function imagesSize($imgs)
-    {
-        global $e, $adm, $plugin_tx;
-
-        $ptx = $plugin_tx['imagescroller'];
-        foreach ($imgs as $img) {
-            $fn = is_array($img) ? $img[0] : $img;
-            if (!is_readable($fn) || !($size = getimagesize($fn))) {
-                $e = "<li><strong>$ptx[error_no_image]</strong>"
-                    . tag('br') . "$fn</li>";
-                continue;
-            }
-            if (!isset($width)) {
-                list($width, $height) = $size;
-            } else {
-                if (($size[0] != $width || $size[1] != $height) && $adm) {
-                    $e .= '<li><strong>'
-                        . sprintf(
-                            $ptx['error_image_size'],
-                            $size[0], $size[1], $width, $height
-                        )
-                        . '</strong>' . tag('br') . "$fn</li>";
-                }
-            }
-        }
-        return array($width, $height);
-    }
-
-    /**
-     * Returns the <li> containing the image.
-     *
-     * @param mixed $img    An image.
-     * @param int   $width  An image width.
-     * @param int   $height An image height.
-     *
-     * @return string (X)HTML.
-     */
-    protected function imageLi($img, $width, $height)
-    {
-        if (is_array($img)) {
-            list($fn, $url, $title, $desc) = $img;
-        } else {
-            $fn = $img; $url = $title = $desc = null;
-        }
-        $o = '<li>'
-            . (!empty($url) ? "<a href=\"$url\">" : '')
-            . tag("img src=\"$fn\" alt=\"\" width=\"$width\" height=\"$height\"")
-            . (!empty($url) ? '</a>' : '');
-        if (!empty($title) || !empty($desc)) {
-            $o .= '<div class="imagescroller_info">'
-                . '<h6>'
-                . (!empty($url) ? "<a href=\"$url\">" : '')
-                . $title // htmlspecialchars?
-                . (!empty($url) ? '</a>' : '')
-                . '</h6>'
-                . "<p>$desc</p>" // Htmlspecialchars?
-                . '</div>';
-        }
-        $o .= '</li>';
-        return $o;
-    }
-
-    /**
      * Includes the necessary JS.
      *
      * @return void
@@ -240,58 +120,24 @@ class Imagescroller_Controller
         $pcf = $plugin_cf['imagescroller'];
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jquery();
+        $libraryFolder =  $pth['folder']['plugins'] . 'imagescroller/lib/';
         include_jqueryplugin(
-            'scrollTo', $pth['folder']['plugins']
-            . 'imagescroller/lib/jquery.scrollTo-1.4.3.1-min.js'
+            'scrollTo', $libraryFolder . 'jquery.scrollTo-1.4.3.1-min.js'
         );
         include_jqueryplugin(
-            'serialScroll', $pth['folder']['plugins']
-            . 'imagescroller/lib/jquery.serialScroll-1.2.2-min.js'
+            'serialScroll', $libraryFolder . 'jquery.serialScroll-1.2.2-min.js'
         );
-        $fastRewind = $pcf['rewind_fast'] ? 'false' : 'true';
-        $dynctrls = $pcf['controls_dynamic'] ? 'true' : 'false';
-        $hjs .= <<<EOT
-<script type="text/javascript">
-/* <![CDATA[ */
-(function($) {
-    $(function() {
-        $('div.imagescroller').serialScroll({
-            items: 'li',
-            prev: 'div.imagescroller_container img.imagescroller_prev',
-            next: 'div.imagescroller_container img.imagescroller_next',
-            force: true,
-            axis: 'xy',
-            duration: $pcf[scroll_duration],
-            interval: $pcf[scroll_interval],
-            constant: $fastRewind
-        });
-        if ($dynctrls) {
-            $('div.imagescroller_container').mouseenter(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next,' +
-                        'img.imagescroller_play, img.imagescroller_stop').show();
-            }).mouseleave(function() {
-                $(this).find('img.imagescroller_prev, img.imagescroller_next,' +
-                        'img.imagescroller_play, img.imagescroller_stop').hide();
-            });
-            $('img.imagescroller_stop').click(function() {
-                $('div.imagescroller').trigger('stop');
-                $('img.imagescroller_stop').css('visibility', 'hidden');
-                $('img.imagescroller_play').css('visibility', 'visible');
-            });
-            $('img.imagescroller_play').click(function() {
-                $('div.imagescroller').trigger('start');
-                $('img.imagescroller_play').css('visibility', 'hidden');
-                $('img.imagescroller_stop').css('visibility', 'visible');
-            })
-        } else {
-            $(this).find('img.imagescroller_prev, img.imagescroller_next').show()
-        }
-    })
-})(jQuery)
-/* ]]> */
-</script>
-
-EOT;
+        $config = array(
+            'duration' => (int) $pcf['scroll_duration'],
+            'interval' => (int) $pcf['scroll_interval'],
+            'constant' => (bool) $pcf['rewind_fast'],
+            'dynamicControls' => (bool) $pcf['controls_dynamic']
+        );
+        $hjs .= '<script type="text/javascript">/* <![CDATA[ */'
+            . 'var IMAGESCROLLER = ' . XH_encodeJson($config) . ';'
+            . '/* ]]> */</script>'
+            . '<script type="text/javascript" src="' . $pth['folder']['plugins']
+            . 'imagescroller/imagescroller.js"></script>';
     }
 
     /**
@@ -308,39 +154,75 @@ EOT;
     {
         global $pth, $plugin_tx;
 
-        $imgs = is_dir($path)
-            ? $this->imagesFromDir($path)
-            : $this->imagesFromFile($path);
-        list($width, $height) = $this->imagesSize($imgs);
+        $gallery = is_dir($path)
+            ? Imagescroller_Gallery::makeFromFolder($path)
+            : Imagescroller_Gallery::makeFromFile($path);
+        list($width, $height) = $gallery->getDimensions();
         $this->emitJs();
-        $totalWidth = count($imgs) * $width;
-        $o = <<<EOT
-<div class="imagescroller_container" style="width:{$width}px; height:{$height}px">
-    <div class="imagescroller" style="width:{$width}px; height:{$height}px">
-        <ul style="width:{$totalWidth}px; height:{$height}px\">
+        $totalWidth = $gallery->getImageCount() * $width;
+        return $this->render(
+            'gallery', compact('gallery', 'width', 'height', 'totalWidth')
+        );
+    }
 
-EOT;
-        foreach ($imgs as $img) {
-            $o .= $this->imageLi($img, $width, $height);
+    /**
+     * Renders a template.
+     *
+     * @param string $template A template name.
+     * @param array  $bag      A bag with template variables.
+     *
+     * @return string (X)HTML.
+     *
+     * @global array The paths of system files and folders.
+     * @global array The configuration of the core.
+     */
+    protected function render($template, $bag)
+    {
+        global $pth, $cf;
+
+        ob_start();
+        extract($bag);
+        include $pth['folder']['plugins'] . 'imagescroller/views/' . $template
+            . '.htm';
+        $html = ob_get_clean();
+        if (!$cf['xhtml']['endtags']) {
+            $html = str_replace(' />', '>', $html);
         }
-        $o .= '</ul>';
-        $o .= '</div>';
+        return $html;
+    }
+
+    /**
+     * Renders the buttons.
+     *
+     * @param int $width  A width.
+     * @param int $height A height.
+     *
+     * @return string (X)HTML.
+     *
+     * @global array The paths of system files and folders.
+     * @global array The localization of the plugins.
+     */
+    protected function renderButtons($width, $height)
+    {
+        global $pth, $plugin_tx;
+
+        $html = '';
         foreach (array('prev', 'next', 'play', 'stop') as $btn) {
             $name = $btn;
-            $alt = $plugin_tx['imagescroller']["button_$btn"];
-            $img = "{$pth['folder']['plugins']}imagescroller/images/$name.png";
+            $alt = $plugin_tx['imagescroller']['button_' . $btn];
+            $img = $pth['folder']['plugins'] . 'imagescroller/images/' . $name
+                . '.png';
             list($w, $h) = getimagesize($img);
             $top = 'top:' . intval(($height - $h) / 2) . 'px;';
             $left = ($btn == 'play' || $btn == 'stop')
                 ? 'left:' . intval(($width - $w) / 2) . 'px'
                 : '';
-            $o .= tag(
-                "img class=\"imagescroller_$btn\" src=\"$img\" alt=\"$alt\""
-                . " style=\"$top$left\""
+            $html .= tag(
+                'img class="imagescroller_' . $btn . '" src="' . $img
+                . '" alt="' . $alt . '"' . ' style="' . $top . $left . '"'
             );
         }
-        $o .= '</div>';
-        return $o;
+        return $html;
     }
 
     /**
@@ -349,8 +231,6 @@ EOT;
      * @return string (X)HTML.
      *
      * @global array The paths of system files and folders.
-     *
-     * @todo Fix empty element.
      */
     protected function version()
     {
@@ -358,36 +238,7 @@ EOT;
 
         $iconPath = $pth['folder']['plugins'] . 'imagescroller/imagescroller.png';
         $version = IMAGESCROLLER_VERSION;
-        return <<<EOT
-<h1><a href="http://3-magi.net/?CMSimple_XH/Imagescroller_XH">
-    Imagescroller_XH</a></h1>
-<img src="$iconPath" with="128" height="128"
-     style="float: left; margin: 0 1em 0 0" alt="Plugin Icon" />
-<p>Version: $version</p>
-<p>Copyright &copy; 2012-2014 <a href="http://3-magi.net">
-    Christoph M. Becker</a></p>
-<p>Imagescroller_XH is powered by <a
-    href="http://flesler.blogspot.de/2008/02/jqueryserialscroll.html">
-    jQuery.SerialScroll</a>.</p>
-<p style="text-align: justify">
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-</p>
-<p style="text-align: justify">
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHAN&shy;TABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-</p>
-<p style="text-align: justify">
-    You should have received a copy of the GNU General Public License
-    along with this program. If not, see <a
-    href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
-</p>
-
-EOT;
+        return $this->render('info', compact('iconPath', 'version'));
     }
 
     /**

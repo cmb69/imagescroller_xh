@@ -1,0 +1,36 @@
+<!-- Imagescroller_XH gallery -->
+<div class="imagescroller_container"
+     style="width: <?php echo $width?>px; height: <?php echo $height?>px">
+    <div class="imagescroller"
+         style="width: <?php echo $width?>px; height: <?php echo $height?>px">
+        <ul style="width: <?php echo $totalWidth?>px; height: <?php echo $height?>px">
+<?php foreach ($gallery->getImages() as $image):?>
+            <li>
+<?php if ($image->getUrl() != ''):?>
+                <a href="<?php echo $image->getUrl()?>">
+<?php endif?>
+                    <img src="<?php echo $image->getFilename()?>" alt=""
+                         width="<?php echo $width?>" height="<?php echo $height?>" />
+<?php if ($image->getUrl() != ''):?>
+                </a>
+<?php endif?>
+<?php if ($image->getTitle() != '' || $image->getDescription() != ''):?>
+                <div class="imagescroller_info">
+                    <h6>
+<?php if ($image->getUrl() != ''):?>
+                        <a href="<?php echo $image->getUrl()?>">
+<?php endif?>
+                            <?php echo $image->getTitle() /* hsc? */?>
+<?php if ($image->getUrl() != ''):?>
+                        </a>
+<?php endif?>
+                    </h6>
+                    <p><?php echo $image->getDescription() /* hsc? */?></p>
+                </div>
+<?php endif?>
+            </li>
+<?php endforeach?>
+        </ul>
+    </div>
+    <?php echo $this->renderButtons($width, $height)?>
+</div>
