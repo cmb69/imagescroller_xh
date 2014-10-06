@@ -24,26 +24,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 
 /**
  * The controller.
- */
-require_once $pth['folder']['plugin_classes'] . 'Controller.php';
-
-/**
- * The galleries.
- */
-require_once $pth['folder']['plugin_classes'] . 'Gallery.php';
-
-/**
- * The images.
- */
-require_once $pth['folder']['plugin_classes'] . 'Image.php';
-
-/**
- * The version number.
- */
-define('IMAGESCROLLER_VERSION', '@IMAGESCROLLER_VERSION@');
-
-/**
- * The controller.
  *
  * @var Imagescroller_Controller
  */
