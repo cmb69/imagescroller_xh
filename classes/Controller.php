@@ -11,7 +11,7 @@
  * @copyright 2012-2014 Christoph M. Becker <http://3-magi.net/>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @version   SVN: $Id$
- * @link      http://3-magi.net/?CMSimple_XH/Schedule_XH
+ * @link      http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
 
 /**
@@ -255,7 +255,7 @@ class Imagescroller_Controller
         global $pth, $tx, $plugin_tx;
 
         $ptx = $plugin_tx['imagescroller'];
-        $phpVersion = '4.3.0';
+        $phpVersion = '5.1.2';
         $imgdir = $pth['folder']['plugins'] . 'imagescroller/images/';
         $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
         $warn = tag('img src="' . $imgdir . 'warn.png" alt="warning"');
@@ -264,7 +264,7 @@ class Imagescroller_Controller
             . (version_compare(PHP_VERSION, $phpVersion) >= 0 ? $ok : $fail)
             . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_phpversion'], $phpVersion)
             . tag('br') . tag('br');
-        foreach (array() as $ext) {
+        foreach (array('spl') as $ext) {
             $o .= (extension_loaded($ext) ? $ok : $fail)
                 . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_extension'], $ext)
                 . tag('br');
