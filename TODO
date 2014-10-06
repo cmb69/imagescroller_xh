@@ -3,7 +3,6 @@
 * translate manual to German
 * add meaningful alt texts
 
-* list-style unterdruecken (!important)
 * open links in new windows (sugg. by intelli)
 * path to image relative to root ($pth[folder][base])
 * show play/pause

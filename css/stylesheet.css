@@ -7,15 +7,15 @@
     overflow: hidden;
 }
 .imagescroller ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 .imagescroller li {
     position: relative;
-    float:left;
-    padding: 0;
-    margin: 0;
+    float: left;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 .imagescroller a img {
     border: 0;
