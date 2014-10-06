@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "013bf7d0fe7f89120de922fb2d53ff48",
+    "hash": "fd015f91acd698bbe28478b10fd9e031",
     "packages": [
 
     ],
@@ -192,28 +192,28 @@
         },
         {
             "name": "mikey179/vfsStream",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mikey179/vfsStream.git",
-                "reference": "8571f349567e02af1b7efc0fc4e3a4a1c98e664e"
+                "reference": "61b12172292cf539685507aa65b076c1530e83c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/8571f349567e02af1b7efc0fc4e3a4a1c98e664e",
-                "reference": "8571f349567e02af1b7efc0fc4e3a4a1c98e664e",
+                "url": "https://api.github.com/repos/mikey179/vfsStream/zipball/61b12172292cf539685507aa65b076c1530e83c1",
+                "reference": "61b12172292cf539685507aa65b076c1530e83c1",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~4.1"
+                "phpunit/phpunit": "~4.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3.x-dev"
+                    "dev-master": "1.4.x-dev"
                 }
             },
             "autoload": {
@@ -226,7 +226,7 @@
                 "BSD"
             ],
             "homepage": "http://vfs.bovigo.org/",
-            "time": "2014-07-21 20:15:54"
+            "time": "2014-09-14 10:18:53"
         },
         {
             "name": "nikic/php-parser",
@@ -593,16 +593,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "4.2.6",
+            "version": "4.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "c28a790620fe30b049bb693be1ef9cd4e0fe906c"
+                "reference": "06005259429c156c02596add91f6a59c7dc3d4af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c28a790620fe30b049bb693be1ef9cd4e0fe906c",
-                "reference": "c28a790620fe30b049bb693be1ef9cd4e0fe906c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/06005259429c156c02596add91f6a59c7dc3d4af",
+                "reference": "06005259429c156c02596add91f6a59c7dc3d4af",
                 "shasum": ""
             },
             "require": {
@@ -616,7 +616,7 @@
                 "phpunit/php-file-iterator": "~1.3.1",
                 "phpunit/php-text-template": "~1.2",
                 "phpunit/php-timer": "~1.0.2",
-                "phpunit/phpunit-mock-objects": "~2.2",
+                "phpunit/phpunit-mock-objects": "~2.3",
                 "sebastian/comparator": "~1.0",
                 "sebastian/diff": "~1.1",
                 "sebastian/environment": "~1.0",
@@ -633,7 +633,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2.x-dev"
+                    "dev-master": "4.3.x-dev"
                 }
             },
             "autoload": {
@@ -663,7 +663,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-09-14 09:31:24"
+            "time": "2014-10-06 06:20:35"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
