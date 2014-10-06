@@ -1,6 +1,22 @@
 * protect data folder
 * revise English manual
-* translate to German
+* translate manual to German
 * add meaningful alt texts
+
+* list-style unterdruecken (!important)
+* open links in new windows (sugg. by intelli)
+* path to image relative to root ($pth[folder][base])
+* show play/pause
+* back-end! (oldnema)
+* other button sizes (Joe)
+* config: hide buttons (suggested by maeg)
+* merke position bei seitenwechesel
+* docu: $pth['folder']['base'] for subistes/2lang
+* alternative remote URLs for images (requires allow_url_fopen=On for
+  getimagesize); is_readable will fail, so it's probably not reasonable to check
+  it at all (suggested by Oldnema)
+* randomize images:
+  <http://cmsimpleforum.com/viewtopic.php?f=12&t=5525&p=41090#p41090>
+
 
 * make responsive (sugg. by Tata)
