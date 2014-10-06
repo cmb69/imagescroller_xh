@@ -23,6 +23,11 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 /**
+ * The version number.
+ */
+define('IMAGESCROLLER_VERSION', '@IMAGESCROLLER_VERSION@');
+
+/**
  * The controller.
  *
  * @var Imagescroller_Controller

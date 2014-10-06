@@ -4,7 +4,5 @@
 * translate to German
 * add meaningful alt texts
 * metaconfig.php
-* autoloading
-* update to PHPUnit 4.3
 
 * make responsive (sugg. by Tata)
