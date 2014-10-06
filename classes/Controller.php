@@ -52,7 +52,7 @@ class Imagescroller_Controller
      *
      * @return bool
      *
-     * @global $imagescroller Whether the plugin administration is requested.
+     * @global string Whether the plugin administration is requested.
      */
     protected function isAdministrationRequested()
     {
