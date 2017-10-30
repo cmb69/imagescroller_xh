@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
 
+namespace Imagescroller;
+
 /**
  * The controller.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Schedule_XH
  */
-class Imagescroller_Controller
+class Controller
 {
     /**
      * Dispatches on plugin related requests.
@@ -139,8 +141,8 @@ class Imagescroller_Controller
         global $pth, $plugin_tx;
 
         $gallery = is_dir($path)
-            ? Imagescroller_Gallery::makeFromFolder($path)
-            : Imagescroller_Gallery::makeFromFile($path);
+            ? Gallery::makeFromFolder($path)
+            : Gallery::makeFromFile($path);
         list($width, $height) = $gallery->getDimensions();
         $this->emitJs();
         $totalWidth = $gallery->getImageCount() * $width;

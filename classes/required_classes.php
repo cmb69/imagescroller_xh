@@ -14,7 +14,7 @@
  */
 
 spl_autoload_register(function ($className) {
-    $parts = explode('_', $className);
+    $parts = explode('\\', $className);
     if ($parts[0] == 'Imagescroller') {
         include_once __DIR__ . '/' . $parts[1] . '.php';
     }

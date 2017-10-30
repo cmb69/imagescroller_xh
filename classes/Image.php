@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
 
+namespace Imagescroller;
+
 /**
  * The images.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
-class Imagescroller_Image
+class Image
 {
     /**
      * The filename.
@@ -58,7 +60,7 @@ class Imagescroller_Image
      *
      * @param string $filename A filename.
      *
-     * @return Imagescroller_Image
+     * @return Image
      */
     public static function makeFromFilename($filename)
     {
@@ -72,7 +74,7 @@ class Imagescroller_Image
      *
      * @param array $record A data record.
      *
-     * @return Imagescroller_Image
+     * @return Image
      */
     public static function makeFromRecord($record)
     {

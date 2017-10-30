@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
 
+namespace Imagescroller;
+
 /**
  * The galleries.
  *
@@ -22,14 +24,14 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
-class Imagescroller_Gallery
+class Gallery
 {
     /**
      * Returns a gallery made from an image folder.
      *
      * @param string $foldername A foldername.
      *
-     * @return Imagescroller_Gallery
+     * @return Gallery
      */
     public static function makeFromFolder($foldername)
     {
@@ -39,7 +41,7 @@ class Imagescroller_Gallery
             while (($filename = readdir($dir)) !== false) {
                 $fullFilename = $foldername . $filename;
                 if (self::isImageFile($fullFilename)) {
-                    $gallery->images[] = Imagescroller_Image::makeFromFilename(
+                    $gallery->images[] = Image::makeFromFilename(
                         $fullFilename
                     );
                 }
@@ -67,7 +69,7 @@ class Imagescroller_Gallery
      *
      * @param string $filename A filename.
      *
-     * @return Imagescroller_Gallery
+     * @return Gallery
      */
     public static function makeFromFile($filename)
     {
@@ -79,7 +81,7 @@ class Imagescroller_Gallery
         foreach ($records as $record) {
             $record = array_map('trim', explode("\n", $record));
             $record[0] = $foldername . $record[0];
-            $gallery->images[] = Imagescroller_Image::makeFromRecord($record);
+            $gallery->images[] = Image::makeFromRecord($record);
         }
         return $gallery;
     }
@@ -87,7 +89,7 @@ class Imagescroller_Gallery
     /**
      * The images.
      *
-     * @var array<Imagescroller_Image>
+     * @var array<Image>
      */
     protected $images = array();
 
@@ -104,7 +106,7 @@ class Imagescroller_Gallery
     /**
      * Returns the images.
      *
-     * @return array<Imagescroller_Image>
+     * @return array<Image>
      */
     public function getImages()
     {

@@ -37,9 +37,9 @@ define('IMAGESCROLLER_VERSION', '@IMAGESCROLLER_VERSION@');
 /**
  * The controller.
  *
- * @var Imagescroller_Controller
+ * @var Imagescroller\Controller
  */
-$_Imagescroller_controller = new Imagescroller_Controller();
+$_Imagescroller_controller = new Imagescroller\Controller();
 
 /**
  * Returns the imagescroller for the images in $path.
