@@ -14,12 +14,9 @@
  */
 
 spl_autoload_register(function ($className) {
-    global $pth;
-
     $parts = explode('_', $className);
     if ($parts[0] == 'Imagescroller') {
-        include_once $pth['folder']['plugins'] . 'imagescroller/classes/'
-            . $parts[1] . '.php';
+        include_once __DIR__ . '/' . $parts[1] . '.php';
     }
 });
 
