@@ -13,19 +13,7 @@
  * @link      http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
 
-spl_autoload_register('Imagescroller_autoload');
-
-/**
- * The autoloader.
- *
- * @param string $className A class name.
- *
- * @return void
- *
- * @global array The paths of system files and folders.
- */
-function Imagescroller_autoload($className)
-{
+spl_autoload_register(function ($className) {
     global $pth;
 
     $parts = explode('_', $className);
@@ -33,6 +21,6 @@ function Imagescroller_autoload($className)
         include_once $pth['folder']['plugins'] . 'imagescroller/classes/'
             . $parts[1] . '.php';
     }
-}
+});
 
 ?>
