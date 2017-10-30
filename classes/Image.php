@@ -21,51 +21,31 @@
 
 namespace Imagescroller;
 
-/**
- * The images.
- *
- * @category CMSimple_XH
- * @package  Imagescroller
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Imagescroller_XH
- */
 class Image
 {
     /**
-     * The filename.
-     *
      * @var string
      */
     protected $filename;
 
     /**
-     * The URL to link to.
-     *
      * @var string
      */
     protected $url;
 
     /**
-     * The title.
-     *
      * @var string
      */
     protected $title;
 
     /**
-     * The description.
-     *
      * @var string
      */
     protected $description;
 
 
     /**
-     * Creates an image from a filename.
-     *
-     * @param string $filename A filename.
-     *
+     * @param string $filename
      * @return Image
      */
     public static function makeFromFilename($filename)
@@ -76,10 +56,7 @@ class Image
     }
 
     /**
-     * Creates an image from a data record.
-     *
-     * @param array $record A data record.
-     *
+     * @param array $record
      * @return Image
      */
     public static function makeFromRecord($record)
@@ -92,9 +69,6 @@ class Image
         return $image;
     }
 
-    /**
-     * Initializes a new instance.
-     */
     public function __construct()
     {
         $this->filename = '';
@@ -104,8 +78,6 @@ class Image
     }
 
     /**
-     * Returns the filename.
-     *
      * @return string
      */
     public function getFilename()
@@ -114,8 +86,6 @@ class Image
     }
 
     /**
-     * Returns the URL to link to.
-     *
      * @return string
      */
     public function getUrl()
@@ -124,8 +94,6 @@ class Image
     }
 
     /**
-     * Returns the title.
-     *
      * @return string
      */
     public function getTitle()
@@ -134,8 +102,6 @@ class Image
     }
 
     /**
-     * Returns the description.
-     *
      * @return string
      */
     public function getDescription()

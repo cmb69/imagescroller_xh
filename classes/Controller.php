@@ -21,23 +21,10 @@
 
 namespace Imagescroller;
 
-/**
- * The controller.
- *
- * @category CMSimple_XH
- * @package  Imagescroller
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Schedule_XH
- */
 class Controller
 {
     /**
-     * Dispatches on plugin related requests.
-     *
      * @return void
-     *
-     * @global array The configuration of the plugins.
      */
     public function dispatch()
     {
@@ -54,13 +41,7 @@ class Controller
     }
 
     /**
-     * Handles the plugin administration.
-     *
      * @return void
-     *
-     * @global string The value of the admin GP parameter.
-     * @global string The value of the action GP parameter.
-     * @global string The (X)HTML of the contents area.
      */
     protected function handleAdministration()
     {
@@ -90,15 +71,7 @@ class Controller
     }
 
     /**
-     * Includes the necessary JS.
-     *
      * @return void
-     *
-     * @global array  The paths of system files and folders.
-     * @global string The (X)HTML to insert in the HEAD element.
-     * @global array  The configuration of the plugins.
-     *
-     * @staticvar bool $again Whether the function is called again.
      */
     public function emitJs()
     {
@@ -129,14 +102,8 @@ class Controller
     }
 
     /**
-     * Returns the imagescroller for the images in $path.
-     *
-     * @param string $path A directory or info file path.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
-     * @global array The localization of the plugins.
+     * @param string $path
+     * @return string
      */
     public function main($path)
     {
@@ -152,15 +119,9 @@ class Controller
     }
 
     /**
-     * Renders a template.
-     *
-     * @param string $template A template name.
-     * @param array  $bag      A bag with template variables.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
-     * @global array The configuration of the core.
+     * @param string $template
+     * @param array $bag
+     * @return string
      */
     protected function render($template, $bag)
     {
@@ -178,15 +139,9 @@ class Controller
     }
 
     /**
-     * Renders the buttons.
-     *
-     * @param int $width  A width.
-     * @param int $height A height.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
-     * @global array The localization of the plugins.
+     * @param int $width
+     * @param int $height
+     * @return string
      */
     protected function renderButtons($width, $height)
     {
@@ -212,11 +167,7 @@ class Controller
     }
 
     /**
-     * Returns the plugin version information view.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
+     * @return string
      */
     protected function version()
     {
@@ -228,13 +179,7 @@ class Controller
     }
 
     /**
-     * Returns the requirements information view.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array The paths of system files and folders.
-     * @global array The localization of the core.
-     * @global array The localization of the plugins.
+     * @return string
      */
     protected function systemCheck()
     {
@@ -272,11 +217,7 @@ class Controller
     }
 
     /**
-     * Returns the available galleries.
-     *
      * @return array
-     *
-     * @global array The paths of system files and folders.
      */
     protected function galleries()
     {
@@ -295,11 +236,7 @@ class Controller
     }
 
     /**
-     * Returns a gallery select element.
-     *
-     * @return string (X)HTML.
-     *
-     * @global string The script name.
+     * @return string
      */
     protected function gallerySelectbox()
     {
@@ -321,11 +258,7 @@ class Controller
     }
 
     /**
-     * Handles the gallery administration.
-     *
-     * @return string (X)HTML.
-     *
-     * @global string The script name.
+     * @return string
      */
     protected function galleryAdmin()
     {
@@ -337,12 +270,7 @@ class Controller
     }
 
     /**
-     * Returns the edit gallery view.
-     *
-     * @return string (X)HTML.
-     *
-     * @global array  The paths of system files and folders.
-     * @global string The script name.
+     * @return string
      */
     protected function editGallery()
     {
@@ -374,9 +302,7 @@ class Controller
     }
 
     /**
-     * Saves a gallery.
-     *
-     * @return string (X)HTML.
+     * @return string
      */
     protected function saveGallery()
     {

@@ -23,20 +23,9 @@ namespace Imagescroller;
 
 use PHPUnit\Framework\TestCase;
 
-/**
- * Testing the images.
- *
- * @category Testing
- * @package  Imagescroller
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Imagescroller_XH
- */
 class ImageTest extends TestCase
 {
     /**
-     * Tests that makeFromFilename() sets the filename.
-     *
      * @return void
      */
     public function testMakeFromFilenameSetsFilename()
@@ -47,8 +36,6 @@ class ImageTest extends TestCase
     }
 
     /**
-     * Tests that makeFromRecord() sets the filename.
-     *
      * @return void
      */
     public function testMakeFromRecordSetsFilename()
@@ -61,8 +48,6 @@ class ImageTest extends TestCase
     }
 
     /**
-     * Tests that makeFromRecord() sets the URL to link to.
-     *
      * @return void
      */
     public function testMakeFromRecordSetsUrl()
@@ -75,8 +60,6 @@ class ImageTest extends TestCase
     }
 
     /**
-     * Tests that makeFromRecord() sets the title.
-     *
      * @return void
      */
     public function testMakeFromRecordSetsTitle()
@@ -89,8 +72,6 @@ class ImageTest extends TestCase
     }
 
     /**
-     * Tests that makeFromRecord() sets the description.
-     *
      * @return void
      */
     public function testMakeFromRecordSetsDescription()

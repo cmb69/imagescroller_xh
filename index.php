@@ -35,26 +35,16 @@ EOT
     );
 }
 
-/**
- * The version number.
- */
 define('IMAGESCROLLER_VERSION', '@IMAGESCROLLER_VERSION@');
 
 /**
- * The controller.
- *
  * @var Imagescroller\Controller
  */
 $_Imagescroller_controller = new Imagescroller\Controller();
 
 /**
- * Returns the imagescroller for the images in $path.
- *
- * @param string $path A directory or info file path.
- *
- * @return string (X)HTML.
- *
- * @global Imagescroller_Controller The plugin controller.
+ * @param string $path
+ * @return string
  */
 function imagescroller($path)
 {

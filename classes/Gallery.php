@@ -21,22 +21,10 @@
 
 namespace Imagescroller;
 
-/**
- * The galleries.
- *
- * @category CMSimple_XH
- * @package  Imagescroller
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Imagescroller_XH
- */
 class Gallery
 {
     /**
-     * Returns a gallery made from an image folder.
-     *
-     * @param string $foldername A foldername.
-     *
+     * @param string $foldername
      * @return Gallery
      */
     public static function makeFromFolder($foldername)
@@ -59,10 +47,7 @@ class Gallery
     }
 
     /**
-     * Returns whether a file is an image file.
-     *
-     * @param string $filename A filename.
-     *
+     * @param string $filename
      * @return bool
      */
     protected static function isImageFile($filename)
@@ -71,10 +56,7 @@ class Gallery
     }
 
     /**
-     * Returns gallery made from an info file.
-     *
-     * @param string $filename A filename.
-     *
+     * @param string $filename
      * @return Gallery
      */
     public static function makeFromFile($filename)
@@ -93,15 +75,11 @@ class Gallery
     }
 
     /**
-     * The images.
-     *
-     * @var array<Image>
+     * @var Image[]
      */
     protected $images = array();
 
     /**
-     * Returns the count of the images.
-     *
      * @return int
      */
     public function getImageCount()
@@ -110,9 +88,7 @@ class Gallery
     }
 
     /**
-     * Returns the images.
-     *
-     * @return array<Image>
+     * @return Image[]
      */
     public function getImages()
     {
@@ -120,15 +96,7 @@ class Gallery
     }
 
     /**
-     * Returns the dimensions of the gallery.
-     *
-     * If the dimensions differ, this will be reported through $e in admin mode.
-     *
      * @return array
-     *
-     * @global string The (X)HTML containing error messages.
-     * @global array  The localization of the plugins.
-     *
      * @todo Throw exceptions instead of appending to $e.
      */
     public function getDimensions()
