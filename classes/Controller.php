@@ -30,16 +30,15 @@ class Imagescroller_Controller
      * @return void
      *
      * @global array The configuration of the plugins.
-     * @global bool  Whether we're logged in as admin.
      */
     public function dispatch()
     {
-        global $plugin_cf, $adm;
+        global $plugin_cf;
 
         if ($plugin_cf['imagescroller']['autoload']) {
             $this->emitJs();
         }
-        if ($adm) {
+        if (XH_ADM) {
             if (XH_wantsPluginAdministration('imagescroller')) {
                 $this->handleAdministration();
             }

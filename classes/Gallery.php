@@ -119,14 +119,13 @@ class Imagescroller_Gallery
      * @return array
      *
      * @global string The (X)HTML containing error messages.
-     * @global bool   Whether we're in admin mode.
      * @global array  The localization of the plugins.
      *
      * @todo Throw exceptions instead of appending to $e.
      */
     public function getDimensions()
     {
-        global $e, $adm, $plugin_tx;
+        global $e, $plugin_tx;
 
         $ptx = $plugin_tx['imagescroller'];
         foreach ($this->images as $image) {
@@ -139,7 +138,7 @@ class Imagescroller_Gallery
             if (!isset($width)) {
                 list($width, $height) = $size;
             } else {
-                if (($size[0] != $width || $size[1] != $height) && $adm) {
+                if (($size[0] != $width || $size[1] != $height) && XH_ADM) {
                     $e .= '<li><strong>'
                         . sprintf(
                             $ptx['error_image_size'],
