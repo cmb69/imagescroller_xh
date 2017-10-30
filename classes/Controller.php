@@ -40,24 +40,10 @@ class Imagescroller_Controller
             $this->emitJs();
         }
         if ($adm) {
-            if ($this->isAdministrationRequested()) {
+            if (XH_wantsPluginAdministration('imagescroller')) {
                 $this->handleAdministration();
             }
         }
-    }
-
-    /**
-     * Returns whether the plugin administration is requested.
-     *
-     * @return bool
-     *
-     * @global string Whether the plugin administration is requested.
-     */
-    protected function isAdministrationRequested()
-    {
-        global $imagescroller;
-
-        return isset($imagescroller) && $imagescroller == 'true';
     }
 
     /**
