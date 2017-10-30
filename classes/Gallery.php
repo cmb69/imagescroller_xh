@@ -142,10 +142,7 @@ class Gallery
             } else {
                 if (($size[0] != $width || $size[1] != $height) && XH_ADM) {
                     $e .= '<li><strong>'
-                        . sprintf(
-                            $ptx['error_image_size'],
-                            $size[0], $size[1], $width, $height
-                        )
+                        . sprintf($ptx['error_image_size'], $size[0], $size[1], $width, $height)
                         . '</strong>' . tag('br') . $filename . '</li>';
                 }
             }
@@ -153,5 +150,3 @@ class Gallery
         return array($width, $height);
     }
 }
-
-?>

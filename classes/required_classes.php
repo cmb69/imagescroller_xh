@@ -19,5 +19,3 @@ spl_autoload_register(function ($className) {
         include_once __DIR__ . '/' . $parts[1] . '.php';
     }
 });
-
-?>

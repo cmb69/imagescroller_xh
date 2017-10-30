@@ -137,5 +137,3 @@ class Image
         return $this->description;
     }
 }
-
-?>

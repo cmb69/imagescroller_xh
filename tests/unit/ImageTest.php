@@ -96,5 +96,3 @@ class ImageTest extends TestCase
         $this->assertEquals($description, $image->getDescription());
     }
 }
-
-?>

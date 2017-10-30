@@ -58,5 +58,3 @@ function imagescroller($path)
 }
 
 $_Imagescroller_controller->dispatch();
-
-?>

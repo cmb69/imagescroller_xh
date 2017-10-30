@@ -62,24 +62,24 @@ class Controller
 
         $o .= print_plugin_admin('on');
         switch ($admin) {
-        case '':
-            $o .= $this->version() . tag('hr')
-                . $this->systemCheck();
-            break;
-        case 'plugin_main':
-            switch ($action) {
-            case 'edit_gallery':
-                $o .= $this->editGallery();
+            case '':
+                $o .= $this->version() . tag('hr')
+                    . $this->systemCheck();
                 break;
-            case 'save':
-                $o .= $this->saveGallery();
+            case 'plugin_main':
+                switch ($action) {
+                    case 'edit_gallery':
+                        $o .= $this->editGallery();
+                        break;
+                    case 'save':
+                        $o .= $this->saveGallery();
+                        break;
+                    default:
+                        $o .= $this->galleryAdmin();
+                }
                 break;
             default:
-                $o .= $this->galleryAdmin();
-            }
-            break;
-        default:
-            $o .= plugin_admin_common($action, $admin, 'imagescroller');
+                $o .= plugin_admin_common($action, $admin, 'imagescroller');
         }
     }
 
@@ -107,12 +107,8 @@ class Controller
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jquery();
         $libraryFolder =  $pth['folder']['plugins'] . 'imagescroller/lib/';
-        include_jqueryplugin(
-            'scrollTo', $libraryFolder . 'jquery.scrollTo-1.4.3.1-min.js'
-        );
-        include_jqueryplugin(
-            'serialScroll', $libraryFolder . 'jquery.serialScroll-1.2.2-min.js'
-        );
+        include_jqueryplugin('scrollTo', $libraryFolder . 'jquery.scrollTo-1.4.3.1-min.js');
+        include_jqueryplugin('serialScroll', $libraryFolder . 'jquery.serialScroll-1.2.2-min.js');
         $config = array(
             'duration' => (int) $pcf['scroll_duration'],
             'interval' => (int) $pcf['scroll_interval'],
@@ -146,9 +142,7 @@ class Controller
         list($width, $height) = $gallery->getDimensions();
         $this->emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
-        return $this->render(
-            'gallery', compact('gallery', 'width', 'height', 'totalWidth')
-        );
+        return $this->render('gallery', compact('gallery', 'width', 'height', 'totalWidth'));
     }
 
     /**
@@ -390,7 +384,4 @@ class Controller
         }
         var_dump($gallery);
     }
-
 }
-
-?>
