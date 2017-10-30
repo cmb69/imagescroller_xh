@@ -349,15 +349,15 @@ class Controller
         global $pth, $sn;
 
         $dn = "{$pth['folder']['images']}$_GET[imagescroller_gallery]";
-        $imgs = $this->imagesFromDir("$dn/");
+        $gallery = Gallery::makeFromFolder("$dn/");
         $url = "$sn?imagescroller&amp;admin=plugin_main";
         $o = "<form action=\"$url\" method=\"POST\"><table><tbody>";
-        foreach ($imgs as $img) {
+        foreach ($gallery->getImages() as $img) {
             $o .= '<tr><td>'
-                . tag("img src=\"$img\" width=\"200\" height=\"\" alt=\"\"")
+                . tag("img src=\"{$img->getFilename()}\" width=\"200\" height=\"\" alt=\"\"")
                 . tag(
                     'input type="hidden" name="imagescroller_image[]" value="'
-                    . $img . '"'
+                    . $img->getFilename() . '"'
                 )
                 . '</td>'
                 . '<td>'
