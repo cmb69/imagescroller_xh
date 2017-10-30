@@ -13,9 +13,6 @@
  * @link      http://3-magi.net/?CMSimple_XH/Imagescroller_XH
  */
 
-require_once './vendor/autoload.php';
-require_once './classes/Image.php';
-
 /**
  * Testing the images.
  *
