@@ -21,6 +21,7 @@
 
 namespace Imagescroller;
 
+use Pfw\SystemCheckService;
 use Pfw\View\View;
 use Pfw\View\HtmlString;
 
@@ -53,8 +54,7 @@ class Controller
         $o .= print_plugin_admin('on');
         switch ($admin) {
             case '':
-                $o .= $this->version() . tag('hr')
-                    . $this->systemCheck();
+                $o .= $this->version();
                 break;
             case 'plugin_main':
                 switch ($action) {
@@ -167,48 +167,19 @@ class Controller
             ->template('info')
             ->data([
                 'logo' => "{$pth['folder']['plugins']}imagescroller/imagescroller.png",
-                'version' => IMAGESCROLLER_VERSION
+                'version' => IMAGESCROLLER_VERSION,
+                'checks' => (new SystemCheckService)
+                    ->minPhpVersion('5.4.0')
+                    ->minXhVersion('1.6.3')
+                    ->plugin('pfw')
+                    ->plugin('jquery')
+                    ->writable("{$pth['folder']['plugins']}imagescroller/config/")
+                    ->writable("{$pth['folder']['plugins']}imagescroller/css/")
+                    ->writable("{$pth['folder']['plugins']}imagescroller/languages/")
+                    ->getChecks()
             ])
             ->render();
         return ob_get_clean();
-    }
-
-    /**
-     * @return string
-     */
-    protected function systemCheck()
-    {
-        global $pth, $tx, $plugin_tx;
-
-        $ptx = $plugin_tx['imagescroller'];
-        $phpVersion = '5.1.2';
-        $imgdir = $pth['folder']['plugins'] . 'imagescroller/images/';
-        $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
-        $warn = tag('img src="' . $imgdir . 'warn.png" alt="warning"');
-        $fail = tag('img src="' . $imgdir . 'fail.png" alt="failure"');
-        $o = '<h4>' . $ptx['syscheck_title'] . '</h4>'
-            . (version_compare(PHP_VERSION, $phpVersion) >= 0 ? $ok : $fail)
-            . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_phpversion'], $phpVersion)
-            . tag('br') . tag('br');
-        foreach (array('spl') as $ext) {
-            $o .= (extension_loaded($ext) ? $ok : $fail)
-                . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_extension'], $ext)
-                . tag('br');
-        }
-        $o .= (!get_magic_quotes_runtime() ? $ok : $fail)
-            . '&nbsp;&nbsp;' . $ptx['syscheck_magic_quotes'] . tag('br');
-        $o .= (strtoupper($tx['meta']['codepage']) == 'UTF-8' ? $ok : $warn)
-            . '&nbsp;&nbsp;' . $ptx['syscheck_encoding'] . tag('br') . tag('br');
-        $filename = $pth['folder']['plugins'].'jquery/jquery.inc.php';
-        $o .= (file_exists($filename) ? $ok : $fail)
-            . '&nbsp;&nbsp;' . $ptx['syscheck_jquery'] . tag('br') . tag('br');
-        foreach (array('config/', 'css/', 'languages/') as $folder) {
-            $folder = $pth['folder']['plugins'].'imagescroller/' . $folder;
-            $o .= (is_writable($folder) ? $ok : $warn)
-                . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_writable'], $folder)
-                . tag('br');
-        }
-        return $o;
     }
 
     /**

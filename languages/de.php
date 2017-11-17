@@ -1,13 +1,5 @@
 <?php
 
-$plugin_tx['imagescroller']['syscheck_title']="Systemprüfung";
-$plugin_tx['imagescroller']['syscheck_phpversion']="PHP-Version &ge; %s";
-$plugin_tx['imagescroller']['syscheck_extension']="Erweiterung '%s' geladen";
-$plugin_tx['imagescroller']['syscheck_encoding']="Encoding 'UTF-8' configured";
-$plugin_tx['imagescroller']['syscheck_magic_quotes']="magic_quotes_runtime ausgeschaltet";
-$plugin_tx['imagescroller']['syscheck_jquery']="<a href=\"http://www.cmsimple-xh.com/wiki/doku.php/plugins:jquery4cmsimple\">jQuery4CMSimple plugin</a> installiert";
-$plugin_tx['imagescroller']['syscheck_writable']="Ordner '%s' schreibbar";
-
 $plugin_tx['imagescroller']['button_prev']="Voriges Bild";
 $plugin_tx['imagescroller']['button_next']="Nächstes Bild";
 $plugin_tx['imagescroller']['button_play']="Diahow fortsetzen";
