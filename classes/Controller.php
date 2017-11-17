@@ -21,6 +21,9 @@
 
 namespace Imagescroller;
 
+use Pfw\View\View;
+use Pfw\View\HtmlString;
+
 class Controller
 {
     /**
@@ -115,27 +118,13 @@ class Controller
         list($width, $height) = $gallery->getDimensions();
         $this->emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
-        return $this->render('gallery', compact('gallery', 'width', 'height', 'totalWidth'));
-    }
-
-    /**
-     * @param string $template
-     * @param array $bag
-     * @return string
-     */
-    protected function render($template, $bag)
-    {
-        global $pth, $cf;
-
+        $renderedButtons = new HtmlString($this->renderButtons($width, $height));
         ob_start();
-        extract($bag);
-        include $pth['folder']['plugins'] . 'imagescroller/views/' . $template
-            . '.htm';
-        $html = ob_get_clean();
-        if (!$cf['xhtml']['endtags']) {
-            $html = str_replace(' />', '>', $html);
-        }
-        return $html;
+        (new View('imagescroller'))
+            ->template('gallery')
+            ->data(compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons'))
+            ->render();
+        return ob_get_clean();
     }
 
     /**
@@ -173,9 +162,15 @@ class Controller
     {
         global $pth;
 
-        $iconPath = $pth['folder']['plugins'] . 'imagescroller/imagescroller.png';
-        $version = IMAGESCROLLER_VERSION;
-        return $this->render('info', compact('iconPath', 'version'));
+        ob_start();
+        (new View('imagescroller'))
+            ->template('info')
+            ->data([
+                'logo' => "{$pth['folder']['plugins']}imagescroller/imagescroller.png",
+                'version' => IMAGESCROLLER_VERSION
+            ])
+            ->render();
+        return ob_get_clean();
     }
 
     /**
