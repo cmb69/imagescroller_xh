@@ -54,7 +54,9 @@ class Controller
         $o .= print_plugin_admin('on');
         switch ($admin) {
             case '':
-                $o .= $this->version();
+                ob_start();
+                (new InfoController)->defaultAction();
+                $o .= ob_get_clean();
                 break;
             case 'plugin_main':
                 switch ($action) {
@@ -153,33 +155,6 @@ class Controller
             );
         }
         return $html;
-    }
-
-    /**
-     * @return string
-     */
-    protected function version()
-    {
-        global $pth;
-
-        ob_start();
-        (new View('imagescroller'))
-            ->template('info')
-            ->data([
-                'logo' => "{$pth['folder']['plugins']}imagescroller/imagescroller.png",
-                'version' => IMAGESCROLLER_VERSION,
-                'checks' => (new SystemCheckService)
-                    ->minPhpVersion('5.4.0')
-                    ->minXhVersion('1.6.3')
-                    ->plugin('pfw')
-                    ->plugin('jquery')
-                    ->writable("{$pth['folder']['plugins']}imagescroller/config/")
-                    ->writable("{$pth['folder']['plugins']}imagescroller/css/")
-                    ->writable("{$pth['folder']['plugins']}imagescroller/languages/")
-                    ->getChecks()
-            ])
-            ->render();
-        return ob_get_clean();
     }
 
     /**
