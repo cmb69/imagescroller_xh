@@ -1,7 +1,7 @@
 (function($) {
     $(function() {
         $(".imagescroller").serialScroll({
-            items: "li",
+            items: ".imagescroller_item",
             prev: ".imagescroller_container .imagescroller_prev",
             next: ".imagescroller_container .imagescroller_next",
             force: true,

@@ -6,16 +6,9 @@
     position: relative;
     overflow: hidden;
 }
-.imagescroller ul {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
-.imagescroller li {
+.imagescroller_item {
     position: relative;
     float: left;
-    padding: 0 !important;
-    margin: 0 !important;
 }
 .imagescroller a img {
     border: 0;
