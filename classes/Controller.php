@@ -310,7 +310,7 @@ class Controller
         foreach (array_keys($_POST['imagescroller_image']) as $i) {
             $image = array();
             foreach (array('image', 'title', 'desc', 'link') as $key) {
-                $image[$key] = stsl($_POST["imagescroller_$key"][$i]);
+                $image[$key] = $_POST["imagescroller_$key"][$i];
             }
             $gallery[] = $image;
         }
