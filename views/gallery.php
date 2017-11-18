@@ -29,5 +29,7 @@
 <?php endforeach?>
         </div>
     </div>
-    <?=$renderedButtons?>
+    <div class="imagescroller_controls" style="width: <?=$width?>px; height: <?=$height?>px;">
+        <?=$renderedButtons?>
+    </div>
 </div>

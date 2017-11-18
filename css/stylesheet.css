@@ -18,27 +18,19 @@
  * "media" buttons
  */
 
-.imagescroller_prev {
+.imagescroller_controls {
     position: absolute;
-    left: 10px;
-    cursor: pointer;
-    display: none;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }
-.imagescroller_play {
-    position: absolute;
+.imagescroller_controls img {
     cursor: pointer;
-    display: none;
     visibility: hidden;
 }
-.imagescroller_stop {
-    position: absolute;
-    cursor: pointer;
-    display: none;
-}
-.imagescroller_next {
-    position: absolute;
-    right: 10px;
-    cursor: pointer;
+.imagescroller_play {
     display: none;
 }
 
@@ -48,6 +40,7 @@
 
 .imagescroller_info {
     position: absolute;
+    z-index: 1;
     bottom: 50px;
     left: 70px;
     width: 30%;

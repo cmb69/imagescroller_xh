@@ -13,23 +13,23 @@
         if (IMAGESCROLLER.dynamicControls) {
             $(".imagescroller_container").mouseenter(function() {
                 $(this).find(".imagescroller_prev, .imagescroller_next," +
-                        ".imagescroller_play, .imagescroller_stop").show();
+                        ".imagescroller_play, .imagescroller_stop").css("visibility", "visible");
             }).mouseleave(function() {
                 $(this).find(".imagescroller_prev, .imagescroller_next," +
-                        ".imagescroller_play, .imagescroller_stop").hide();
+                        ".imagescroller_play, .imagescroller_stop").css("visibility", "hidden");
             });
             $(".imagescroller_stop").click(function() {
                 $(".imagescroller").trigger("stop");
-                $(".imagescroller_stop").css("visibility", "hidden");
-                $(".imagescroller_play").css("visibility", "visible");
+                $(".imagescroller_stop").css("display", "none");
+                $(".imagescroller_play").css("display", "inline");
             });
             $(".imagescroller_play").click(function() {
                 $(".imagescroller").trigger("start");
-                $(".imagescroller_play").css("visibility", "hidden");
-                $(".imagescroller_stop").css("visibility", "visible");
+                $(".imagescroller_play").css("display", "none");
+                $(".imagescroller_stop").css("display", "inline");
             })
         } else {
-            $(this).find(".imagescroller_prev, img.imagescroller_next").show();
+            $(this).find(".imagescroller_prev, img.imagescroller_next").css("visibility", "visible");
         }
     })
 }(jQuery))

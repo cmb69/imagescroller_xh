@@ -61,7 +61,7 @@ class MainController
         list($width, $height) = $gallery->getDimensions();
         Plugin::emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
-        $renderedButtons = new HtmlString($this->renderButtons($width, $height));
+        $renderedButtons = new HtmlString($this->renderButtons());
         (new View('imagescroller'))
             ->template('gallery')
             ->data(compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons'))
@@ -69,28 +69,21 @@ class MainController
     }
 
     /**
-     * @param int $width
-     * @param int $height
      * @return string
      */
-    private function renderButtons($width, $height)
+    private function renderButtons()
     {
         global $pth, $plugin_tx;
 
         $html = '';
-        foreach (array('prev', 'next', 'play', 'stop') as $btn) {
+        foreach (array('prev', 'stop', 'play', 'next') as $btn) {
             $name = $btn;
             $alt = $plugin_tx['imagescroller']['button_' . $btn];
             $img = $pth['folder']['plugins'] . 'imagescroller/images/' . $name
                 . '.png';
-            list($w, $h) = getimagesize($img);
-            $top = 'top:' . intval(($height - $h) / 2) . 'px;';
-            $left = ($btn == 'play' || $btn == 'stop')
-                ? 'left:' . intval(($width - $w) / 2) . 'px'
-                : '';
             $html .= tag(
                 'img class="imagescroller_' . $btn . '" src="' . $img
-                . '" alt="' . $alt . '"' . ' style="' . $top . $left . '"'
+                . '" alt="' . $alt . '"'
             );
         }
         return $html;
