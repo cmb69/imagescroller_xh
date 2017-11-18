@@ -92,8 +92,8 @@ class Plugin
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jquery();
         $libraryFolder =  $pth['folder']['plugins'] . 'imagescroller/lib/';
-        include_jqueryplugin('scrollTo', $libraryFolder . 'jquery.scrollTo-1.4.3.1-min.js');
-        include_jqueryplugin('serialScroll', $libraryFolder . 'jquery.serialScroll-1.2.2-min.js');
+        include_jqueryplugin('scrollTo', $libraryFolder . 'jquery.scrollTo.min.js');
+        include_jqueryplugin('serialScroll', $libraryFolder . 'jquery.serialScroll.min.js');
         $config = array(
             'duration' => (int) $pcf['scroll_duration'],
             'interval' => (int) $pcf['scroll_interval'],
