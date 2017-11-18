@@ -113,12 +113,12 @@
     To display an image scroller with all all images in the folder
     <code>images/my_gallery/</code> alphabetically sorted, insert in a page:
 </p>
-<pre>{{{PLUGIN:imagescroller('./images/my_gallery');}}}</pre>
+<pre>{{{imagescroller('./images/my_gallery')}}}</pre>
 <p>
     To display the image scroller on all pages, you have to set the autoload
     configuration option to <code>1</code>, and to insert in the template:
 </p>
-<pre>&lt;?php echo imagescroller('./images/my_gallery');?&gt;</pre>
+<pre>&lt;?=imagescroller('./images/my_gallery')?&gt;</pre>
 <p>
     If you want to link the images or add titles or descriptions, you have to
     create an info file. This is best placed in the same folder as the images,
@@ -158,7 +158,7 @@ My favorite website ;)
     To display the image scroller just call imagescroller with the path to the
     info file, e.g.
 </p>
-<pre>{{{PLUGIN:imagescroller('./images/my_gallery/info.txt');}}}</pre>
+<pre>{{{imagescroller('./images/my_gallery/info.txt')}}}</pre>
 <p>
     Note that all images should have the same size (i.e. dimensions). Otherwise
     they will be resized to the size of the first image in the gallery, and in
