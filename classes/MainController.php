@@ -63,7 +63,7 @@ class MainController
         Plugin::emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
         $renderedButtons = new HtmlString($this->renderButtons());
-        $config = XH_encodeJson([
+        $config = json_encode([
             'duration' => (int) $plugin_cf['imagescroller']['scroll_duration'],
             'interval' => (int) $plugin_cf['imagescroller']['scroll_interval'],
             'constant' => (bool) $plugin_cf['imagescroller']['rewind_fast'],

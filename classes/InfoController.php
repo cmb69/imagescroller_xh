@@ -40,6 +40,7 @@ class InfoController
                 'version' => Plugin::VERSION,
                 'checks' => (new SystemCheckService)
                     ->minPhpVersion('5.4.0')
+                    ->extension('json')
                     ->minXhVersion('1.6.3')
                     ->plugin('pfw')
                     ->plugin('jquery')
