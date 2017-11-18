@@ -61,8 +61,10 @@ class Gallery
      */
     public static function makeFromFile($filename)
     {
+        global $pth;
+
         $gallery = new self();
-        $foldername = dirname($filename) . '/';
+        $foldername = $pth['folder']['images'];
         $data = file_get_contents($filename);
         $data = str_replace(array("\r\n", "\r"), "\n", $data);
         $records = explode("\n\n", $data);

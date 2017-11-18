@@ -74,11 +74,6 @@
     Set write permissions to the subdirectories <code>config/</code>,
     <code>css/</code> and <code>languages/</code>.
 </li>
-<li>
-    Protect Imagescroller_XH's data folder against direct access by any means
-    your webserver provides. A .htaccess file for Apache servers is already
-    distributed in the default data folder.
-</li>
 <li class="important">
     Browse to <i>Plugins</i> → <i>Imagescroller</i> to check if all requirements
     are fulfilled.
@@ -122,8 +117,9 @@
 <pre>&lt;?=imagescroller('my_gallery')?&gt;</pre>
 <p>
     If you want to link the images or add titles or descriptions, you have to
-    create an info file. This is best placed in the same folder as the images,
-    and can have any name you prefer. To edit this file you can use any text
+    create an info file. This has to be placed in
+    <code>content/imagescroller/</code>, and can have any name you prefer with
+    the file extension <code>.txt</code>. To edit this file you can use any text
     editor you prefer, but it is important that the file is UTF-8 encoded.
 </p>
 <p>
@@ -133,9 +129,9 @@
     separate lines and have to be in this order, but you can omit trailing
     fields, e.g. if you don't need a title and description, just write the
     filename and the URL. If you want to skip a field, just enter a single space
-    in its line. The filename of the image has to be relative to the info file;
-    the URL can be relative to the current CMSimple_XH (sub-)site or absolute.
-    An example info file looks like:
+    in its line. The filename of the image has to be relative to
+    <code>userfiles/images/</code>; the URL can be relative to the current
+    CMSimple_XH (sub-)site or absolute. An example info file looks like:
 </p>
 <pre>
 image1.jpg
@@ -156,10 +152,10 @@ http://3-magi.net/
 My favorite website ;)
 </pre>
 <p>
-    To display the image scroller just call imagescroller with the path to the
-    info file, e.g.
+    To display the image scroller just call imagescroller with the name of the
+    info file (without file extension), e.g.
 </p>
-<pre>{{{imagescroller('./images/my_gallery/info.txt')}}}</pre>
+<pre>{{{imagescroller('info')}}}</pre>
 <p>
     Note that all images should have the same size (i.e. dimensions). Otherwise
     they will be resized to the size of the first image in the gallery, and in

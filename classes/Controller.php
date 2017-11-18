@@ -112,12 +112,17 @@ class Controller
      */
     public function main($path)
     {
-        global $pth, $plugin_tx;
+        global $pth, $cf, $sl, $plugin_tx;
 
+        $contentfolder = $pth['folder']['content'];
+        if ($sl !== $cf['language']['default']) {
+            $contentfolder = dirname($contentfolder) . '/';
+        }
+        $contentfolder = "{$contentfolder}imagescroller/";
         if (is_dir("{$pth['folder']['images']}$path")) {
             $gallery = Gallery::makeFromFolder("{$pth['folder']['images']}$path");
-        } elseif (is_file($path)) {
-            $gallery = Gallery::makeFromFile($path);
+        } elseif (is_file("{$contentfolder}$path.txt")) {
+            $gallery = Gallery::makeFromFile("{$contentfolder}$path.txt");
         } else {
             return XH_message('fail', $plugin_tx['imagescroller']['error_gallery_missing'], $path);
         }
