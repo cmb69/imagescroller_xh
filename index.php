@@ -48,9 +48,9 @@ $_Imagescroller_controller = new Imagescroller\Controller();
  */
 function imagescroller($path)
 {
-    global $_Imagescroller_controller;
-
-    return $_Imagescroller_controller->main($path);
+    ob_start();
+    (new Imagescroller\MainController($path))->defaultAction();
+    return ob_get_clean();
 }
 
 $_Imagescroller_controller->dispatch();

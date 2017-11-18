@@ -22,8 +22,6 @@
 namespace Imagescroller;
 
 use Pfw\SystemCheckService;
-use Pfw\View\View;
-use Pfw\View\HtmlString;
 
 class Controller
 {
@@ -35,7 +33,7 @@ class Controller
         global $plugin_cf;
 
         if ($plugin_cf['imagescroller']['autoload']) {
-            $this->emitJs();
+            self::emitJs();
         }
         if (XH_ADM) {
             if (XH_wantsPluginAdministration('imagescroller')) {
@@ -78,7 +76,7 @@ class Controller
     /**
      * @return void
      */
-    public function emitJs()
+    public static function emitJs()
     {
         global $pth, $hjs, $plugin_cf;
         static $again = false;
@@ -104,66 +102,6 @@ class Controller
             . '/* ]]> */</script>'
             . '<script type="text/javascript" src="' . $pth['folder']['plugins']
             . 'imagescroller/imagescroller.js"></script>';
-    }
-
-    /**
-     * @param string $path
-     * @return string
-     */
-    public function main($path)
-    {
-        global $pth, $cf, $sl, $plugin_tx;
-
-        $contentfolder = $pth['folder']['content'];
-        if ($sl !== $cf['language']['default']) {
-            $contentfolder = dirname($contentfolder) . '/';
-        }
-        $contentfolder = "{$contentfolder}imagescroller/";
-        if (is_dir("{$pth['folder']['images']}$path")) {
-            $gallery = Gallery::makeFromFolder("{$pth['folder']['images']}$path");
-        } elseif (is_file("{$contentfolder}$path.txt")) {
-            $gallery = Gallery::makeFromFile("{$contentfolder}$path.txt");
-        } else {
-            return XH_message('fail', $plugin_tx['imagescroller']['error_gallery_missing'], $path);
-        }
-        list($width, $height) = $gallery->getDimensions();
-        $this->emitJs();
-        $totalWidth = $gallery->getImageCount() * $width;
-        $renderedButtons = new HtmlString($this->renderButtons($width, $height));
-        ob_start();
-        (new View('imagescroller'))
-            ->template('gallery')
-            ->data(compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons'))
-            ->render();
-        return ob_get_clean();
-    }
-
-    /**
-     * @param int $width
-     * @param int $height
-     * @return string
-     */
-    protected function renderButtons($width, $height)
-    {
-        global $pth, $plugin_tx;
-
-        $html = '';
-        foreach (array('prev', 'next', 'play', 'stop') as $btn) {
-            $name = $btn;
-            $alt = $plugin_tx['imagescroller']['button_' . $btn];
-            $img = $pth['folder']['plugins'] . 'imagescroller/images/' . $name
-                . '.png';
-            list($w, $h) = getimagesize($img);
-            $top = 'top:' . intval(($height - $h) / 2) . 'px;';
-            $left = ($btn == 'play' || $btn == 'stop')
-                ? 'left:' . intval(($width - $w) / 2) . 'px'
-                : '';
-            $html .= tag(
-                'img class="imagescroller_' . $btn . '" src="' . $img
-                . '" alt="' . $alt . '"' . ' style="' . $top . $left . '"'
-            );
-        }
-        return $html;
     }
 
     /**
