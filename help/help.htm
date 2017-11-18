@@ -111,14 +111,15 @@
 <h2>Usage</h2>
 <p>
     To display an image scroller with all all images in the folder
-    <code>images/my_gallery/</code> alphabetically sorted, insert in a page:
+    <code>./userfiles/images/my_gallery/</code> alphabetically sorted, insert
+    into a page:
 </p>
-<pre>{{{imagescroller('./images/my_gallery')}}}</pre>
+<pre>{{{imagescroller('my_gallery')}}}</pre>
 <p>
     To display the image scroller on all pages, you have to set the autoload
     configuration option to <code>1</code>, and to insert in the template:
 </p>
-<pre>&lt;?=imagescroller('./images/my_gallery')?&gt;</pre>
+<pre>&lt;?=imagescroller('my_gallery')?&gt;</pre>
 <p>
     If you want to link the images or add titles or descriptions, you have to
     create an info file. This is best placed in the same folder as the images,

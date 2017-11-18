@@ -114,8 +114,8 @@ class Controller
     {
         global $pth, $plugin_tx;
 
-        if (is_dir($path)) {
-            $gallery = Gallery::makeFromFolder($path);
+        if (is_dir("{$pth['folder']['images']}$path")) {
+            $gallery = Gallery::makeFromFolder("{$pth['folder']['images']}$path");
         } elseif (is_file($path)) {
             $gallery = Gallery::makeFromFile($path);
         } else {
