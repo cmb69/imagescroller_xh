@@ -8,8 +8,8 @@
 </p>
 <p>
     Imagescroller_XH is powered by <a
-    href="http://flesler.blogspot.de/2008/02/jqueryserialscroll.html">
-    jQuery.SerialScroll</a>.
+    href="https://github.com/flesler/jquery.serialScroll">
+    jQuery.serialScroll</a>.
 </p>
 <p class="imagescroller_license">
     This program is free software: you can redistribute it and/or modify it
