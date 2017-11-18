@@ -23,7 +23,6 @@ namespace Imagescroller;
 
 use Pfw\SystemCheckService;
 use Pfw\View\View;
-use Pfw\View\HtmlString;
 
 class InfoController
 {

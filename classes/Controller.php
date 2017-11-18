@@ -21,8 +21,6 @@
 
 namespace Imagescroller;
 
-use Pfw\SystemCheckService;
-
 class Controller
 {
     /**
