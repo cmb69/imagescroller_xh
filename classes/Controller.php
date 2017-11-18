@@ -55,16 +55,19 @@ class Controller
                 $o .= ob_get_clean();
                 break;
             case 'plugin_main':
+                $controller = new MainAdminController;
+                ob_start();
                 switch ($action) {
                     case 'edit_gallery':
-                        $o .= $this->editGallery();
+                        $controller->editAction();
                         break;
                     case 'save':
-                        $o .= $this->saveGallery();
+                        $controller->saveAction();
                         break;
                     default:
-                        $o .= $this->galleryAdmin();
+                        $controller->defaultAction();
                 }
+                $o .= ob_get_clean();
                 break;
             default:
                 $o .= plugin_admin_common($action, $admin, 'imagescroller');
@@ -100,106 +103,5 @@ class Controller
             . '/* ]]> */</script>'
             . '<script type="text/javascript" src="' . $pth['folder']['plugins']
             . 'imagescroller/imagescroller.js"></script>';
-    }
-
-    /**
-     * @return array
-     */
-    protected function galleries()
-    {
-        global $pth;
-
-        $galleries = array();
-        $dh = opendir($pth['folder']['images']);
-        while (($fn = readdir($dh)) !== false) {
-            if ($fn{0} != '.' && is_dir("{$pth['folder']['images']}$fn")) {
-                $galleries[] = $fn;
-            }
-        }
-        closedir($dh);
-        natcasesort($galleries);
-        return $galleries;
-    }
-
-    /**
-     * @return string
-     */
-    protected function gallerySelectbox()
-    {
-        global $sn;
-
-        $onchange = "window.document.location.href = '$sn?&imagescroller"
-            . "&amp;admin=plugin_main&amp;imagescroller_gallery='+this.value";
-        $o = "<select onchange=\"$onchange\">";
-        $galleries = $this->galleries();
-        foreach ($galleries as $gallerie) {
-            $sel = (isset($_GET['imagescroller_gallery'])
-                && $gallerie == $_GET['imagescroller_gallery'])
-                    ? ' selected="selected"'
-                    : '';
-            $o .= "<option value=\"$gallerie\"$sel>$gallerie</option>";
-        }
-        $o .= '</select>';
-        return $o;
-    }
-
-    /**
-     * @return string
-     */
-    protected function galleryAdmin()
-    {
-        global $sn;
-
-        $o = $this->gallerySelectbox();
-        $o .= $this->editGallery();
-        return $o;
-    }
-
-    /**
-     * @return string
-     */
-    protected function editGallery()
-    {
-        global $pth, $sn;
-
-        $dn = "{$pth['folder']['images']}$_GET[imagescroller_gallery]";
-        $gallery = Gallery::makeFromFolder("$dn/");
-        $url = "$sn?imagescroller&amp;admin=plugin_main";
-        $o = "<form action=\"$url\" method=\"POST\"><table><tbody>";
-        foreach ($gallery->getImages() as $img) {
-            $o .= '<tr><td>'
-                . tag("img src=\"{$img->getFilename()}\" width=\"200\" height=\"\" alt=\"\"")
-                . tag(
-                    'input type="hidden" name="imagescroller_image[]" value="'
-                    . $img->getFilename() . '"'
-                )
-                . '</td>'
-                . '<td>'
-                . tag("input type=\"text\" name=\"imagescroller_title[]\"")
-                . tag("input type=\"text\" name=\"imagescroller_desc[]\"")
-                . tag("input type=\"text\" name=\"imagescroller_link[]\"")
-                . '</td>'
-                . '</tr>';
-        }
-        $o .= '</tbody></table>'
-            . tag('input type="hidden" name="action" value="save"')
-            . tag('input type="submit" class="submit"') . '</form>';
-        return $o;
-    }
-
-    /**
-     * @return string
-     */
-    protected function saveGallery()
-    {
-        $gallery = array();
-        foreach (array_keys($_POST['imagescroller_image']) as $i) {
-            $image = array();
-            foreach (array('image', 'title', 'desc', 'link') as $key) {
-                $image[$key] = $_POST["imagescroller_$key"][$i];
-            }
-            $gallery[] = $image;
-        }
-        var_dump($gallery);
     }
 }
