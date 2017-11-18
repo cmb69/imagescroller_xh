@@ -1,4 +1,4 @@
-<div class="imagescroller_container"
+<div class="imagescroller_container" data-config="<?=$config?>"
      style="width: <?=$width?>px; height: <?=$height?>px">
     <div class="imagescroller" style="width: <?=$width?>px; height: <?=$height?>px">
         <div style="width: <?=$totalWidth?>px; height: <?=$height?>px">

@@ -81,29 +81,21 @@ class Plugin
      */
     public static function emitJs()
     {
-        global $pth, $hjs, $plugin_cf;
+        global $pth, $hjs;
         static $again = false;
 
         if ($again) {
             return;
         }
         $again = true;
-        $pcf = $plugin_cf['imagescroller'];
         include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
         include_jquery();
         $libraryFolder =  $pth['folder']['plugins'] . 'imagescroller/lib/';
         include_jqueryplugin('scrollTo', $libraryFolder . 'jquery.scrollTo.min.js');
         include_jqueryplugin('serialScroll', $libraryFolder . 'jquery.serialScroll.min.js');
-        $config = array(
-            'duration' => (int) $pcf['scroll_duration'],
-            'interval' => (int) $pcf['scroll_interval'],
-            'constant' => (bool) $pcf['rewind_fast'],
-            'dynamicControls' => (bool) $pcf['controls_dynamic']
+        $hjs .= sprintf(
+            '<script type="text/javascript" src="%s"></script>',
+            "{$pth['folder']['plugins']}imagescroller/imagescroller.js"
         );
-        $hjs .= '<script type="text/javascript">/* <![CDATA[ */'
-            . 'var IMAGESCROLLER = ' . XH_encodeJson($config) . ';'
-            . '/* ]]> */</script>'
-            . '<script type="text/javascript" src="' . $pth['folder']['plugins']
-            . 'imagescroller/imagescroller.js"></script>';
     }
 }

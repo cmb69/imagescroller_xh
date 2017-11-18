@@ -44,7 +44,7 @@ class MainController
      */
     public function defaultAction()
     {
-        global $pth, $cf, $sl, $plugin_tx;
+        global $pth, $cf, $sl, $plugin_cf, $plugin_tx;
 
         $contentfolder = $pth['folder']['content'];
         if ($sl !== $cf['language']['default']) {
@@ -63,9 +63,15 @@ class MainController
         Plugin::emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
         $renderedButtons = new HtmlString($this->renderButtons());
+        $config = XH_encodeJson([
+            'duration' => (int) $plugin_cf['imagescroller']['scroll_duration'],
+            'interval' => (int) $plugin_cf['imagescroller']['scroll_interval'],
+            'constant' => (bool) $plugin_cf['imagescroller']['rewind_fast'],
+            'dynamicControls' => (bool) $plugin_cf['imagescroller']['controls_dynamic']
+        ]);
         (new View('imagescroller'))
             ->template('gallery')
-            ->data(compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons'))
+            ->data(compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons', 'config'))
             ->render();
     }
 

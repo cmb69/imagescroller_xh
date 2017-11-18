@@ -1,6 +1,7 @@
 jQuery(function($) {
     $(".imagescroller_container").each(function () {
         var container = $(this);
+        var config = container.data("config");
         var scroller = container.find(".imagescroller");
         var prevButton = container.find(".imagescroller_prev");
         var nextButton = container.find(".imagescroller_next");
@@ -11,9 +12,9 @@ jQuery(function($) {
             items: ".imagescroller_item",
             force: true,
             axis: "xy",
-            duration: IMAGESCROLLER.duration,
-            interval: IMAGESCROLLER.interval,
-            constant: IMAGESCROLLER.constant
+            duration: config.duration,
+            interval: config.interval,
+            constant: config.constant
         });
         prevButton.click(function () {
             scroller.trigger("prev");
@@ -21,7 +22,7 @@ jQuery(function($) {
         nextButton.click(function () {
             scroller.trigger("next");
         });
-        if (IMAGESCROLLER.dynamicControls) {
+        if (config.dynamicControls) {
             container
                 .mouseenter(function () {
                     container.find(".imagescroller_controls img").css("visibility", "visible");
