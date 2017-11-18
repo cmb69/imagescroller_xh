@@ -38,11 +38,6 @@ EOT
 define('IMAGESCROLLER_VERSION', '@IMAGESCROLLER_VERSION@');
 
 /**
- * @var Imagescroller\Controller
- */
-$_Imagescroller_controller = new Imagescroller\Controller();
-
-/**
  * @param string $path
  * @return string
  */
@@ -53,4 +48,4 @@ function imagescroller($path)
     return ob_get_clean();
 }
 
-$_Imagescroller_controller->dispatch();
+(new Imagescroller\Plugin)->dispatch();

@@ -21,7 +21,7 @@
 
 namespace Imagescroller;
 
-class Controller
+class Plugin
 {
     /**
      * @return void

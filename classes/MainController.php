@@ -59,7 +59,7 @@ class MainController
             return XH_message('fail', $plugin_tx['imagescroller']['error_gallery_missing'], $this->path);
         }
         list($width, $height) = $gallery->getDimensions();
-        Controller::emitJs();
+        Plugin::emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
         $renderedButtons = new HtmlString($this->renderButtons($width, $height));
         (new View('imagescroller'))
