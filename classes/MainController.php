@@ -56,7 +56,8 @@ class MainController
         } elseif (is_file("{$contentfolder}{$this->path}.txt")) {
             $gallery = Gallery::makeFromFile("{$contentfolder}{$this->path}.txt");
         } else {
-            return XH_message('fail', $plugin_tx['imagescroller']['error_gallery_missing'], $this->path);
+            echo XH_message('fail', $plugin_tx['imagescroller']['error_gallery_missing'], $this->path);
+            return;
         }
         list($width, $height) = $gallery->getDimensions();
         Plugin::emitJs();
