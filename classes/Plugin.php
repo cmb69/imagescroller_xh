@@ -43,7 +43,7 @@ class Plugin
     /**
      * @return void
      */
-    protected function handleAdministration()
+    private function handleAdministration()
     {
         global $admin, $action, $o;
 

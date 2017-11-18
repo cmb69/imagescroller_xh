@@ -26,22 +26,22 @@ class Image
     /**
      * @var string
      */
-    protected $filename;
+    private $filename;
 
     /**
      * @var string
      */
-    protected $url;
+    private $url;
 
     /**
      * @var string
      */
-    protected $title;
+    private $title;
 
     /**
      * @var string
      */
-    protected $description;
+    private $description;
 
 
     /**

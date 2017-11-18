@@ -50,7 +50,7 @@ class Gallery
      * @param string $filename
      * @return bool
      */
-    protected static function isImageFile($filename)
+    private static function isImageFile($filename)
     {
         return is_file($filename) && getimagesize($filename);
     }
@@ -79,7 +79,7 @@ class Gallery
     /**
      * @var Image[]
      */
-    protected $images = array();
+    private $images = array();
 
     /**
      * @return int
