@@ -1,33 +1,46 @@
 jQuery(function($) {
-    $(".imagescroller").serialScroll({
-        items: ".imagescroller_item",
-        prev: ".imagescroller_container .imagescroller_prev",
-        next: ".imagescroller_container .imagescroller_next",
-        force: true,
-        axis: "xy",
-        duration: IMAGESCROLLER.duration,
-        interval: IMAGESCROLLER.interval,
-        constant: IMAGESCROLLER.constant
+    $(".imagescroller_container").each(function () {
+        var container = $(this);
+        var scroller = container.find(".imagescroller");
+        var prevButton = container.find(".imagescroller_prev");
+        var nextButton = container.find(".imagescroller_next");
+        var stopButton = container.find(".imagescroller_stop");
+        var playButton = container.find(".imagescroller_play");
+
+        scroller.serialScroll({
+            items: ".imagescroller_item",
+            force: true,
+            axis: "xy",
+            duration: IMAGESCROLLER.duration,
+            interval: IMAGESCROLLER.interval,
+            constant: IMAGESCROLLER.constant
+        });
+        prevButton.click(function () {
+            scroller.trigger("prev");
+        });
+        nextButton.click(function () {
+            scroller.trigger("next");
+        });
+        if (IMAGESCROLLER.dynamicControls) {
+            container
+                .mouseenter(function () {
+                    container.find(".imagescroller_controls img").css("visibility", "visible");
+                })
+                .mouseleave(function () {
+                    container.find(".imagescroller_controls img").css("visibility", "hidden");
+                });
+            stopButton.click(function () {
+                scroller.trigger("stop");
+                stopButton.css("display", "none");
+                playButton.css("display", "inline");
+            });
+            playButton.click(function () {
+                scroller.trigger("start");
+                playButton.css("display", "none");
+                stopButton.css("display", "inline");
+            })
+        } else {
+            container.find(".imagescroller_prev_next").css("visibility", "visible");
+        }
     });
-    if (IMAGESCROLLER.dynamicControls) {
-        $(".imagescroller_container").mouseenter(function() {
-            $(this).find(".imagescroller_prev, .imagescroller_next," +
-                    ".imagescroller_play, .imagescroller_stop").css("visibility", "visible");
-        }).mouseleave(function() {
-            $(this).find(".imagescroller_prev, .imagescroller_next," +
-                    ".imagescroller_play, .imagescroller_stop").css("visibility", "hidden");
-        });
-        $(".imagescroller_stop").click(function() {
-            $(".imagescroller").trigger("stop");
-            $(".imagescroller_stop").css("display", "none");
-            $(".imagescroller_play").css("display", "inline");
-        });
-        $(".imagescroller_play").click(function() {
-            $(".imagescroller").trigger("start");
-            $(".imagescroller_play").css("display", "none");
-            $(".imagescroller_stop").css("display", "inline");
-        })
-    } else {
-        $(this).find(".imagescroller_prev, .imagescroller_next").css("visibility", "visible");
-    }
 });

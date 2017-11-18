@@ -81,8 +81,12 @@ class MainController
             $alt = $plugin_tx['imagescroller']['button_' . $btn];
             $img = $pth['folder']['plugins'] . 'imagescroller/images/' . $name
                 . '.png';
+            $class = 'imagescroller_' . $btn;
+            if (in_array($btn, ['prev', 'next'])) {
+                $class .= ' imagescroller_prev_next';
+            }
             $html .= tag(
-                'img class="imagescroller_' . $btn . '" src="' . $img
+                'img class="' . $class . '" src="' . $img
                 . '" alt="' . $alt . '"'
             );
         }
