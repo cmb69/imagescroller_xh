@@ -29,7 +29,7 @@
                 $(".imagescroller_stop").css("display", "inline");
             })
         } else {
-            $(this).find(".imagescroller_prev, img.imagescroller_next").css("visibility", "visible");
+            $(this).find(".imagescroller_prev, .imagescroller_next").css("visibility", "visible");
         }
     })
 }(jQuery))
