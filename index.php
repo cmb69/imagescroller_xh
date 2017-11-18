@@ -35,8 +35,6 @@ EOT
     );
 }
 
-define('IMAGESCROLLER_VERSION', '@IMAGESCROLLER_VERSION@');
-
 /**
  * @param string $path
  * @return string

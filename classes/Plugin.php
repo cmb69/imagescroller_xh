@@ -23,6 +23,8 @@ namespace Imagescroller;
 
 class Plugin
 {
+    const VERSION = '@IMAGESCROLLER_VERSION@';
+
     /**
      * @return void
      */

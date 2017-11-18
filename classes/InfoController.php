@@ -37,7 +37,7 @@ class InfoController
             ->template('info')
             ->data([
                 'logo' => "{$pth['folder']['plugins']}imagescroller/imagescroller.png",
-                'version' => IMAGESCROLLER_VERSION,
+                'version' => Plugin::VERSION,
                 'checks' => (new SystemCheckService)
                     ->minPhpVersion('5.4.0')
                     ->minXhVersion('1.6.3')
