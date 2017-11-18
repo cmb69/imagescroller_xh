@@ -5,6 +5,7 @@ $plugin_tx['imagescroller']['button_next']="Next Image";
 $plugin_tx['imagescroller']['button_play']="Continue slideshow";
 $plugin_tx['imagescroller']['button_stop']="Pause slideshow";
 
+$plugin_tx['imagescroller']['error_gallery_missing']="The gallery \"%s\" does not exist!";
 $plugin_tx['imagescroller']['error_no_image']="No image:";
 $plugin_tx['imagescroller']['error_image_size']="Image size %1dx%2d (expected %3dx%4d):";
 

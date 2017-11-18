@@ -114,9 +114,13 @@ class Controller
     {
         global $pth, $plugin_tx;
 
-        $gallery = is_dir($path)
-            ? Gallery::makeFromFolder($path)
-            : Gallery::makeFromFile($path);
+        if (is_dir($path)) {
+            $gallery = Gallery::makeFromFolder($path);
+        } elseif (is_file($path)) {
+            $gallery = Gallery::makeFromFile($path);
+        } else {
+            return XH_message('fail', $plugin_tx['imagescroller']['error_gallery_missing'], $path);
+        }
         list($width, $height) = $gallery->getDimensions();
         $this->emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
