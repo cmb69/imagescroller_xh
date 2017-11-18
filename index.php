@@ -48,4 +48,4 @@ function imagescroller($path)
     return ob_get_clean();
 }
 
-(new Imagescroller\Plugin)->dispatch();
+(new Imagescroller\Plugin)->run();

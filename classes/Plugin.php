@@ -26,7 +26,7 @@ class Plugin
     /**
      * @return void
      */
-    public function dispatch()
+    public function run()
     {
         global $plugin_cf;
 
