@@ -1,7 +1,7 @@
 <div class="imagescroller_container"
-     style="width: <?=$width?>px; height: <?$height?>px">
-    <div class="imagescroller" style="width: <?$width?>px; height: <?$height?>px">
-        <div style="width: <?=$totalWidth?>px; height: <?$height?>px">
+     style="width: <?=$width?>px; height: <?=$height?>px">
+    <div class="imagescroller" style="width: <?=$width?>px; height: <?=$height?>px">
+        <div style="width: <?=$totalWidth?>px; height: <?=$height?>px">
 <?php foreach ($gallery->getImages() as $image):?>
             <div class="imagescroller_item">
 <?php if ($image->getUrl() != ''):?>
