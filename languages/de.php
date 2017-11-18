@@ -14,5 +14,3 @@ $plugin_tx['imagescroller']['cf_scroll_duration']="Die Dauer des Scrollens zum n
 $plugin_tx['imagescroller']['cf_rewind_fast']="Ob die Bilder schnell zurück gespult werden sollen.";
 $plugin_tx['imagescroller']['cf_controls_dynamic']="Ob die Steuerelemente nur beim Überfahren des Bildes angezeigt werden sollen. Falls ausgeschaltet, ist der Fortsetzen/Anhalten Schalter nicht verfügbar.";
 $plugin_tx['imagescroller']['cf_autoload']="Ob das nötige JavaScript automatisch geladen werden soll. Aktivieren, wenn Sie einen Imagescroller im Template verwenden.";
-
-?>

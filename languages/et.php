@@ -9,5 +9,3 @@
 	$plugin_tx['imagescroller']['cf_scroll_interval']="Kahe kerimise vaheline intervall millisekundites.";
 	$plugin_tx['imagescroller']['cf_scroll_duration']="Järgmise pildi kerimise aeg millisekundites.";
 	$plugin_tx['imagescroller']['cf_autoload']="Kui JS automaatne laadimine on vajalik: 1 (jah) või 0 (ei). Valige 1, kui kasutatate malliga.";
-
-?>

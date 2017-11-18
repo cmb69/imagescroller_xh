@@ -14,5 +14,3 @@ $plugin_tx['imagescroller']['cf_scroll_duration']="The duration of scrolling to 
 $plugin_tx['imagescroller']['cf_rewind_fast']="Whether the images shall be rewound fast.";
 $plugin_tx['imagescroller']['cf_controls_dynamic']="Whether the controls shall be displayed only while hovering over the image. If disabled, the play/pause control is not available.";
 $plugin_tx['imagescroller']['cf_autoload']="Whether the necessary JavaScript shall be autoloaded. Enable, if an imagescroller is used in the template.";
-
-?>

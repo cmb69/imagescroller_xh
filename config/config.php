@@ -8,5 +8,3 @@ $plugin_cf['imagescroller']['rewind_fast']="0";
 $plugin_cf['imagescroller']['controls_dynamic']="1";
 
 $plugin_cf['imagescroller']['autoload']="0";
-
-?>
