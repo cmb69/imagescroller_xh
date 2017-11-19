@@ -60,6 +60,7 @@
                 <exclude name="imagescroller.min.js"/>
                 <exclude name="imagescroller.komodoproject"/>
                 <exclude name="phpcompatinfo.*"/>
+                <exclude name="README.md"/>
                 <exclude name="tests/**"/>
                 <exclude name="TODO"/>
             </fileset>
