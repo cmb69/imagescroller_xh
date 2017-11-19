@@ -124,32 +124,32 @@
 </p>
 <p>
     The file contains a record for each image you want to show; records are
-    seperated by a single empty line. The records have the following fields:
-    filename, URL, title, description; the fields of the record are written on
-    separate lines and have to be in this order, but you can omit trailing
-    fields, e.g. if you don't need a title and description, just write the
-    filename and the URL. If you want to skip a field, just enter a single space
-    in its line. The filename of the image has to be relative to
+    seperated by a line containing only two percent signs (`%%`).  The records
+    can have the following fields: <code>Image</code>, <code>URL</code>,
+    <code>Title</code> and <code>Description</code>; only <code>Image</code> is
+    required, the other fields are optional.  The fields of the record are
+    written on separate lines which start with the field name, followed by a
+    colon and the field value.  The order of the lines does not matter. The
+    filename of the image has to be relative to
     <code>userfiles/images/</code>; the URL can be relative to the current
     CMSimple_XH (sub-)site or absolute. An example info file looks like:
 </p>
 <pre>
-image1.jpg
-http://www.example.com
-First Photo
-This is the first photo for the image scroller.
-
-image37.jpg
-?A_CMSimple_Page
-
-image2.jpg
-?&amp;mailform
-Contact
-
-image3.jpg
-http://3-magi.net/
-&nbsp;
-My favorite website ;)
+Image: image1.jpg
+URL: http://www.example.com/
+Title: First Photo
+Description: This is the first photo for the image scroller.
+%%
+Image: image37.jpg
+URL: ?A_CMSimple_Page
+%%
+Image: image2.jpg
+URL: ?&amp;mailform
+Title: Contact
+%%
+Image: image3.jpg
+URL: http://3-magi.net/
+Description: My favorite website ;)
 </pre>
 <p>
     To display the image scroller just call imagescroller with the name of the

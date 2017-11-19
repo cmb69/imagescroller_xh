@@ -62,10 +62,10 @@ class Image
     public static function makeFromRecord($record)
     {
         $image = new self();
-        $image->filename = $record[0];
-        $image->url = isset($record[1]) ? $record[1] : '';
-        $image->title = isset($record[2]) ? $record[2] : '';
-        $image->description = isset($record[3]) ? $record[3] : '';
+        $image->filename = $record['Image'];
+        $image->url = isset($record['URL']) ? $record['URL'] : '';
+        $image->title = isset($record['Title']) ? $record['Title'] : '';
+        $image->description = isset($record['Description']) ? $record['Description'] : '';
         return $image;
     }
 

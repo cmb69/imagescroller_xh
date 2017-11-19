@@ -69,10 +69,17 @@ class Gallery
         $foldername = $pth['folder']['images'];
         $data = file_get_contents($filename);
         $data = str_replace(array("\r\n", "\r"), "\n", $data);
-        $records = explode("\n\n", $data);
+        $records = explode("\n%%\n", $data);
         foreach ($records as $record) {
-            $record = array_map('trim', explode("\n", $record));
-            $record[0] = $foldername . $record[0];
+            $lines = array_map('trim', explode("\n", $record));
+            $record = [];
+            foreach ($lines as $line) {
+                if ($line) {
+                    list($name, $value) = array_map('trim', explode(':', $line, 2));
+                    $record[$name] = $value;
+                }
+            }
+            $record['Image'] = $foldername . $record['Image'];
             $gallery->images[] = Image::makeFromRecord($record);
         }
         return $gallery;
