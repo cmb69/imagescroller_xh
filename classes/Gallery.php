@@ -53,7 +53,7 @@ class Gallery
     private static function isImageFile($filename)
     {
         $imageexts = ['gif', 'jpg', 'jpeg', 'png', 'svg'];
-        return is_file($filename) 
+        return is_file($filename)
             && in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $imageexts);
     }
 
