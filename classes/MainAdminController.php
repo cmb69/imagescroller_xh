@@ -21,15 +21,81 @@
 
 namespace Imagescroller;
 
+use Pfw\Url;
+use Pfw\View\View;
+
 class MainAdminController
 {
+    /**
+     * @var string
+     */
+    private $contentFolder;
+
+    public function __construct()
+    {
+        global $pth, $sl, $cf;
+
+        $contentfolder = $pth['folder']['content'];
+        if ($sl !== $cf['language']['default']) {
+            $contentfolder = dirname($contentfolder) . '/';
+        }
+        $this->contentFolder = "{$contentfolder}imagescroller/";
+    }
+
     /**
      * @return void
      */
     public function defaultAction()
     {
-        echo $this->gallerySelectbox();
-        $this->editAction();
+        (new View('imagescroller'))
+            ->template('gallery_overview')
+            ->data([
+                'galleries' => $this->findGalleries()
+            ])
+            ->render();
+    }
+
+    /**
+     * @return string[]
+     */
+    private function findGalleries()
+    {
+        $result = [];
+        foreach (scandir($this->contentFolder) as $filename) {
+            if (pathinfo($filename, PATHINFO_EXTENSION) === 'txt') {
+                $result[] = basename($filename, '.txt');
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * @return void
+     */
+    public function newAction()
+    {
+        (new View('imagescroller'))
+            ->template('gallery_editor')
+            ->data([
+                'isNew' => true,
+                'actionurl' => Url::getCurrent()->with('action', 'create'),
+                'name' => '',
+                'contents' => ''
+            ])
+            ->render();
+    }
+
+    /**
+     * @return void
+     */
+    public function createAction()
+    {
+        $gallery = $_POST['name'];
+        if (XH_writeFile("{$this->contentFolder}$gallery.txt", $_POST['contents'])) {
+            $url = Url::getCurrent()->with('action', 'plugin_text')->without('imagescroller_gallery');
+            header('Location: ' . $url->getAbsolute(), true, 303);
+            exit;
+        }
     }
 
     /**
@@ -37,87 +103,29 @@ class MainAdminController
      */
     public function editAction()
     {
-        global $pth, $sn;
-
-        $dn = "{$pth['folder']['images']}$_GET[imagescroller_gallery]";
-        $gallery = Gallery::makeFromFolder("$dn/");
-        $url = "$sn?imagescroller&amp;admin=plugin_main";
-        $o = "<form action=\"$url\" method=\"POST\"><table><tbody>";
-        foreach ($gallery->getImages() as $img) {
-            $o .= '<tr><td>'
-                . tag("img src=\"{$img->getFilename()}\" width=\"200\" height=\"\" alt=\"\"")
-                . tag(
-                    'input type="hidden" name="imagescroller_image[]" value="'
-                    . $img->getFilename() . '"'
-                )
-                . '</td>'
-                . '<td>'
-                . tag("input type=\"text\" name=\"imagescroller_title[]\"")
-                . tag("input type=\"text\" name=\"imagescroller_desc[]\"")
-                . tag("input type=\"text\" name=\"imagescroller_link[]\"")
-                . '</td>'
-                . '</tr>';
-        }
-        $o .= '</tbody></table>'
-            . tag('input type="hidden" name="action" value="save"')
-            . tag('input type="submit" class="submit"') . '</form>';
-        echo $o;
+        $gallery = $_GET['imagescroller_gallery'];
+        (new View('imagescroller'))
+            ->template('gallery_editor')
+            ->data([
+                'isNew' => false,
+                'actionurl' => Url::getCurrent()->with('action', 'update'),
+                'name' => $gallery,
+                'contents' => XH_readFile("{$this->contentFolder}$gallery.txt")
+            ])
+            ->render();
+        return;
     }
 
     /**
      * @return void
      */
-    public function saveAction()
+    public function updateAction()
     {
-        $gallery = array();
-        foreach (array_keys($_POST['imagescroller_image']) as $i) {
-            $image = array();
-            foreach (array('image', 'title', 'desc', 'link') as $key) {
-                $image[$key] = $_POST["imagescroller_$key"][$i];
-            }
-            $gallery[] = $image;
+        $gallery = $_GET['imagescroller_gallery'];
+        if (XH_writeFile("{$this->contentFolder}$gallery.txt", $_POST['contents'])) {
+            $url = Url::getCurrent()->with('action', 'plugin_text')->without('imagescroller_gallery');
+            header('Location: ' . $url->getAbsolute(), true, 303);
+            exit;
         }
-        // var_dump($gallery);
-    }
-
-    /**
-     * @return string
-     */
-    private function gallerySelectbox()
-    {
-        global $sn;
-
-        $onchange = "window.document.location.href = '$sn?&imagescroller"
-            . "&amp;admin=plugin_main&amp;imagescroller_gallery='+this.value";
-        $o = "<select onchange=\"$onchange\">";
-        $galleries = $this->galleries();
-        foreach ($galleries as $gallerie) {
-            $sel = (isset($_GET['imagescroller_gallery'])
-                && $gallerie == $_GET['imagescroller_gallery'])
-                    ? ' selected="selected"'
-                    : '';
-            $o .= "<option value=\"$gallerie\"$sel>$gallerie</option>";
-        }
-        $o .= '</select>';
-        return $o;
-    }
-
-    /**
-     * @return array
-     */
-    private function galleries()
-    {
-        global $pth;
-
-        $galleries = array();
-        $dh = opendir($pth['folder']['images']);
-        while (($fn = readdir($dh)) !== false) {
-            if ($fn{0} != '.' && is_dir("{$pth['folder']['images']}$fn")) {
-                $galleries[] = $fn;
-            }
-        }
-        closedir($dh);
-        natcasesort($galleries);
-        return $galleries;
     }
 }

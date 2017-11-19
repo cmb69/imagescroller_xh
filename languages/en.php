@@ -1,5 +1,7 @@
 <?php
 
+$plugin_tx['imagescroller']['menu_main']="Galleries";
+
 $plugin_tx['imagescroller']['button_prev']="Previous Image";
 $plugin_tx['imagescroller']['button_next']="Next Image";
 $plugin_tx['imagescroller']['button_play']="Continue slideshow";

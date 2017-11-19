@@ -60,11 +60,17 @@ class Plugin
                 $controller = new MainAdminController;
                 ob_start();
                 switch ($action) {
-                    case 'edit_gallery':
+                    case 'new':
+                        $controller->newAction();
+                        break;
+                    case 'create':
+                        $controller->createAction();
+                        break;
+                    case 'edit':
                         $controller->editAction();
                         break;
-                    case 'save':
-                        $controller->saveAction();
+                    case 'update':
+                        $controller->updateAction();
                         break;
                     default:
                         $controller->defaultAction();
