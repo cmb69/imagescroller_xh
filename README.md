@@ -1,7 +1,7 @@
 Imagescroller_XH – a CMSimple_XH plugin
 =======================================
 
-[![beta: 1beta1](https://img.shields.io/badge/beta-1beta1-red.svg)](https://github.com/cmb69/Imagescroller_XH/releases/tag/1beta1)
+[![beta: 1.0beta3](https://img.shields.io/badge/beta-1.0beta3-red.svg)](https://github.com/cmb69/Imagescroller_XH/releases/tag/1.0beta3)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 Copyright (c) 2012-2017 Christoph M. Becker
