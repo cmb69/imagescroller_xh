@@ -29,6 +29,8 @@
 .imagescroller_controls img {
     cursor: pointer;
     visibility: hidden;
+    width: 48px;
+    height: 48px;
 }
 .imagescroller_play {
     display: none;
