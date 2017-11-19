@@ -41,9 +41,7 @@ class ImageTest extends TestCase
     public function testMakeFromRecordSetsFilename()
     {
         $filename = 'foo.bar';
-        $image = Image::makeFromRecord(
-            array($filename, null, null, null)
-        );
+        $image = Image::makeFromRecord(['Image' => $filename]);
         $this->assertEquals($filename, $image->getFilename());
     }
 
@@ -53,9 +51,7 @@ class ImageTest extends TestCase
     public function testMakeFromRecordSetsUrl()
     {
         $url = 'http://example.com/';
-        $image = Image::makeFromRecord(
-            array(null, $url, null, null)
-        );
+        $image = Image::makeFromRecord(['Image' => '', 'URL' => $url]);
         $this->assertEquals($url, $image->getUrl());
     }
 
@@ -65,9 +61,7 @@ class ImageTest extends TestCase
     public function testMakeFromRecordSetsTitle()
     {
         $title = 'foo';
-        $image = Image::makeFromRecord(
-            array(null, null, $title, null)
-        );
+        $image = Image::makeFromRecord(['Image' => '', 'Title' => $title]);
         $this->assertEquals($title, $image->getTitle());
     }
 
@@ -77,9 +71,7 @@ class ImageTest extends TestCase
     public function testMakeFromRecordSetsDescription()
     {
         $description = 'foo';
-        $image = Image::makeFromRecord(
-            array(null, null, null, $description)
-        );
+        $image = Image::makeFromRecord(['Image' => '', 'Description' => $description]);
         $this->assertEquals($description, $image->getDescription());
     }
 }
