@@ -36,6 +36,7 @@ class Plugin
             self::emitJs();
         }
         if (XH_ADM) {
+            XH_registerStandardPluginMenuItems(false);
             if (XH_wantsPluginAdministration('imagescroller')) {
                 $this->handleAdministration();
             }
