@@ -49,7 +49,7 @@ class Plugin
     {
         global $admin, $action, $o;
 
-        $o .= print_plugin_admin('on');
+        $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
                 ob_start();
