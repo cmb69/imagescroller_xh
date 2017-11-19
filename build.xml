@@ -57,7 +57,7 @@
                 <exclude name="build.xml"/>
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
-                <exclude name="imagescroller.js"/>
+                <exclude name="imagescroller.min.js"/>
                 <exclude name="imagescroller.komodoproject"/>
                 <exclude name="phpcompatinfo.*"/>
                 <exclude name="tests/**"/>

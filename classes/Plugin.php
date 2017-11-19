@@ -95,7 +95,7 @@ class Plugin
         include_jqueryplugin('serialScroll', $libraryFolder . 'jquery.serialScroll.min.js');
         $hjs .= sprintf(
             '<script type="text/javascript" src="%s"></script>',
-            "{$pth['folder']['plugins']}imagescroller/imagescroller.js"
+            "{$pth['folder']['plugins']}imagescroller/imagescroller.min.js"
         );
     }
 }
