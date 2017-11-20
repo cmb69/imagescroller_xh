@@ -55,8 +55,6 @@
         <move todir="dist">
             <fileset dir="export">
                 <exclude name="build.xml"/>
-                <exclude name="composer.*"/>
-                <exclude name="coverage.xml"/>
                 <exclude name="imagescroller.min.js"/>
                 <exclude name="imagescroller.komodoproject"/>
                 <exclude name="phpcompatinfo.*"/>
