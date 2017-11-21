@@ -17,45 +17,4 @@
         <include name="*Test.php"/>
     </fileset>
 
-    <target name="build" description="builds a distributable ZIP archive">
-        <fail unless="version" message="version is not defined!"/>
-        <exec command="git archive -o export.tar HEAD" checkreturn="true"/>
-        <untar file="export.tar" todir="export"/>
-        <delete file="export.tar"/>
-        <move todir="dist">
-            <fileset dir="export">
-                <include name="classes/Plugin.php"/>
-                <include name="version.nfo"/>
-            </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="IMAGESCROLLER_VERSION" value="${version}"/>
-                </replacetokens>
-            </filterchain>
-        </move>
-        <jsMin targetDir="dist" suffix="" failonerror="true">
-            <fileset dir="export">
-                <include name="*.js"/>
-            </fileset>
-        </jsMin>
-        <move todir="dist">
-            <fileset dir="export">
-                <exclude name="build.xml"/>
-                <exclude name="imagescroller.min.js"/>
-                <exclude name="imagescroller.komodoproject"/>
-                <exclude name="phpcompatinfo.*"/>
-                <exclude name="README.md"/>
-                <exclude name="tests/**"/>
-                <exclude name="TODO"/>
-            </fileset>
-        </move>
-        <delete dir="export"/>
-        <copy file="dist/config/config.php"
-              tofile="dist/config/defaultconfig.php"/>
-        <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-        <zip destfile="Imagescroller_XH-${version}.zip" basedir="dist"
-             prefix="imagescroller/"/>
-        <delete dir="dist"/>
-    </target>
-
 </project>
