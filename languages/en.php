@@ -9,6 +9,8 @@ $plugin_tx['imagescroller']['error_gallery_missing']="The gallery \"%s\" does no
 $plugin_tx['imagescroller']['error_no_image']="No image:";
 $plugin_tx['imagescroller']['error_image_size']="Image size %1dx%2d (expected %3dx%4d):";
 
+$plugin_tx['imagescroller']['alt_logo']="Moving Arrow";
+
 $plugin_tx['imagescroller']['cf_scroll_interval']="The interval between two scroll processes in milliseconds.";
 $plugin_tx['imagescroller']['cf_scroll_duration']="The duration of scrolling to the next image in milliseconds.";
 $plugin_tx['imagescroller']['cf_rewind_fast']="Whether the images shall be rewound fast.";

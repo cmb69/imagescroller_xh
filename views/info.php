@@ -1,5 +1,5 @@
 <h1>Imagescroller_XH – Info</h1>
-<img src="<?=$logo?>" class="pfw_logo" alt="Plugin Icon">
+<img src="<?=$logo?>" class="pfw_logo" alt="<?=$this->text('alt_logo')?>">
 <p>
     Version: <?=$version?>
 </p>
