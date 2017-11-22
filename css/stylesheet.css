@@ -61,17 +61,3 @@
 .imagescroller_info p {
     color: #fff;
 }
-
-/*
- * Back-end
- */
-
-.imagescoller_logo {
-    float: left;
-    margin: 0 16px 0 0;
-    width: 128px;
-    height: 128px;
-}
-.imagescroller_license {
-    text-align: justify;
-}
