@@ -94,9 +94,10 @@ class Plugin
         $libraryFolder =  $pth['folder']['plugins'] . 'imagescroller/lib/';
         include_jqueryplugin('scrollTo', $libraryFolder . 'jquery.scrollTo.min.js');
         include_jqueryplugin('serialScroll', $libraryFolder . 'jquery.serialScroll.min.js');
-        $hjs .= sprintf(
-            '<script type="text/javascript" src="%s"></script>',
-            "{$pth['folder']['plugins']}imagescroller/imagescroller.min.js"
-        );
+        $filename = "{$pth['folder']['plugins']}imagescroller/imagescroller.min.js";
+        if (!file_exists($filename)) {
+            $filename = "{$pth['folder']['plugins']}imagescroller/imagescroller.js";
+        }
+        $hjs .= sprintf('<script type="text/javascript" src="%s"></script>', $filename);
     }
 }
