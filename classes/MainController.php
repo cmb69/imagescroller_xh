@@ -21,8 +21,8 @@
 
 namespace Imagescroller;
 
-use Pfw\View\View;
-use Pfw\View\HtmlString;
+use Imagescroller\View;
+use Imagescroller\Html;
 
 class MainController
 {
@@ -62,17 +62,15 @@ class MainController
         list($width, $height) = $gallery->getDimensions();
         Plugin::emitJs();
         $totalWidth = $gallery->getImageCount() * $width;
-        $renderedButtons = new HtmlString($this->renderButtons());
+        $renderedButtons = new Html($this->renderButtons());
         $config = json_encode([
             'duration' => (int) $plugin_cf['imagescroller']['scroll_duration'],
             'interval' => (int) $plugin_cf['imagescroller']['scroll_interval'],
             'constant' => (bool) $plugin_cf['imagescroller']['rewind_fast'],
             'dynamicControls' => (bool) $plugin_cf['imagescroller']['controls_dynamic']
         ]);
-        (new View('imagescroller'))
-            ->template('gallery')
-            ->data(compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons', 'config'))
-            ->render();
+        $view = new View($pth["folder"]["plugins"] . "imagescroller/views/", $plugin_tx["imagescroller"]);
+        echo $view->render("gallery", compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons', 'config'));
     }
 
     /**

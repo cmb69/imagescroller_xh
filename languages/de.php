@@ -11,6 +11,17 @@ $plugin_tx['imagescroller']['error_image_size']="Bildgröße %1dx%2d (erwartet %
 
 $plugin_tx['imagescroller']['alt_logo']="Pfeil in Bewegung";
 
+$plugin_tx['imagescroller']['syscheck_extension']="die PHP-Extension '%s' geladen wurde";
+$plugin_tx['imagescroller']['syscheck_fail']="Fehlschlag";
+$plugin_tx['imagescroller']['syscheck_message']="Prüfe, dass %1\$s … %2\$s";
+$plugin_tx['imagescroller']['syscheck_phpversion']="die PHP-Version mindestens %s ist";
+$plugin_tx['imagescroller']['syscheck_plugin']="das CMSimple_XH-Plugin '%s' installiert ist";
+$plugin_tx['imagescroller']['syscheck_success']="Okay";
+$plugin_tx['imagescroller']['syscheck_title']="System-Prüfung";
+$plugin_tx['imagescroller']['syscheck_warning']="Warnung";
+$plugin_tx['imagescroller']['syscheck_writable']="'%s' is writable";
+$plugin_tx['imagescroller']['syscheck_xhversion']="die CMSimple_XH-Version mindestens %s ist";
+
 $plugin_tx['imagescroller']['cf_scroll_interval']="Die Zeitspanne zwischen zwei Scroll-Vorgängen in Millisekunden.";
 $plugin_tx['imagescroller']['cf_scroll_duration']="Die Dauer des Scrollens zum nächsten Bild in Millisekunden.";
 $plugin_tx['imagescroller']['cf_rewind_fast']="Ob die Bilder schnell zurück gespult werden sollen.";
