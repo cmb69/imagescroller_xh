@@ -35,7 +35,7 @@ class Plugin
         if ($plugin_cf['imagescroller']['autoload']) {
             self::emitJs();
         }
-        if (XH_ADM) {
+        if (defined("XH_ADM") && XH_ADM) {
             XH_registerStandardPluginMenuItems(false);
             if (XH_wantsPluginAdministration('imagescroller')) {
                 $this->handleAdministration();
@@ -73,7 +73,7 @@ class Plugin
                 $o .= ob_get_clean();
                 break;
             default:
-                $o .= plugin_admin_common($action, $admin, 'imagescroller');
+                $o .= plugin_admin_common();
         }
     }
 

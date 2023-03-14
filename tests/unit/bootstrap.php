@@ -15,4 +15,3 @@ spl_autoload_register(function (string $className) {
         include_once "./classes/$filename.php";
     }
 });
-

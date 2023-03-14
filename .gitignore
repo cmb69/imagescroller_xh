@@ -3,3 +3,5 @@ vendor
 /imagescroller.min.js
 /README.htm
 /composer.lock
+/.phpunit.cache
+/tools

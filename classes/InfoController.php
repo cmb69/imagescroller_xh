@@ -22,6 +22,7 @@
 namespace Imagescroller;
 
 use Imagescroller\View;
+use stdClass;
 
 class InfoController
 {
@@ -40,6 +41,7 @@ class InfoController
         ]);
     }
 
+    /** @return list<stdClass> */
     private function checks(): array
     {
         global $pth;
@@ -55,7 +57,7 @@ class InfoController
         ];
     }
 
-    private function checkPhpVersion(string $version)
+    private function checkPhpVersion(string $version): stdClass
     {
         global $plugin_tx;
 
@@ -67,7 +69,7 @@ class InfoController
         ];
     }
 
-    private function checkExtension(string $name)
+    private function checkExtension(string $name): stdClass
     {
         global $plugin_tx;
 
@@ -79,7 +81,7 @@ class InfoController
         ];
     }
 
-    private function checkXhVersion(string $version)
+    private function checkXhVersion(string $version): stdClass
     {
         global $plugin_tx;
 
@@ -91,7 +93,7 @@ class InfoController
         ];
     }
 
-    private function checkPlugin(string $name)
+    private function checkPlugin(string $name): stdClass
     {
         global $pth, $plugin_tx;
 
@@ -103,7 +105,7 @@ class InfoController
         ];
     }
 
-    private function checkWritability(string $folder)
+    private function checkWritability(string $folder): stdClass
     {
         global $plugin_tx;
 

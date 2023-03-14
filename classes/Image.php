@@ -56,7 +56,7 @@ class Image
     }
 
     /**
-     * @param array $record
+     * @param array{Image:string,URL?:string,Title?:string,Description?:string} $record
      * @return Image
      */
     public static function makeFromRecord($record)

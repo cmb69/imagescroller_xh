@@ -1,3 +1,17 @@
+<?php
+
+use Imagescroller\View;
+
+/**
+ * @var View $this
+ * @var string $config
+ * @var int $width
+ * @var int $height
+ * @var int $totalWidth
+ * @var object $gallery
+ * @var string $renderedButtons
+ */
+?>
 <div class="imagescroller_container" data-config="<?=$config?>"
      style="width: <?=$width?>px; height: <?=$height?>px">
     <div class="imagescroller" style="width: <?=$width?>px; height: <?=$height?>px">

@@ -102,9 +102,7 @@ class MainAdminController
         return $o;
     }
 
-    /**
-     * @return array
-     */
+    /** @return list<string> */
     private function galleries()
     {
         global $pth;

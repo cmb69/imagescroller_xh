@@ -23,6 +23,7 @@ namespace Imagescroller;
 
 class Html
 {
+    /** @var string */
     private $string;
 
     public function __construct(string $string)
