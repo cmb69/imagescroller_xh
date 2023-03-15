@@ -4,6 +4,7 @@ require_once './vendor/autoload.php';
 require_once "../../cmsimple/functions.php";
 
 const CMSIMPLE_XH_VERSION = "CMSimple_XH 1.7.5";
+const IMAGESCROLLER_VERSION = "1.0beta3";
 
 spl_autoload_register(function (string $className) {
     $parts = explode("\\", $className);

@@ -39,6 +39,22 @@ class MainAdminController
     }
 
     /** @return void */
+    public function __invoke(string $action)
+    {
+        switch ($action) {
+            default:
+                $this->defaultAction();
+                break;
+            case "edit_gallery":
+                $this->editAction();
+                break;
+            case "save":
+                $this->saveAction();
+                break;
+        }
+    }
+
+    /** @return void */
     public function defaultAction()
     {
         $this->editAction();

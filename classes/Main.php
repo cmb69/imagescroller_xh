@@ -19,30 +19,30 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Imagescroller\Dic;
+namespace Imagescroller;
+
 use Imagescroller\Infra\JavaScript;
-use Imagescroller\Main;
 
-const IMAGESCROLLER_VERSION = "1.0beta3";
-
-/**
- * @param string $path
- * @return string
- */
-function imagescroller($path)
+class Main
 {
-    global $pth, $plugin_cf;
+    /** @var array<string,string> */
+    private $conf;
 
-    $controller = new Imagescroller\MainController(
-        $pth["folder"]["plugins"] . "imagescroller/",
-        $plugin_cf["imagescroller"],
-        Dic::makeRepository(),
-        new JavaScript,
-        Dic::makeView()
-    );
-    return $controller->defaultAction($path);
+    /** @var JavaScript */
+    private $javaScript;
+
+    /** @param array<string,string> $conf */
+    public function __construct(array $conf, JavaScript $javaScript)
+    {
+        $this->conf = $conf;
+        $this->javaScript = $javaScript;
+    }
+
+    /** @return void */
+    public function __invoke()
+    {
+        if ($this->conf['autoload']) {
+            $this->javaScript->emit();
+        }
+    }
 }
-
-/** @var array<string,array<string,string>> $plugin_cf */
-
-(new Main($plugin_cf["imagescroller"], new JavaScript))();

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2012-2017 Christoph M. Becker
+ * Copyright 2023 M. Becker
  *
  * This file is part of Imagescroller_XH.
  *
@@ -19,30 +19,27 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Imagescroller\Dic;
-use Imagescroller\Infra\JavaScript;
-use Imagescroller\Main;
+namespace Imagescroller;
 
-const IMAGESCROLLER_VERSION = "1.0beta3";
+use PHPUnit\Framework\TestCase;
 
-/**
- * @param string $path
- * @return string
- */
-function imagescroller($path)
+class DicTest extends TestCase
 {
-    global $pth, $plugin_cf;
+    public function setUp(): void
+    {
+        global $pth, $plugin_tx;
 
-    $controller = new Imagescroller\MainController(
-        $pth["folder"]["plugins"] . "imagescroller/",
-        $plugin_cf["imagescroller"],
-        Dic::makeRepository(),
-        new JavaScript,
-        Dic::makeView()
-    );
-    return $controller->defaultAction($path);
+        $pth = ["folder" => ["content" => "../", "images" => "", "plugins" => ""]];
+        $plugin_tx = ["imagescroller" => []];
+    }
+
+    public function testMakesInfoController(): void
+    {
+        $this->assertInstanceOf(InfoController::class, Dic::makeInfoController());
+    }
+
+    public function testMakesMainAdminController(): void
+    {
+        $this->assertInstanceOf(MainAdminController::class, Dic::makeMainAdminController());
+    }
 }
-
-/** @var array<string,array<string,string>> $plugin_cf */
-
-(new Main($plugin_cf["imagescroller"], new JavaScript))();

@@ -22,10 +22,28 @@
 namespace Imagescroller;
 
 use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;
 
 class Dic
 {
+    public static function makeInfoController(): InfoController
+    {
+        global $pth, $plugin_tx;
+
+        return new InfoController(
+            $pth["folder"]["plugins"] . "imagescroller/",
+            $plugin_tx["imagescroller"],
+            new SystemChecker,
+            self::makeView()
+        );
+    }
+
+    public static function makeMainAdminController(): MainAdminController
+    {
+        return new MainAdminController(self::makeRepository(), self::makeView());
+    }
+
     public static function makeRepository(): Repository
     {
         global $pth;

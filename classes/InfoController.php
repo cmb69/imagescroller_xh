@@ -52,7 +52,7 @@ class InfoController
     {
         return $this->view->render('info', [
             'logo' => $this->pluginFolder . "imagescroller.png",
-            'version' => Plugin::VERSION,
+            'version' => IMAGESCROLLER_VERSION,
             'checks' => $this->checks(),
         ]);
     }
