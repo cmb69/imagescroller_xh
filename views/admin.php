@@ -1,29 +1,31 @@
 <?php
 
 use Imagescroller\Infra\View;
-use Imagescroller\Value\Image;
+
+if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
 /**
  * @var View $this
  * @var string $onchange
  * @var array<string,string> $options
  * @var string $url
- * @var list<Image> $images
+ * @var list<string> $images
  */
 ?>
+<!-- imagescroller admin -->
 <select onchange="<?=$onchange?>">
-<?php foreach ($options as $option => $selected):?>
+<?foreach ($options as $option => $selected):?>
   <option value="<?=$option?>" <?=$selected?>><?=$option?></option>
-<?php endforeach?>
+<?endforeach?>
 </select>
 <form action="<?=$url?>" method="post">
   <table>
     <tbody>
-<?php foreach ($images as $img):?>
+<?foreach ($images as $image):?>
       <tr>
         <td>
-          <img src="<?=$img->filename()?>" width="200" height="" alt="">
-          <input type="hidden" name="imagescroller_image[]" value="<?=$img->filename()?>">
+          <img src="<?=$image?>" width="200" height="" alt="">
+          <input type="hidden" name="imagescroller_image[]" value="<?=$image?>">
         </td>
         <td>
           <input type="text" name="imagescroller_title[]">
@@ -31,7 +33,7 @@ use Imagescroller\Value\Image;
           <input type="text" name="imagescroller_link[]">
         </td>
       </tr>
-<?php endforeach?>
+<?endforeach?>
     </tbody>
   </table>
   <input type="hidden" name="action" value="save">

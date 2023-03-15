@@ -23,6 +23,7 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\View;
+use Imagescroller\Value\Image;
 
 class MainAdminController
 {
@@ -66,13 +67,15 @@ class MainAdminController
         global $sn;
 
         $onchange = "window.document.location.href = '$sn?&imagescroller"
-            . "&amp;admin=plugin_main&amp;imagescroller_gallery='+this.value";
+            . "&admin=plugin_main&imagescroller_gallery='+this.value";
         $images = $this->repository->find($_GET["imagescroller_gallery"] ?? "");
         echo $this->view->render("admin", [
             "onchange" => $onchange,
             "options" => $this->options(),
-            "url" => "$sn?imagescroller&amp;admin=plugin_main",
-            "images" => $images,
+            "url" => "$sn?imagescroller&admin=plugin_main",
+            "images" => array_map(function (Image $image) {
+                return $image->filename();
+            }, $images),
         ]);
     }
 

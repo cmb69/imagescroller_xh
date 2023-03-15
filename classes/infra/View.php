@@ -39,7 +39,7 @@ class View
     /** @param scalar $args */
     public function text(string $key, ...$args): string
     {
-        return sprintf(XH_hsc($this->text[$key]), ...$args);
+        return sprintf($this->esc($this->text[$key]), ...$args);
     }
 
     /** @param scalar $args */
@@ -51,9 +51,19 @@ class View
     /** @param array<string,mixed> $_data */
     public function render(string $_template, array $_data): string
     {
+        array_walk_recursive($_data, function (&$value) {
+            if (is_string($value)) {
+                $value = $this->esc($value);
+            }
+        });
         extract($_data);
         ob_start();
         include $this->templateFolder . $_template . ".php";
         return ob_get_clean();
+    }
+
+    public function esc(string $string): string
+    {
+        return XH_hsc($string);
     }
 }

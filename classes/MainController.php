@@ -24,6 +24,7 @@ namespace Imagescroller;
 use Imagescroller\Infra\JavaScript;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\View;
+use Imagescroller\Value\Image;
 
 class MainController
 {
@@ -73,7 +74,7 @@ class MainController
             'dynamicControls' => (bool) $this->conf['controls_dynamic']
         ]);
         return $this->view->render("gallery", [
-            'images' => $images,
+            'images' => $this->imageRecords($images),
             'width' => $width,
             'height' => $height,
             'totalWidth' => $totalWidth,
@@ -81,6 +82,22 @@ class MainController
             'config' => $config,
             "errors" => defined("XH_ADM") && XH_ADM ? $errors : [],
         ]);
+    }
+
+    /**
+     * @param list<Image> $images
+     * @return list<array{filename:string,url:?string,title:?string,description:?string}>
+     */
+    private function imageRecords(array $images): array
+    {
+        return array_map(function (Image $image) {
+            return [
+                "filename" => $image->filename(),
+                "url" => $image->url(),
+                "title" => $image->title(),
+                "description" => $image->description(),
+            ];
+        }, $images);
     }
 
     /** @return list<array{class:string,src:string,altkey:string}> */
