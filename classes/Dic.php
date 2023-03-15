@@ -50,11 +50,10 @@ class Dic
 
     public static function makeInfoController(): InfoController
     {
-        global $pth, $plugin_tx;
+        global $pth;
 
         return new InfoController(
             $pth["folder"]["plugins"] . "imagescroller/",
-            $plugin_tx["imagescroller"],
             new SystemChecker,
             self::makeView()
         );

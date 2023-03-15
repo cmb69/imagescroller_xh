@@ -38,7 +38,7 @@ if (XH_wantsPluginAdministration("imagescroller")) {
     $o .= print_plugin_admin("off");
     switch ($admin) {
         case "":
-            $o .= Dic::makeInfoController()->defaultAction();
+            $o .= Dic::makeInfoController()();
             break;
         case "plugin_main":
             $controller = Dic::makeMainAdminController();

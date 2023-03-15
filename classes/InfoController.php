@@ -23,15 +23,11 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;
-use stdClass;
 
 class InfoController
 {
     /** @var string */
     private $pluginFolder;
-
-    /** @var array<string,string> */
-    private $text;
 
     /** @var SystemChecker */
     private $systemChecker;
@@ -39,85 +35,86 @@ class InfoController
     /** @var View */
     private $view;
 
-    /** @param array<string,string> $text */
-    public function __construct(string $pluginFolder, array $text, SystemChecker $systemChecker, View $view)
+    public function __construct(string $pluginFolder, SystemChecker $systemChecker, View $view)
     {
         $this->pluginFolder = $pluginFolder;
-        $this->text = $text;
         $this->systemChecker = $systemChecker;
         $this->view = $view;
     }
 
-    public function defaultAction(): string
+    public function __invoke(): string
     {
-        return $this->view->render('info', [
-            'logo' => $this->pluginFolder . "imagescroller.png",
-            'version' => IMAGESCROLLER_VERSION,
-            'checks' => $this->checks(),
+        return $this->view->render("info", [
+            "version" => IMAGESCROLLER_VERSION,
+            "checks" => [
+                $this->checkPhpVersion("5.4.0"),
+                $this->checkExtension("json"),
+                $this->checkXhVersion("1.6.3"),
+                $this->checkPlugin("jquery"),
+                $this->checkWritability($this->pluginFolder . "config/"),
+                $this->checkWritability($this->pluginFolder . "css/"),
+                $this->checkWritability($this->pluginFolder . "languages/")
+            ],
         ]);
     }
 
-    /** @return list<stdClass> */
-    private function checks(): array
-    {
-        return [
-            $this->checkPhpVersion("5.4.0"),
-            $this->checkExtension("json"),
-            $this->checkXhVersion("1.6.3"),
-            $this->checkPlugin("jquery"),
-            $this->checkWritability($this->pluginFolder . "config/"),
-            $this->checkWritability($this->pluginFolder . "css/"),
-            $this->checkWritability($this->pluginFolder . "languages/")
-        ];
-    }
-
-    private function checkPhpVersion(string $version): stdClass
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkPhpVersion(string $version): array
     {
         $state = $this->systemChecker->checkVersion(PHP_VERSION, $version) ? "success" : "fail";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($this->text['syscheck_phpversion'], $version),
-            "stateLabel" => $this->text["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_phpversion",
+            "arg" => $version,
+            "statekey" => "syscheck_$state",
         ];
     }
 
-    private function checkExtension(string $name): stdClass
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkExtension(string $name): array
     {
         $state = $this->systemChecker->checkExtension($name) ? "success" : "fail";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($this->text['syscheck_extension'], $name),
-            "stateLabel" => $this->text["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_extension",
+            "arg" => $name,
+            "statekey" => "syscheck_$state",
         ];
     }
 
-    private function checkXhVersion(string $version): stdClass
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkXhVersion(string $version): array
     {
         $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version") ? "success" : "fail";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($this->text['syscheck_xhversion'], $version),
-            "stateLabel" => $this->text["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_xhversion",
+            "arg" => $version,
+            "statekey" => "syscheck_$state",
         ];
     }
 
-    private function checkPlugin(string $name): stdClass
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkPlugin(string $name): array
     {
         $state = $this->systemChecker->checkPlugin($name) ? "success" : "fail";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($this->text['syscheck_plugin'], $name),
-            "stateLabel" => $this->text["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_plugin",
+            "arg" => $name,
+            "statekey" => "syscheck_$state",
         ];
     }
 
-    private function checkWritability(string $folder): stdClass
+    /** @return array{class:string,key:string,arg:string,statekey:string} */
+    private function checkWritability(string $folder): array
     {
         $state = $this->systemChecker->checkWritability($folder) ? "success" : "warning";
-        return (object) [
-            "state" => $state,
-            "label" => sprintf($this->text['syscheck_writable'], $folder),
-            "stateLabel" => $this->text["syscheck_$state"],
+        return [
+            "class" => "xh_$state",
+            "key" => "syscheck_writable",
+            "arg" => $folder,
+            "statekey" => "syscheck_$state",
         ];
     }
 }

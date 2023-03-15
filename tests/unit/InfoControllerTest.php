@@ -30,15 +30,14 @@ class InfoControllerTest extends TestCase
 {
     public function testRendersPluginInfo(): void
     {
-        $text = XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"];
         $systemChecker = $this->createMock(SystemChecker::class);
         $systemChecker->method("checkVersion")->willReturn(false);
         $systemChecker->method("checkExtension")->willReturn(false);
         $systemChecker->method("checkPlugin")->willReturn(false);
         $systemChecker->method("checkWritability")->willReturn(false);
-        $view = new View("./views/", $text);
-        $sut = new InfoController("./plugins/imagescroller/", $text, $systemChecker, $view);
-        $response = $sut->defaultAction();
+        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
+        $sut = new InfoController("./plugins/imagescroller/", $systemChecker, $view);
+        $response = $sut();
         Approvals::verifyHtml($response);
     }
 }

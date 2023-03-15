@@ -11,18 +11,15 @@ $plugin_tx['imagescroller']['error_image_size']="Image size %1dx%2d (expected %3
 $plugin_tx['imagescroller']['error_no_image_new']="%s is not an image!";
 $plugin_tx['imagescroller']['error_image_size_new']="%s has size %\$2dx%\$3d, but expected %\$4dx%\$5d!";
 
-$plugin_tx['imagescroller']['alt_logo']="Moving Arrow";
-
-$plugin_tx['imagescroller']['syscheck_extension']="the PHP extension '%s' is loaded";
+$plugin_tx['imagescroller']['syscheck_extension']="PHP extension '%s' is loaded: ";
 $plugin_tx['imagescroller']['syscheck_fail']="failure";
-$plugin_tx['imagescroller']['syscheck_message']="Checking that %1\$s … %2\$s";
-$plugin_tx['imagescroller']['syscheck_phpversion']="the PHP version is at least %s";
-$plugin_tx['imagescroller']['syscheck_plugin']="the CMSimple_XH plugin '%s' is installed";
+$plugin_tx['imagescroller']['syscheck_phpversion']="PHP version is at least %s: ";
+$plugin_tx['imagescroller']['syscheck_plugin']="CMSimple_XH plugin '%s' is installed: ";
 $plugin_tx['imagescroller']['syscheck_success']="okay";
 $plugin_tx['imagescroller']['syscheck_title']="System check";
 $plugin_tx['imagescroller']['syscheck_warning']="warning";
-$plugin_tx['imagescroller']['syscheck_writable']="'%s' is writable";
-$plugin_tx['imagescroller']['syscheck_xhversion']="the CMSimple_XH version is at least %s";
+$plugin_tx['imagescroller']['syscheck_writable']="'%s' is writable: ";
+$plugin_tx['imagescroller']['syscheck_xhversion']="CMSimple_XH version is at least %s: ";
 
 $plugin_tx['imagescroller']['cf_scroll_interval']="The interval between two scroll processes in milliseconds.";
 $plugin_tx['imagescroller']['cf_scroll_duration']="The duration of scrolling to the next image in milliseconds.";
