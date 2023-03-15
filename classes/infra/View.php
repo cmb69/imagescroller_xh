@@ -42,6 +42,12 @@ class View
         return sprintf($this->esc($this->text[$key]), ...$args);
     }
 
+    /** @param mixed $data */
+    public function json($data): string
+    {
+        return json_encode($data, JSON_HEX_APOS|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+    }
+
     /** @param scalar $args */
     public function error(string $key, ...$args): string
     {

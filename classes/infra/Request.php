@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2012-2017 Christoph M. Becker
+ * Copyright 2023 Christoph M. Becker
  *
  * This file is part of Imagescroller_XH.
  *
@@ -19,24 +19,19 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Imagescroller\Dic;
-use Imagescroller\Infra\Request;
-use Imagescroller\Infra\Responder;
+namespace Imagescroller\Infra;
 
-if (!defined("CMSIMPLE_XH_VERSION")) {
-    header("HTTP/1.1 403 Forbidden");
-    exit;
-}
-
-const IMAGESCROLLER_VERSION = "1.0beta3";
-
-/**
- * @param string $path
- * @return string
- */
-function imagescroller($path)
+class Request
 {
-    return Responder::respond(Dic::makeMainController()(Request::current(), $path));
-}
+    /** @codeCoverageIgnore */
+    public static function current(): self
+    {
+        return new self;
+    }
 
-Responder::respond(Dic::makeMain()());
+    /** @codeCoverageIgnore */
+    public function adm(): bool
+    {
+        return defined("XH_ADM") && XH_ADM;
+    }
+}

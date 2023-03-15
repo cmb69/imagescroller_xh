@@ -23,6 +23,7 @@ namespace Imagescroller;
 
 use ApprovalTests\Approvals;
 use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
 use PHPUnit\Framework\TestCase;
@@ -39,7 +40,9 @@ class MainControllerTest extends TestCase
         ]);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
         $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $view);
-        $response = $sut->defaultAction("test");
+        $request = $this->createMock(Request::class);
+        $request->method("adm")->willReturn(true);
+        $response = $sut($request, "test");
         $this->assertEquals("./plugins/imagescroller/", $response->js());
         Approvals::verifyHtml($response->output());
     }
@@ -50,7 +53,8 @@ class MainControllerTest extends TestCase
         $repository = $this->createMock(Repository::class);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
         $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $view);
-        $response = $sut->defaultAction("missing");
+        $request = $this->createMock(Request::class);
+        $response = $sut($request, "missing");
         $this->assertNull($response->js());
         Approvals::verifyHtml($response->output());
     }

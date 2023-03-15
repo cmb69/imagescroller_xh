@@ -6,7 +6,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
 /**
  * @var View $this
- * @var string $config
+ * @var array<string,mixed> $config
  * @var int $width
  * @var int $height
  * @var int $totalWidth
@@ -19,7 +19,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 <?foreach ($errors as $error):?>
 <p class="xh_warning"><?=$this->text(...$error)?></p>
 <?endforeach?>
-<div class="imagescroller_container" data-config="<?=$config?>"
+<div class="imagescroller_container" data-config='<?=$this->json($config)?>'
    style="width: <?=$width?>px; height: <?=$height?>px">
   <div class="imagescroller" style="width: <?=$width?>px; height: <?=$height?>px">
     <div style="width: <?=$totalWidth?>px; height: <?=$height?>px">

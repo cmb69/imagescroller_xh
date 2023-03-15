@@ -22,6 +22,7 @@
 namespace Imagescroller;
 
 use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
 use Imagescroller\Value\Response;
@@ -53,28 +54,21 @@ class MainController
         $this->view = $view;
     }
 
-    public function defaultAction(string $filename): Response
+    public function __invoke(Request $request, string $filename): Response
     {
         $images = $this->repository->find($filename);
         if ($images === null) {
             return Response::create($this->view->error("error_gallery_missing", $filename));
         }
         [$width, $height, $errors] = $this->repository->dimensionsOf($images);
-        $totalWidth = count($images) * $width;
-        $config = json_encode([
-            'duration' => (int) $this->conf['scroll_duration'],
-            'interval' => (int) $this->conf['scroll_interval'],
-            'constant' => (bool) $this->conf['rewind_fast'],
-            'dynamicControls' => (bool) $this->conf['controls_dynamic']
-        ]);
         return Response::create($this->view->render("gallery", [
-            'images' => $this->imageRecords($images),
-            'width' => $width,
-            'height' => $height,
-            'totalWidth' => $totalWidth,
+            "images" => $this->imageRecords($images),
+            "width" => $width,
+            "height" => $height,
+            "totalWidth" => count($images) * $width,
             "buttons" => $this->buttonRecords(),
-            'config' => $config,
-            "errors" => defined("XH_ADM") && XH_ADM ? $errors : [],
+            "config" => $this->jsConf(),
+            "errors" => $request->adm() ? $errors : [],
         ]))->withJs($this->pluginFolder);
     }
 
@@ -110,5 +104,16 @@ class MainController
             ];
         }
         return $records;
+    }
+
+    /** @return array{duration:int,interval:int,constant:bool,dynamicControls:bool} */
+    private function jsConf(): array
+    {
+        return [
+            "duration" => (int) $this->conf["scroll_duration"],
+            "interval" => (int) $this->conf["scroll_interval"],
+            "constant" => (bool) $this->conf["rewind_fast"],
+            "dynamicControls" => (bool) $this->conf["controls_dynamic"]
+        ];
     }
 }
