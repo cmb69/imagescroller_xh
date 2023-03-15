@@ -38,6 +38,7 @@ class InfoControllerTest extends TestCase
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
         $sut = new InfoController("./plugins/imagescroller/", $systemChecker, $view);
         $response = $sut();
-        Approvals::verifyHtml($response);
+        $this->assertEquals("Imagescroller – 1.0beta3", $response->title());
+        Approvals::verifyHtml($response->output());
     }
 }

@@ -22,7 +22,6 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\JavaScript;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
@@ -38,22 +37,22 @@ class MainControllerTest extends TestCase
         $repository->method("dimensionsOf")->willReturn([800, 600, [
             ["error_no_image_new", "./userfiles/images/image.jpg"]]
         ]);
-        $javaScript = $this->createMock(JavaScript::class);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
-        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $javaScript, $view);
+        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $view);
         $response = $sut->defaultAction("test");
-        Approvals::verifyHtml($response);
+        $this->assertEquals("./plugins/imagescroller/", $response->js());
+        Approvals::verifyHtml($response->output());
     }
 
     public function testReportsErrorOnMissingGallery(): void
     {
         $conf = XH_includeVar("./config/config.php", "plugin_cf")["imagescroller"];
         $repository = $this->createMock(Repository::class);
-        $javaScript = $this->createMock(JavaScript::class);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
-        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $javaScript, $view);
+        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $view);
         $response = $sut->defaultAction("missing");
-        Approvals::verifyHtml($response);
+        $this->assertNull($response->js());
+        Approvals::verifyHtml($response->output());
     }
 
     private function images(): array

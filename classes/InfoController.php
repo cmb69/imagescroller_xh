@@ -23,6 +23,7 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;
+use Imagescroller\Value\Response;
 
 class InfoController
 {
@@ -42,9 +43,9 @@ class InfoController
         $this->view = $view;
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
-        return $this->view->render("info", [
+        return Response::create($this->view->render("info", [
             "version" => IMAGESCROLLER_VERSION,
             "checks" => [
                 $this->checkPhpVersion("5.4.0"),
@@ -55,7 +56,7 @@ class InfoController
                 $this->checkWritability($this->pluginFolder . "css/"),
                 $this->checkWritability($this->pluginFolder . "languages/")
             ],
-        ]);
+        ]))->withTitle($this->view->esc("Imagescroller – 1.0beta3"));
     }
 
     /** @return array{class:string,key:string,arg:string,statekey:string} */

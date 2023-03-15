@@ -20,6 +20,7 @@
  */
 
 use Imagescroller\Dic;
+use Imagescroller\Infra\Responder;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {
     header("HTTP/1.1 403 Forbidden");
@@ -38,13 +39,10 @@ if (XH_wantsPluginAdministration("imagescroller")) {
     $o .= print_plugin_admin("off");
     switch ($admin) {
         case "":
-            $o .= Dic::makeInfoController()();
+            $o .= Responder::respond(Dic::makeInfoController()());
             break;
         case "plugin_main":
-            $controller = Dic::makeMainAdminController();
-            ob_start();
-            $controller($action);
-            $o .= ob_get_clean();
+            $o .= Responder::respond(Dic::makeMainAdminController()($action));
             break;
         default:
             $o .= plugin_admin_common();

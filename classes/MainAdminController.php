@@ -24,6 +24,7 @@ namespace Imagescroller;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
+use Imagescroller\Value\Response;
 
 class MainAdminController
 {
@@ -39,48 +40,41 @@ class MainAdminController
         $this->view = $view;
     }
 
-    /** @return void */
-    public function __invoke(string $action)
+    public function __invoke(string $action): Response
     {
         switch ($action) {
             default:
-                $this->defaultAction();
-                break;
+                return $this->defaultAction();
             case "edit_gallery":
-                $this->editAction();
-                break;
+                return $this->editAction();
             case "save":
-                $this->saveAction();
-                break;
+                return $this->saveAction();
         }
     }
 
-    /** @return void */
-    public function defaultAction()
+    public function defaultAction(): Response
     {
-        $this->editAction();
+        return $this->editAction();
     }
 
-    /** @return void */
-    public function editAction()
+    public function editAction(): Response
     {
         global $sn;
 
         $onchange = "window.document.location.href = '$sn?&imagescroller"
             . "&admin=plugin_main&imagescroller_gallery='+this.value";
         $images = $this->repository->find($_GET["imagescroller_gallery"] ?? "");
-        echo $this->view->render("admin", [
+        return Response::create($this->view->render("admin", [
             "onchange" => $onchange,
             "options" => $this->options(),
             "url" => "$sn?imagescroller&admin=plugin_main",
             "images" => array_map(function (Image $image) {
                 return $image->filename();
             }, $images),
-        ]);
+        ]));
     }
 
-    /** @return void */
-    public function saveAction()
+    public function saveAction(): Response
     {
         $gallery = array();
         foreach (array_keys($_POST['imagescroller_image']) as $i) {
@@ -91,6 +85,7 @@ class MainAdminController
             $gallery[] = $image;
         }
         // var_dump($gallery);
+        return Response::create();
     }
 
     /** @return array<string,string> */

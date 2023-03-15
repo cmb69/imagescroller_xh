@@ -21,28 +21,28 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\JavaScript;
+use Imagescroller\Value\Response;
 
 class Main
 {
+    /** @var string */
+    private $pluginFolder;
+
     /** @var array<string,string> */
     private $conf;
 
-    /** @var JavaScript */
-    private $javaScript;
-
     /** @param array<string,string> $conf */
-    public function __construct(array $conf, JavaScript $javaScript)
+    public function __construct(string $pluginFolder, array $conf)
     {
+        $this->pluginFolder = $pluginFolder;
         $this->conf = $conf;
-        $this->javaScript = $javaScript;
     }
 
-    /** @return void */
-    public function __invoke()
+    public function __invoke(): Response
     {
         if ($this->conf['autoload']) {
-            $this->javaScript->emit();
+            return Response::create()->withJs($this->pluginFolder);
         }
+        return Response::create();
     }
 }

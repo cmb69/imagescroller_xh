@@ -21,7 +21,6 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\JavaScript;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;
@@ -30,9 +29,9 @@ class Dic
 {
     public static function makeMain(): Main
     {
-        global $plugin_cf;
+        global $pth, $plugin_cf;
 
-        return new Main($plugin_cf["imagescroller"], new JavaScript);
+        return new Main($pth["folder"]["plugins"] . "imagescroller/", $plugin_cf["imagescroller"]);
     }
 
     public static function makeMainController(): MainController
@@ -43,7 +42,6 @@ class Dic
             $pth["folder"]["plugins"] . "imagescroller/",
             $plugin_cf["imagescroller"],
             Dic::makeRepository(),
-            new JavaScript,
             Dic::makeView()
         );
     }

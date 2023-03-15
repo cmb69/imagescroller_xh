@@ -20,6 +20,7 @@
  */
 
 use Imagescroller\Dic;
+use Imagescroller\Infra\Responder;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {
     header("HTTP/1.1 403 Forbidden");
@@ -34,7 +35,7 @@ const IMAGESCROLLER_VERSION = "1.0beta3";
  */
 function imagescroller($path)
 {
-    return Dic::makeMainController()->defaultAction($path);
+    return Responder::respond(Dic::makeMainController()->defaultAction($path));
 }
 
-Dic::makeMain()();
+Responder::respond(Dic::makeMain()());

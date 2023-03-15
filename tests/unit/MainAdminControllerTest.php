@@ -37,10 +37,8 @@ class MainAdminControllerTest extends TestCase
         $repository->method("findAll")->willReturn(["gallery1", "gallery2", "gallery3"]);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
         $sut = new MainAdminController($repository, $view);
-        ob_start();
-        $sut->defaultAction();
-        $response = ob_get_clean();
-        Approvals::verifyHtml($response);
+        $response = $sut->defaultAction();
+        Approvals::verifyHtml($response->output());
     }
 
     private function images(): array

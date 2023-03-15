@@ -21,10 +21,10 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\JavaScript;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
+use Imagescroller\Value\Response;
 
 class MainController
 {
@@ -37,9 +37,6 @@ class MainController
     /** @var Repository */
     private $repository;
 
-    /** @var JavaScript */
-    private $javaScript;
-
     /** @var View */
     private $view;
 
@@ -48,24 +45,21 @@ class MainController
         string $pluginFolder,
         array $conf,
         Repository $repository,
-        JavaScript $javaScript,
         View $view
     ) {
         $this->pluginFolder = $pluginFolder;
         $this->conf = $conf;
         $this->repository = $repository;
-        $this->javaScript = $javaScript;
         $this->view = $view;
     }
 
-    public function defaultAction(string $filename): string
+    public function defaultAction(string $filename): Response
     {
         $images = $this->repository->find($filename);
         if ($images === null) {
-            return $this->view->error("error_gallery_missing", $filename);
+            return Response::create($this->view->error("error_gallery_missing", $filename));
         }
         [$width, $height, $errors] = $this->repository->dimensionsOf($images);
-        $this->javaScript->emit();
         $totalWidth = count($images) * $width;
         $config = json_encode([
             'duration' => (int) $this->conf['scroll_duration'],
@@ -73,7 +67,7 @@ class MainController
             'constant' => (bool) $this->conf['rewind_fast'],
             'dynamicControls' => (bool) $this->conf['controls_dynamic']
         ]);
-        return $this->view->render("gallery", [
+        return Response::create($this->view->render("gallery", [
             'images' => $this->imageRecords($images),
             'width' => $width,
             'height' => $height,
@@ -81,7 +75,7 @@ class MainController
             "buttons" => $this->buttonRecords(),
             'config' => $config,
             "errors" => defined("XH_ADM") && XH_ADM ? $errors : [],
-        ]);
+        ]))->withJs($this->pluginFolder);
     }
 
     /**
