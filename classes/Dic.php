@@ -65,7 +65,7 @@ class Dic
         return new MainAdminController(self::makeRepository(), self::makeView());
     }
 
-    public static function makeRepository(): Repository
+    private static function makeRepository(): Repository
     {
         global $pth;
 
@@ -77,7 +77,7 @@ class Dic
         return new Repository($pth['folder']['images'], $contentfolder);
     }
 
-    public static function makeView(): View
+    private static function makeView(): View
     {
         global $pth, $plugin_tx;
 
