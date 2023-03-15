@@ -20,8 +20,11 @@
  */
 
 use Imagescroller\Dic;
-use Imagescroller\Infra\JavaScript;
-use Imagescroller\Main;
+
+if (!defined("CMSIMPLE_XH_VERSION")) {
+    header("HTTP/1.1 403 Forbidden");
+    exit;
+}
 
 const IMAGESCROLLER_VERSION = "1.0beta3";
 
@@ -31,18 +34,7 @@ const IMAGESCROLLER_VERSION = "1.0beta3";
  */
 function imagescroller($path)
 {
-    global $pth, $plugin_cf;
-
-    $controller = new Imagescroller\MainController(
-        $pth["folder"]["plugins"] . "imagescroller/",
-        $plugin_cf["imagescroller"],
-        Dic::makeRepository(),
-        new JavaScript,
-        Dic::makeView()
-    );
-    return $controller->defaultAction($path);
+    return Dic::makeMainController()->defaultAction($path);
 }
 
-/** @var array<string,array<string,string>> $plugin_cf */
-
-(new Main($plugin_cf["imagescroller"], new JavaScript))();
+Dic::makeMain()();
