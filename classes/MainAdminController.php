@@ -21,52 +21,46 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\View;
+
 class MainAdminController
 {
-    /**
-     * @return void
-     */
+    /** @var Repository */
+    private $repository;
+
+    /** @var View */
+    private $view;
+
+    public function __construct(Repository $repository, View $view)
+    {
+        $this->repository = $repository;
+        $this->view = $view;
+    }
+
+    /** @return void */
     public function defaultAction()
     {
-        echo $this->gallerySelectbox();
         $this->editAction();
     }
 
-    /**
-     * @return void
-     */
+    /** @return void */
     public function editAction()
     {
-        global $pth, $sn;
+        global $sn;
 
-        $dn = "{$pth['folder']['images']}$_GET[imagescroller_gallery]";
-        $gallery = Gallery::makeFromFolder("$dn/");
-        $url = "$sn?imagescroller&amp;admin=plugin_main";
-        $o = "<form action=\"$url\" method=\"POST\"><table><tbody>";
-        foreach ($gallery->getImages() as $img) {
-            $o .= '<tr><td>'
-                . tag("img src=\"{$img->getFilename()}\" width=\"200\" height=\"\" alt=\"\"")
-                . tag(
-                    'input type="hidden" name="imagescroller_image[]" value="'
-                    . $img->getFilename() . '"'
-                )
-                . '</td>'
-                . '<td>'
-                . tag("input type=\"text\" name=\"imagescroller_title[]\"")
-                . tag("input type=\"text\" name=\"imagescroller_desc[]\"")
-                . tag("input type=\"text\" name=\"imagescroller_link[]\"")
-                . '</td>'
-                . '</tr>';
-        }
-        $o .= '</tbody></table>'
-            . tag('input type="hidden" name="action" value="save"')
-            . tag('input type="submit" class="submit"') . '</form>';
-        echo $o;
+        $onchange = "window.document.location.href = '$sn?&imagescroller"
+            . "&amp;admin=plugin_main&amp;imagescroller_gallery='+this.value";
+        $images = $this->repository->find($_GET["imagescroller_gallery"] ?? "");
+        echo $this->view->render("admin", [
+            "onchange" => $onchange,
+            "options" => $this->options(),
+            "url" => "$sn?imagescroller&amp;admin=plugin_main",
+            "images" => $images,
+        ]);
     }
 
-    /**
-     * @return void
-     */
+    /** @return void */
     public function saveAction()
     {
         $gallery = array();
@@ -80,42 +74,15 @@ class MainAdminController
         // var_dump($gallery);
     }
 
-    /**
-     * @return string
-     */
-    private function gallerySelectbox()
+    /** @return array<string,string> */
+    private function options(): array
     {
-        global $sn;
-
-        $onchange = "window.document.location.href = '$sn?&imagescroller"
-            . "&amp;admin=plugin_main&amp;imagescroller_gallery='+this.value";
-        $o = "<select onchange=\"$onchange\">";
-        $galleries = $this->galleries();
-        foreach ($galleries as $gallerie) {
-            $sel = (isset($_GET['imagescroller_gallery'])
-                && $gallerie == $_GET['imagescroller_gallery'])
-                    ? ' selected="selected"'
-                    : '';
-            $o .= "<option value=\"$gallerie\"$sel>$gallerie</option>";
+        $options = [];
+        foreach ($this->repository->findAll() as $gallery) {
+            $selected = (isset($_GET['imagescroller_gallery'])
+                && $gallery == $_GET['imagescroller_gallery']);
+            $options[$gallery] = $selected ? "selected" : "";
         }
-        $o .= '</select>';
-        return $o;
-    }
-
-    /** @return list<string> */
-    private function galleries()
-    {
-        global $pth;
-
-        $galleries = array();
-        $dh = opendir($pth['folder']['images']);
-        while (($fn = readdir($dh)) !== false) {
-            if ($fn{0} != '.' && is_dir("{$pth['folder']['images']}$fn")) {
-                $galleries[] = $fn;
-            }
-        }
-        closedir($dh);
-        natcasesort($galleries);
-        return $galleries;
+        return $options;
     }
 }

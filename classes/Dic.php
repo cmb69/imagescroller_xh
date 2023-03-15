@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2012-2017 Christoph M. Becker
+ * Copyright 2023 M. Becker
  *
  * This file is part of Imagescroller_XH.
  *
@@ -19,25 +19,29 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Imagescroller\Dic;
-use Imagescroller\Infra\JavaScript;
+namespace Imagescroller;
 
-/**
- * @param string $path
- * @return string
- */
-function imagescroller($path)
+use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\View;
+
+class Dic
 {
-    global $pth, $plugin_cf;
+    public static function makeRepository(): Repository
+    {
+        global $pth;
 
-    $controller = new Imagescroller\MainController(
-        $pth["folder"]["plugins"] . "imagescroller/",
-        $plugin_cf["imagescroller"],
-        Dic::makeRepository(),
-        new JavaScript,
-        Dic::makeView()
-    );
-    return $controller->defaultAction($path);
+        $contentfolder = $pth['folder']['content'];
+        if ($contentfolder[1] === ".") {
+            $contentfolder = dirname($contentfolder) . "/";
+        }
+        $contentfolder = $contentfolder . "imagescroller/";
+        return new Repository($pth['folder']['images'], $contentfolder);
+    }
+
+    public static function makeView(): View
+    {
+        global $pth, $plugin_tx;
+
+        return new View($pth["folder"]["plugins"] . "imagescroller/views/", $plugin_tx["imagescroller"]);
+    }
 }
-
-(new Imagescroller\Plugin)->run();

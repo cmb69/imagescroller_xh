@@ -66,7 +66,7 @@ class Plugin
                 $o .= $controller->defaultAction();
                 break;
             case 'plugin_main':
-                $controller = new MainAdminController;
+                $controller = new MainAdminController(Dic::makeRepository(), Dic::makeView());
                 ob_start();
                 switch ($action) {
                     case 'edit_gallery':

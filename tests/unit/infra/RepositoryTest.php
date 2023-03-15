@@ -27,6 +27,17 @@ use PHPUnit\Framework\TestCase;
 
 class RepositoryTest extends TestCase
 {
+    public function testFindsAllGalleries(): void
+    {
+        vfsStream::setup("root");
+        mkdir("vfs://root/userfiles/images/one/", 0777, true);
+        mkdir("vfs://root/userfiles/images/two/", 0777, true);
+        mkdir("vfs://root/userfiles/images/three/", 0777, true);
+        $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $galleries = $sut->findAll();
+        $this->assertEquals(["one", "three", "two"], $galleries);
+    }
+
     public function testFindsImagesByFolder(): void
     {
         vfsStream::setup("root");

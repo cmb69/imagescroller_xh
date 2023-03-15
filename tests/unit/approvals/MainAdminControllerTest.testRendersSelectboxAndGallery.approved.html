@@ -1,0 +1,46 @@
+<select onchange="window.document.location.href = '?&imagescroller&amp;admin=plugin_main&amp;imagescroller_gallery='+this.value">
+  <option value="gallery1" >gallery1</option>
+  <option value="gallery2" selected>gallery2</option>
+  <option value="gallery3" >gallery3</option>
+</select>
+<form action="?imagescroller&amp;admin=plugin_main" method="post">
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <img src="image1" width="200" height="" alt="">
+          <input type="hidden" name="imagescroller_image[]" value="image1">
+        </td>
+        <td>
+          <input type="text" name="imagescroller_title[]">
+          <input type="text" name="imagescroller_desc[]">
+          <input type="text" name="imagescroller_link[]">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="image2" width="200" height="" alt="">
+          <input type="hidden" name="imagescroller_image[]" value="image2">
+        </td>
+        <td>
+          <input type="text" name="imagescroller_title[]">
+          <input type="text" name="imagescroller_desc[]">
+          <input type="text" name="imagescroller_link[]">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <img src="image3" width="200" height="" alt="">
+          <input type="hidden" name="imagescroller_image[]" value="image3">
+        </td>
+        <td>
+          <input type="text" name="imagescroller_title[]">
+          <input type="text" name="imagescroller_desc[]">
+          <input type="text" name="imagescroller_link[]">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="hidden" name="action" value="save">
+  <input type="submit" class="submit">
+</form>

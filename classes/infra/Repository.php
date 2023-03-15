@@ -37,6 +37,22 @@ class Repository
         $this->contentFolder = $contentFolder;
     }
 
+    /** @return list<string> */
+    public function findAll(): array
+    {
+        $galleries = [];
+        if (($dir = opendir($this->imageFolder))) {
+            while (($filename = readdir($dir)) !== false) {
+                if ($filename[0] != '.' && is_dir($this->imageFolder .$filename)) {
+                    $galleries[] = $filename;
+                }
+            }
+            closedir($dir);
+        }
+        natcasesort($galleries);
+        return array_values($galleries);
+    }
+
     /** @return list<Image>|null */
     public function find(string $filename): ?array
     {
