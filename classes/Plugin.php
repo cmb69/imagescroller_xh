@@ -21,6 +21,10 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\JavaScript;
+use Imagescroller\Infra\SystemChecker;
+use Imagescroller\Infra\View;
+
 class Plugin
 {
     const VERSION = '1.0beta3';
@@ -33,7 +37,7 @@ class Plugin
         global $plugin_cf;
 
         if ($plugin_cf['imagescroller']['autoload']) {
-            self::emitJs();
+            (new JavaScript)->emit();
         }
         if (defined("XH_ADM") && XH_ADM) {
             XH_registerStandardPluginMenuItems(false);
@@ -48,14 +52,18 @@ class Plugin
      */
     private function handleAdministration()
     {
-        global $admin, $action, $o;
+        global $admin, $action, $o, $pth, $plugin_tx;
 
         $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
-                ob_start();
-                (new InfoController)->defaultAction();
-                $o .= ob_get_clean();
+                $controller = new InfoController(
+                    $pth["folder"]["plugins"] . "imagescroller/",
+                    $plugin_tx["imagescroller"],
+                    new SystemChecker,
+                    new View($pth["folder"]["plugins"] . "imagescroller/views/", $plugin_tx["imagescroller"])
+                );
+                $o .= $controller->defaultAction();
                 break;
             case 'plugin_main':
                 $controller = new MainAdminController;
@@ -75,29 +83,5 @@ class Plugin
             default:
                 $o .= plugin_admin_common();
         }
-    }
-
-    /**
-     * @return void
-     */
-    public static function emitJs()
-    {
-        global $pth, $hjs;
-        static $again = false;
-
-        if ($again) {
-            return;
-        }
-        $again = true;
-        include_once $pth['folder']['plugins'] . 'jquery/jquery.inc.php';
-        include_jquery();
-        $libraryFolder =  $pth['folder']['plugins'] . 'imagescroller/lib/';
-        include_jqueryplugin('scrollTo', $libraryFolder . 'jquery.scrollTo.min.js');
-        include_jqueryplugin('serialScroll', $libraryFolder . 'jquery.serialScroll.min.js');
-        $filename = "{$pth['folder']['plugins']}imagescroller/imagescroller.min.js";
-        if (!file_exists($filename)) {
-            $filename = "{$pth['folder']['plugins']}imagescroller/imagescroller.js";
-        }
-        $hjs .= sprintf('<script type="text/javascript" src="%s"></script>', $filename);
     }
 }

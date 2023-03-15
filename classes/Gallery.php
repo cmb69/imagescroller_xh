@@ -21,6 +21,8 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Image;
+
 class Gallery
 {
     /**

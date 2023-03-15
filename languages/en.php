@@ -8,6 +8,8 @@ $plugin_tx['imagescroller']['button_stop']="Pause slideshow";
 $plugin_tx['imagescroller']['error_gallery_missing']="The gallery \"%s\" does not exist!";
 $plugin_tx['imagescroller']['error_no_image']="No image:";
 $plugin_tx['imagescroller']['error_image_size']="Image size %1dx%2d (expected %3dx%4d):";
+$plugin_tx['imagescroller']['error_no_image_new']="%s is not an image!";
+$plugin_tx['imagescroller']['error_image_size_new']="%s has size %\$2dx%\$3d, but expected %\$4dx%\$5d!";
 
 $plugin_tx['imagescroller']['alt_logo']="Moving Arrow";
 

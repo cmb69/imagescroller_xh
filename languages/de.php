@@ -8,6 +8,8 @@ $plugin_tx['imagescroller']['button_stop']="Diashow anhalten";
 $plugin_tx['imagescroller']['error_gallery_missing']="Die Galerie \"%s\" existiert nicht!";
 $plugin_tx['imagescroller']['error_no_image']="Kein Bild:";
 $plugin_tx['imagescroller']['error_image_size']="Bildgröße %1dx%2d (erwartet %3dx%4d):";
+$plugin_tx['imagescroller']['error_no_image_new']="%s ist kein Bild!";
+$plugin_tx['imagescroller']['error_image_size_new']="%s hat die Größe %\$2dx%\$3d, aber %\$4dx%\$5d erwartet!";
 
 $plugin_tx['imagescroller']['alt_logo']="Pfeil in Bewegung";
 

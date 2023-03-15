@@ -21,6 +21,7 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Image;
 use PHPUnit\Framework\TestCase;
 
 class ImageTest extends TestCase

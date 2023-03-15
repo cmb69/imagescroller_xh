@@ -1,19 +1,7 @@
-<?php
-
-use Imagescroller\Infra\View;
-
-/**
- * @var View $this
- * @var string $logo
- * @var string $version
- * @var list<stdClass> $checks
- */
-?>
 <h1>Imagescroller_XH – Info</h1>
-<img src="<?=$logo?>" alt="<?=$this->text('alt_logo')?>">
+<img src="./plugins/imagescroller/imagescroller.png" alt="Moving Arrow">
 <p>
-    Version: <?=$version?>
-</p>
+    Version: 1.0beta3</p>
 <p>
     Copyright © 2012-2017 <a href="http://3-magi.net">Christoph M. Becker</a>
 </p>
@@ -40,8 +28,12 @@ use Imagescroller\Infra\View;
     href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a>.
 </p>
 <div>
-    <h2><?=$this->text('syscheck_title')?></h2>
-<?php foreach ($checks as $check):?>
-    <p class="xh_<?=$check->state?>"><?=$this->text('syscheck_message', $check->label, $check->stateLabel)?></p>
-<?php endforeach?>
+    <h2>System check</h2>
+    <p class="xh_fail">Checking that the PHP version is at least 5.4.0 … failure</p>
+    <p class="xh_fail">Checking that the PHP extension 'json' is loaded … failure</p>
+    <p class="xh_fail">Checking that the CMSimple_XH version is at least 1.6.3 … failure</p>
+    <p class="xh_fail">Checking that the CMSimple_XH plugin 'jquery' is installed … failure</p>
+    <p class="xh_warning">Checking that './plugins/imagescroller/config/' is writable … warning</p>
+    <p class="xh_warning">Checking that './plugins/imagescroller/css/' is writable … warning</p>
+    <p class="xh_warning">Checking that './plugins/imagescroller/languages/' is writable … warning</p>
 </div>

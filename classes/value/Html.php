@@ -19,35 +19,20 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Imagescroller;
+namespace Imagescroller\Value;
 
-class View
+class Html
 {
     /** @var string */
-    private $templateFolder;
+    private $string;
 
-    /** @var array<string,string> */
-    private $text;
-
-    /** @param array<string,string> $text */
-    public function __construct(string $templateFolder, array $text)
+    public function __construct(string $string)
     {
-        $this->templateFolder = $templateFolder;
-        $this->text = $text;
+        $this->string = $string;
     }
 
-    /** @param scalar $args */
-    public function text(string $key, ...$args): string
+    public function __toString(): string
     {
-        return sprintf(XH_hsc($this->text[$key]), ...$args);
-    }
-
-    /** @param array<string,mixed> $_data */
-    public function render(string $_template, array $_data): string
-    {
-        extract($_data);
-        ob_start();
-        include $this->templateFolder . $_template . ".php";
-        return ob_get_clean();
+        return $this->string;
     }
 }

@@ -21,21 +21,37 @@
 
 namespace Imagescroller;
 
-use Imagescroller\View;
+use Imagescroller\Infra\SystemChecker;
+use Imagescroller\Infra\View;
 use stdClass;
 
 class InfoController
 {
-    /**
-     * @return void
-     */
-    public function defaultAction()
-    {
-        global $pth, $plugin_tx;
+    /** @var string */
+    private $pluginFolder;
 
-        $view = new View($pth["folder"]["plugins"] . "imagescroller/views/", $plugin_tx["imagescroller"]);
-        echo $view->render('info', [
-            'logo' => "{$pth['folder']['plugins']}imagescroller/imagescroller.png",
+    /** @var array<string,string> */
+    private $text;
+
+    /** @var SystemChecker */
+    private $systemChecker;
+
+    /** @var View */
+    private $view;
+
+    /** @param array<string,string> $text */
+    public function __construct(string $pluginFolder, array $text, SystemChecker $systemChecker, View $view)
+    {
+        $this->pluginFolder = $pluginFolder;
+        $this->text = $text;
+        $this->systemChecker = $systemChecker;
+        $this->view = $view;
+    }
+
+    public function defaultAction(): string
+    {
+        return $this->view->render('info', [
+            'logo' => $this->pluginFolder . "imagescroller.png",
             'version' => Plugin::VERSION,
             'checks' => $this->checks(),
         ]);
@@ -44,76 +60,64 @@ class InfoController
     /** @return list<stdClass> */
     private function checks(): array
     {
-        global $pth;
-
         return [
             $this->checkPhpVersion("5.4.0"),
             $this->checkExtension("json"),
             $this->checkXhVersion("1.6.3"),
             $this->checkPlugin("jquery"),
-            $this->checkWritability("{$pth['folder']['plugins']}imagescroller/config/"),
-            $this->checkWritability("{$pth['folder']['plugins']}imagescroller/css/"),
-            $this->checkWritability("{$pth['folder']['plugins']}imagescroller/languages/")
+            $this->checkWritability($this->pluginFolder . "config/"),
+            $this->checkWritability($this->pluginFolder . "css/"),
+            $this->checkWritability($this->pluginFolder . "languages/")
         ];
     }
 
     private function checkPhpVersion(string $version): stdClass
     {
-        global $plugin_tx;
-
-        $state = version_compare(PHP_VERSION, $version, 'ge') ? "success" : "fail";
+        $state = $this->systemChecker->checkVersion(PHP_VERSION, $version) ? "success" : "fail";
         return (object) [
             "state" => $state,
-            "label" => sprintf($plugin_tx["imagescroller"]['syscheck_phpversion'], $version),
-            "stateLabel" => $plugin_tx["imagescroller"]["syscheck_$state"],
+            "label" => sprintf($this->text['syscheck_phpversion'], $version),
+            "stateLabel" => $this->text["syscheck_$state"],
         ];
     }
 
     private function checkExtension(string $name): stdClass
     {
-        global $plugin_tx;
-
-        $state = extension_loaded($name) ? "success" : "fail";
+        $state = $this->systemChecker->checkExtension($name) ? "success" : "fail";
         return (object) [
             "state" => $state,
-            "label" => sprintf($plugin_tx["imagescroller"]['syscheck_extension'], $name),
-            "stateLabel" => $plugin_tx["imagescroller"]["syscheck_$state"],
+            "label" => sprintf($this->text['syscheck_extension'], $name),
+            "stateLabel" => $this->text["syscheck_$state"],
         ];
     }
 
     private function checkXhVersion(string $version): stdClass
     {
-        global $plugin_tx;
-
-        $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge') ? "success" : "fail";
+        $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version") ? "success" : "fail";
         return (object) [
             "state" => $state,
-            "label" => sprintf($plugin_tx["imagescroller"]['syscheck_xhversion'], $version),
-            "stateLabel" => $plugin_tx["imagescroller"]["syscheck_$state"],
+            "label" => sprintf($this->text['syscheck_xhversion'], $version),
+            "stateLabel" => $this->text["syscheck_$state"],
         ];
     }
 
     private function checkPlugin(string $name): stdClass
     {
-        global $pth, $plugin_tx;
-
-        $state = is_dir($pth["folder"]["plugins"] . $name) ? "success" : "fail";
+        $state = $this->systemChecker->checkPlugin($name) ? "success" : "fail";
         return (object) [
             "state" => $state,
-            "label" => sprintf($plugin_tx["imagescroller"]['syscheck_plugin'], $name),
-            "stateLabel" => $plugin_tx["imagescroller"]["syscheck_$state"],
+            "label" => sprintf($this->text['syscheck_plugin'], $name),
+            "stateLabel" => $this->text["syscheck_$state"],
         ];
     }
 
     private function checkWritability(string $folder): stdClass
     {
-        global $plugin_tx;
-
-        $state = is_writable($folder) ? "success" : "warning";
+        $state = $this->systemChecker->checkWritability($folder) ? "success" : "warning";
         return (object) [
             "state" => $state,
-            "label" => sprintf($plugin_tx["imagescroller"]['syscheck_writable'], $folder),
-            "stateLabel" => $plugin_tx["imagescroller"]["syscheck_$state"],
+            "label" => sprintf($this->text['syscheck_writable'], $folder),
+            "stateLabel" => $this->text["syscheck_$state"],
         ];
     }
 }

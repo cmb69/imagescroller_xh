@@ -19,7 +19,7 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Imagescroller;
+namespace Imagescroller\Infra;
 
 class Image
 {

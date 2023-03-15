@@ -21,80 +21,83 @@
 
 namespace Imagescroller;
 
-use Imagescroller\View;
-use Imagescroller\Html;
+use Imagescroller\Infra\JavaScript;
+use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\View;
 
 class MainController
 {
-    /**
-     * @var string
-     */
-    private $path;
+    /** @var string */
+    private $pluginFolder;
 
-    /**
-     * @param string $path
-     */
-    public function __construct($path)
-    {
-        $this->path = (string) $path;
+    /** @var array<string,string> */
+    private $conf;
+
+    /** @var Repository */
+    private $repository;
+
+    /** @var JavaScript */
+    private $javaScript;
+
+    /** @var View */
+    private $view;
+
+    /** @param array<string,string> $conf */
+    public function __construct(
+        string $pluginFolder,
+        array $conf,
+        Repository $repository,
+        JavaScript $javaScript,
+        View $view
+    ) {
+        $this->pluginFolder = $pluginFolder;
+        $this->conf = $conf;
+        $this->repository = $repository;
+        $this->javaScript = $javaScript;
+        $this->view = $view;
     }
 
-    /**
-     * @return void
-     */
-    public function defaultAction()
+    public function defaultAction(string $filename): string
     {
-        global $pth, $cf, $sl, $plugin_cf, $plugin_tx;
-
-        $contentfolder = $pth['folder']['content'];
-        if ($sl !== $cf['language']['default']) {
-            $contentfolder = dirname($contentfolder) . '/';
+        $images = $this->repository->find($filename);
+        if ($images === null) {
+            return $this->view->error("error_gallery_missing", $filename);
         }
-        $contentfolder = "{$contentfolder}imagescroller/";
-        if (is_dir("{$pth['folder']['images']}{$this->path}")) {
-            $gallery = Gallery::makeFromFolder("{$pth['folder']['images']}{$this->path}");
-        } elseif (is_file("{$contentfolder}{$this->path}.txt")) {
-            $gallery = Gallery::makeFromFile("{$contentfolder}{$this->path}.txt");
-        } else {
-            echo XH_message('fail', $plugin_tx['imagescroller']['error_gallery_missing'], $this->path);
-            return;
-        }
-        list($width, $height) = $gallery->getDimensions();
-        Plugin::emitJs();
-        $totalWidth = $gallery->getImageCount() * $width;
-        $renderedButtons = new Html($this->renderButtons());
+        [$width, $height, $errors] = $this->repository->dimensionsOf($images);
+        $this->javaScript->emit();
+        $totalWidth = count($images) * $width;
         $config = json_encode([
-            'duration' => (int) $plugin_cf['imagescroller']['scroll_duration'],
-            'interval' => (int) $plugin_cf['imagescroller']['scroll_interval'],
-            'constant' => (bool) $plugin_cf['imagescroller']['rewind_fast'],
-            'dynamicControls' => (bool) $plugin_cf['imagescroller']['controls_dynamic']
+            'duration' => (int) $this->conf['scroll_duration'],
+            'interval' => (int) $this->conf['scroll_interval'],
+            'constant' => (bool) $this->conf['rewind_fast'],
+            'dynamicControls' => (bool) $this->conf['controls_dynamic']
         ]);
-        $view = new View($pth["folder"]["plugins"] . "imagescroller/views/", $plugin_tx["imagescroller"]);
-        echo $view->render("gallery", compact('gallery', 'width', 'height', 'totalWidth', 'renderedButtons', 'config'));
+        return $this->view->render("gallery", [
+            'images' => $images,
+            'width' => $width,
+            'height' => $height,
+            'totalWidth' => $totalWidth,
+            "buttons" => $this->buttonRecords(),
+            'config' => $config,
+            "errors" => defined("XH_ADM") && XH_ADM ? $errors : [],
+        ]);
     }
 
-    /**
-     * @return string
-     */
-    private function renderButtons()
+    /** @return list<array{class:string,src:string,altkey:string}> */
+    private function buttonRecords(): array
     {
-        global $pth, $plugin_tx;
-
-        $html = '';
-        foreach (array('prev', 'stop', 'play', 'next') as $btn) {
-            $name = $btn;
-            $alt = $plugin_tx['imagescroller']['button_' . $btn];
-            $img = $pth['folder']['plugins'] . 'imagescroller/images/' . $name
-                . '.svg';
-            $class = 'imagescroller_' . $btn;
-            if (in_array($btn, ['prev', 'next'])) {
-                $class .= ' imagescroller_prev_next';
+        $records = [];
+        foreach (["prev", "stop", "play", "next"] as $button) {
+            $class = "imagescroller_$button";
+            if (in_array($button, ["prev", "next"], true)) {
+                $class .= " imagescroller_prev_next";
             }
-            $html .= tag(
-                'img class="' . $class . '" src="' . $img
-                . '" alt="' . $alt . '"'
-            );
+            $records[] = [
+                "class" => $class,
+                "src" => $this->pluginFolder . "images/$button.svg",
+                "altkey" => "button_$button",
+            ];
         }
-        return $html;
+        return $records;
     }
 }

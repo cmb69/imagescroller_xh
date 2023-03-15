@@ -19,15 +19,31 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Imagescroller\Infra\JavaScript;
+use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\View;
+
 /**
  * @param string $path
  * @return string
  */
 function imagescroller($path)
 {
-    ob_start();
-    (new Imagescroller\MainController($path))->defaultAction();
-    return ob_get_clean();
+    global $pth, $plugin_cf, $plugin_tx, $sl, $cf;
+
+    $contentfolder = $pth['folder']['content'];
+    if ($sl !== $cf['language']['default']) {
+        $contentfolder = dirname($contentfolder) . '/';
+    }
+    $contentfolder = "{$contentfolder}imagescroller/";
+    $controller = new Imagescroller\MainController(
+        $pth["folder"]["plugins"] . "imagescroller/",
+        $plugin_cf["imagescroller"],
+        new Repository($pth['folder']['images'], $contentfolder),
+        new JavaScript,
+        new View($pth["folder"]["plugins"] . "imagescroller/views/", $plugin_tx["imagescroller"])
+    );
+    return $controller->defaultAction($path);
 }
 
 (new Imagescroller\Plugin)->run();

@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright 2023 Christoph M. Becker
  *
  * This file is part of Imagescroller_XH.
@@ -19,20 +19,29 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Imagescroller;
+namespace Imagescroller\Infra;
 
-class Html
+/** @codeCoverageIgnore */
+class SystemChecker
 {
-    /** @var string */
-    private $string;
-
-    public function __construct(string $string)
+    public function checkVersion(string $actual, string $minimum): bool
     {
-        $this->string = $string;
+        return version_compare($actual, $minimum) >= 0;
     }
 
-    public function __toString(): string
+    public function checkExtension(string $name): bool
     {
-        return $this->string;
+        return extension_loaded($name);
+    }
+
+    public function checkPlugin(string $name): bool
+    {
+        global $pth;
+        return is_dir($pth["folder"]["plugins"] . $name);
+    }
+
+    public function checkWritability(string $path): bool
+    {
+        return is_writable($path);
     }
 }
