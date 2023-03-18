@@ -29,6 +29,13 @@ class Responder
     {
         global $title;
 
+        if ($response->location() !== null) {
+            while (ob_get_level()) {
+                ob_end_clean();
+            }
+            header("Location: " . $response->location(), true, 303);
+            exit;
+        }
         if ($response->title() !== null) {
             $title = $response->title();
         }

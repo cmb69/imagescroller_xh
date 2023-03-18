@@ -22,7 +22,9 @@
 namespace Imagescroller;
 
 use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
+use Imagescroller\Logic\Util;
 use Imagescroller\Value\Image;
 use Imagescroller\Value\Response;
 
@@ -40,63 +42,49 @@ class MainAdminController
         $this->view = $view;
     }
 
-    public function __invoke(string $action): Response
+    public function __invoke(Request $request): Response
     {
-        switch ($action) {
+        switch ($request->action()) {
             default:
-                return $this->defaultAction();
-            case "edit_gallery":
-                return $this->editAction();
-            case "save":
-                return $this->saveAction();
+                return $this->overview();
+            case "create":
+                return $this->create();
+            case "do_create":
+                return $this->doCreate();
         }
     }
 
-    public function defaultAction(): Response
+    public function overview(): Response
     {
-        return $this->editAction();
-    }
-
-    public function editAction(): Response
-    {
-        global $sn;
-
-        $onchange = "window.document.location.href = '$sn?&imagescroller"
-            . "&admin=plugin_main&imagescroller_gallery='+this.value";
-        $images = $this->repository->find($_GET["imagescroller_gallery"] ?? "");
-        return Response::create($this->view->render("admin", [
-            "onchange" => $onchange,
-            "options" => $this->options(),
-            "url" => "$sn?imagescroller&admin=plugin_main",
-            "images" => array_map(function (Image $image) {
-                return $image->filename();
-            }, $images),
+        return Response::create($this->view->render("overview", [
+            "folders" => $this->repository->findAll(),
         ]));
     }
 
-    public function saveAction(): Response
+    public function create(): Response
     {
-        $gallery = array();
-        foreach (array_keys($_POST['imagescroller_image']) as $i) {
-            $image = array();
-            foreach (array('image', 'title', 'desc', 'link') as $key) {
-                $image[$key] = $_POST["imagescroller_$key"][$i];
-            }
-            $gallery[] = $image;
-        }
-        // var_dump($gallery);
-        return Response::create();
+        $gallery = $_GET["imagescroller_gallery"] ?? "";
+        $images = $this->repository->find($gallery);
+        $contents = Util::recordJarFromImages($gallery, $images);
+        return Response::create($this->renderGalleryForm($contents));
     }
 
-    /** @return array<string,string> */
-    private function options(): array
+    public function doCreate(): Response
     {
-        $options = [];
-        foreach ($this->repository->findAll() as $gallery) {
-            $selected = (isset($_GET['imagescroller_gallery'])
-                && $gallery == $_GET['imagescroller_gallery']);
-            $options[$gallery] = $selected ? "selected" : "";
+        $contents = $_POST["imagescroller_contents"];
+        $gallery = $_GET["imagescroller_gallery"];
+        if (!$this->repository->saveGallery($gallery, $contents)) {
+            return Response::create($this->renderGalleryForm($contents, [["error_save", $gallery]]));
         }
-        return $options;
+        return Response::redirect(CMSIMPLE_URL . "?imagescroller&admin=plugin_main");
+    }
+
+    /** @param list<array{string}> $errors */
+    private function renderGalleryForm(string $contents, array $errors = []): string
+    {
+        return $this->view->render("gallery_form", [
+            "contents" => $contents,
+            "errors" => $errors,
+        ]);
     }
 }

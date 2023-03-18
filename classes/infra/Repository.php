@@ -124,4 +124,9 @@ class Repository
         }
         return [$width, $height, $errors];
     }
+
+    public function saveGallery(string $gallery, string $contents): bool
+    {
+        return file_put_contents($this->contentFolder . $gallery . ".txt", $contents) !== false;
+    }
 }

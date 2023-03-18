@@ -36,6 +36,15 @@
     display: none;
 }
 
+/* gallery administration */
+#imagescroller_admin td {
+    padding: 0.3em;
+}
+#imagescroller_admin textarea {
+    width: 100%;
+    height: 25em;
+}
+
 /*
  * Info box
  */

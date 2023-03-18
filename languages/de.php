@@ -9,7 +9,12 @@ $plugin_tx['imagescroller']['error_gallery_missing']="Die Galerie \"%s\" existie
 $plugin_tx['imagescroller']['error_no_image']="Kein Bild:";
 $plugin_tx['imagescroller']['error_image_size']="Bildgröße %1dx%2d (erwartet %3dx%4d):";
 $plugin_tx['imagescroller']['error_no_image_new']="%s ist kein Bild!";
-$plugin_tx['imagescroller']['error_image_size_new']="%s hat die Größe %\$2dx%\$3d, aber %\$4dx%\$5d erwartet!";
+$plugin_tx['imagescroller']['error_image_size_new']="%s hat die Größe %2\$dx%3\$d, aber %4\$dx%5\$d erwartet!";
+$plugin_tx['imagescroller']['error_save']="Die Galerie %s konnte nicht gespeichert werden!";
+
+$plugin_tx['imagescroller']['menu_main']="Galleries";
+$plugin_tx['imagescroller']['label_create_folder']="Galerie aus Ordner erzeugen";
+$plugin_tx['imagescroller']['label_save']="Galerie speichern";
 
 $plugin_tx['imagescroller']['syscheck_extension']="PHP-Extension '%s' wurde geladen: ";
 $plugin_tx['imagescroller']['syscheck_fail']="Fehlschlag";

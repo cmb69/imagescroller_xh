@@ -20,6 +20,7 @@
  */
 
 use Imagescroller\Dic;
+use Imagescroller\Infra\Request;
 use Imagescroller\Infra\Responder;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {
@@ -33,16 +34,16 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
  * @var string $o
  */
 
-XH_registerStandardPluginMenuItems(false);
+XH_registerStandardPluginMenuItems(true);
 
 if (XH_wantsPluginAdministration("imagescroller")) {
-    $o .= print_plugin_admin("off");
+    $o .= print_plugin_admin("on");
     switch ($admin) {
         case "":
             $o .= Responder::respond(Dic::makeInfoController()());
             break;
         case "plugin_main":
-            $o .= Responder::respond(Dic::makeMainAdminController()($action));
+            $o .= Responder::respond(Dic::makeMainAdminController()(Request::current()));
             break;
         default:
             $o .= plugin_admin_common();

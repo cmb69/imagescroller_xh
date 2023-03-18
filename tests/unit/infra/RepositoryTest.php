@@ -107,6 +107,15 @@ class RepositoryTest extends TestCase
         $this->assertEquals($expected, $errors);
     }
 
+    public function testSavesGallery(): void
+    {
+        vfsStream::setup("root");
+        mkdir("vfs://root/content/imagescroller/", 0777, true);
+        $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $sut->saveGallery("test", $this->gallery());
+        $this->assertStringEqualsFile("vfs://root/content/imagescroller/test.txt", $this->gallery());
+    }
+
     private function gallery()
     {
         return <<<EOT

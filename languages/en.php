@@ -9,7 +9,12 @@ $plugin_tx['imagescroller']['error_gallery_missing']="The gallery \"%s\" does no
 $plugin_tx['imagescroller']['error_no_image']="No image:";
 $plugin_tx['imagescroller']['error_image_size']="Image size %1dx%2d (expected %3dx%4d):";
 $plugin_tx['imagescroller']['error_no_image_new']="%s is not an image!";
-$plugin_tx['imagescroller']['error_image_size_new']="%s has size %\$2dx%\$3d, but expected %\$4dx%\$5d!";
+$plugin_tx['imagescroller']['error_image_size_new']="%s has size %2\$dx%3\$d, but expected %4\$dx%5\$d!";
+$plugin_tx['imagescroller']['error_save']="Gallery %s couldn't be saved!";
+
+$plugin_tx['imagescroller']['menu_main']="Galleries";
+$plugin_tx['imagescroller']['label_create_folder']="Create gallery from folder";
+$plugin_tx['imagescroller']['label_save']="Save gallery";
 
 $plugin_tx['imagescroller']['syscheck_extension']="PHP extension '%s' is loaded: ";
 $plugin_tx['imagescroller']['syscheck_fail']="failure";

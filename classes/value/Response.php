@@ -30,6 +30,13 @@ class Response
         return $that;
     }
 
+    public static function redirect(string $location): self
+    {
+        $that = new self;
+        $that->location = $location;
+        return $that;
+    }
+
     /** @var string */
     private $output;
 
@@ -38,6 +45,9 @@ class Response
 
     /** @var string|null */
     private $js = null;
+
+    /** @var string|null */
+    private $location;
 
     public function withTitle(string $title): self
     {
@@ -66,5 +76,10 @@ class Response
     public function js(): ?string
     {
         return $this->js;
+    }
+
+    public function location(): ?string
+    {
+        return $this->location;
     }
 }

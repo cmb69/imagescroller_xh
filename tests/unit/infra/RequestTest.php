@@ -21,29 +21,27 @@
 
 namespace Imagescroller\Infra;
 
-class Request
+use PHPUnit\Framework\TestCase;
+
+class RequestTest extends TestCase
 {
-    /** @codeCoverageIgnore */
-    public static function current(): self
+    /** @dataProvider actions */
+    public function testAction(string $action, ?string $do, string $expected): void
     {
-        return new self;
+        $GLOBALS["action"] = $action;
+        $_POST = ["imagescroller_do" => $do];
+        $sut = new Request;
+        $result = $sut->action();
+        $this->assertEquals($expected, $result);
     }
 
-    /** @codeCoverageIgnore */
-    public function adm(): bool
+    public function actions(): array
     {
-        return defined("XH_ADM") && XH_ADM;
-    }
-
-    public function action(): string
-    {
-        global $action;
-        if (!strncmp($action, "do_", strlen("do_"))) {
-            return "";
-        }
-        if (isset($_POST["imagescroller_do"])) {
-            $action = "do_" . $action;
-        }
-        return $action;
+        return [
+            ["", null, ""],
+            ["create", null, "create"],
+            ["create", "", "do_create"],
+            ["do_create", null, ""],
+        ];
     }
 }

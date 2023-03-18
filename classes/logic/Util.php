@@ -52,4 +52,12 @@ class Util
         }
         return $images;
     }
+
+    /** @param list<Image> $images */
+    public static function recordJarFromImages(string $gallery, array $images): string
+    {
+        return implode("\n%%\n", array_map(function (Image $image) use ($gallery) {
+            return "Image: " . $gallery . "/" . basename($image->filename());
+        }, $images));
+    }
 }
