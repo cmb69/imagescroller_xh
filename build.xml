@@ -33,6 +33,15 @@
     </exec>
   </target>
 
+  <target name="gen-help" description="builds help.htm from README.md">
+    <exec executable="pandoc" passthru="true" checkreturn="true">
+      <arg line="-s --eol=lf --template=help/template.htm -Vlang=en -Vpagetitle=&quot;User Manual&quot; -o help/help.htm README.md -t html"/>
+    </exec>
+    <exec executable="pandoc" passthru="true" checkreturn="true">
+      <arg line="-s --eol=lf --template=help/template.htm -Vlang=de -Vpagetitle=&quot;Benutzerhandbuch&quot; -o help/help_de.htm README_de.md -t html"/>
+    </exec>
+  </target>
+
   <target name="build">
     <exec executable="git" passthru="true" checkreturn="true">
       <arg line="archive -o export.zip HEAD"/>
@@ -40,11 +49,11 @@
     <unzip file="export.zip" todir="export"/>
     <delete file="export.zip"/>
     <exec executable="uglifyjs" checkreturn="true">
-      <arg file="export/imagescroller.js"/>
+      <arg file="export/imagescroller.min.js"/>
       <arg value="--compress"/>
       <arg value="--mangle"/>
       <arg value="--output"/>
-      <arg file="export/imagescroller.js"/>
+      <arg file="export/imagescroller.min.js"/>
     </exec>
     <move todir="dist">
       <fileset dir="export">
@@ -60,6 +69,7 @@
       <fileset dir="export">
         <exclude name=".github/**"/>
         <exclude name=".phive/**"/>
+        <exclude name="help/template.htm"/>
         <exclude name="tests/**"/>
         <exclude name="build.xml"/>
         <exclude name="composer.*"/>

@@ -1,147 +1,72 @@
-﻿<!DOCTYPE html>
-<html lang="de">
-
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de" xml:lang="de">
 <head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Imagescroller_XH – Handbuch</title>
-<link rel="stylesheet" type="text/css" href="./stylesheet.css">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Imagescroller_XH – Benutzerhandbuch</title>
+  <style type="text/css">
+    body {
+        font-family: Georgia, serif;
+        line-height: 1.5;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        background: #ffffe1;
+        max-width: 32em;
+    }
+    p {
+        text-align: justify;
+    }
+    pre {
+        color: black;
+        background: #ffe;
+        overflow: auto;
+        padding: 0.2em 0.5em;
+        border: 1px solid silver;
+    }
+  </style>
 </head>
-
 <body>
-
-<article>
-<h1>Imagescroller_XH – Handbuch</h1>
-<img src="../imagescroller.png" style="float: left; margin: 0 1.5em 0.5em 0; width: 128px; height: 128px" alt="Moving Arrow">
-<p>
-    Imagescroller_XH ermöglicht die Anzeige einer scrollenden Slideshow von
-    Bildern (optional mit Links und einer Beschreibung). Es bestitzt keine
-    Back-End-Funktionalität um die Galerien zu verwalten. Statt dessen müssen
-    die Bilder per FTP oder mit CMSimple_XH's Filebrowser hoch geladen werden.
-    Zusätzliche Informationen für die Links und die Beschreibung muss manuell in
-    einer speziellen Textdatei eingegeben werden.
-</p>
-
-<nav id="nav">
-<h2>Inhaltsverzeichnis</h2>
+<h1 id="imagescroller_xh">Imagescroller_XH</h1>
+<p>Imagescroller_XH ermöglicht die Anzeige einer scrollenden Slideshow von Bildern (optional mit Links und einer Beschreibung). Es bestitzt keine Back-End-Funktionalität um die Galerien zu verwalten. Statt dessen müssen die Bilder per FTP oder mit dem Filebrowser von CMSimple_XH hoch geladen werden. Zusätzliche Informationen für die Links und die Beschreibung muss manuell in einer speziellen Textdatei eingegeben werden.</p>
 <ul>
-<li><a href="#notice">Wichtiger Hinweis</a></li>
-<li><a href="#requirements">Voraussetzungen</a></li>
+<li><a href="#voraussetzungen">Voraussetzungen</a></li>
+<li><a href="#download">Download</a></li>
 <li><a href="#installation">Installation</a></li>
-<li><a href="#settings">Einstellungen</a></li>
-<li><a href="#usage">Verwendung</a></li>
-<!-- <li><a href="#limitations">Beschränkungen</a></li> -->
-<li><a href="#license">Lizenz</a></li>
-<li><a href="#credits">Danksagung</a></li>
+<li><a href="#einstellungen">Einstellungen</a></li>
+<li><a href="#verwendung">Verwendung</a></li>
+<li><a href="#problembehebung">Problembehebung</a></li>
+<li><a href="#lizenz">Lizenz</a></li>
+<li><a href="#danksagung">Danksagung</a></li>
 </ul>
-</nav>
-
-<section id="notice">
-<h2>Wichtiger Hinweis</h2>
-<p class="important">
-    Imagescroller_XH konnte bislang noch keinen ausführlichen Tests in diversen
-    Umgebungen unterzogen werden. Es handelt sich also um eine so genannte
-    Beta-Version. Vorsicht bei der Verwendung!
-</p>
-</section>
-
-<section id="requirements">
-<h2>Voraussetzungen</h2>
-<p>
-    Imagescroller_XH benötigt CMSimple_XH ≥ 1.6.3, und PHP ≥
-    5.4.0 mit der <i>JSON</i> Extension.
-</p>
-</section>
-
-<section id="installation">
-<h2>Installation</h2>
-<p>
-    Die Installation erfolgt wie bei vielen anderen CMSimple_XH-Plugins auch. Im
-    <a href="http://www.cmsimple-xh.org/wiki/doku.php/de:installation">
-    CMSimple_XH Wiki</a> finden sie ausführliche Hinweise.
-</p>
-<ol>
-<li class="important">
-    Sichern Sie die Daten auf Ihrem Server.
-</li>
-<li>
-    Entpacken Sie die ZIP-Datei auf Ihrem Computer.
-</li>
-<li>
-    Laden Sie das gesamte Verzeichnis <code>imagescroller/</code> auf Ihren
-    Server in das <code>plugins/</code> Verzeichnis von CMSimple_XH hoch.
-</li>
-<li>
-    Vergeben Sie Schreibrechte für die Unterverzeichnisse <code>config/</code>,
-    <code>css/</code> und <code>languages/</code>.
-</li>
-<li class="important">
-    Navigieren Sie zu <i>Plugins</i> → <i>Imagescroller</i>, und prüfen Sie, ob
-    alle Voraussetzungen für den einwandfreien Betrieb erfüllt sind.
-</li>
+<h2 id="voraussetzungen">Voraussetzungen</h2>
+<p>Imagescroller_XH ist ein Plugin für <a href="https://cmsimple-xh.org/de/">CMSimple_XH</a>. Es benötigt CMSimple_XH ≥ 1.6.3, und PHP ≥5.4.0 mit der JSON Extension.</p>
+<h2 id="download">Download</h2>
+<p>Das <a href="https://github.com/cmb69/imagescroller_xh/releases/latest">aktuelle Release</a> kann von Github herunter geladen werden.</p>
+<h2 id="installation">Installation</h2>
+<p>Die Installation erfolgt wie bei vielen anderen CMSimple_XH-Plugins auch. Im <a href="https://wiki.cmsimple-xh.org/de/?fuer-anwender/arbeiten-mit-dem-cms/plugins">CMSimple_XH Wiki</a> finden sie ausführliche Hinweise.</p>
+<ol type="1">
+<li><strong>Sichern Sie die Daten auf Ihrem Server.</strong></li>
+<li>Entpacken Sie die ZIP-Datei auf Ihrem Computer.</li>
+<li>Laden Sie den gesamten Order <code>imagescroller/</code> auf Ihren Server in den <code>plugins/</code> Ordner von CMSimple_XH hoch.</li>
+<li>Vergeben Sie Schreibrechte für die Unterordner <code>config/</code>, <code>css/</code> und <code>languages/</code>.</li>
+<li>Navigieren Sie zu <code>Plugins</code> → <code>Imagescroller</code>, und prüfen Sie, ob alle Voraussetzungen für den einwandfreien Betrieb erfüllt sind.</li>
 </ol>
-</section>
-
-<section id="settings">
-<h2>Einstellungen</h2>
-<p>
-    Die Konfiguration des Plugins erfolgt wie bei vielen anderen
-    CMSimple_XH-Plugins auch im Administrationsbereich der Homepage. Navigieren
-    Sie zu <i>Plugins</i> → <i>Imagescroller</i>.
-</p>
-<p>
-    Sie können die Original-Einstellungen von Imagescroller_XH in der
-    <i>Konfiguration</i> ändern. Beim Überfahren der Hilfe-Icons mit der Maus
-    werden Hinweise zu den Einstellungen angezeigt.
-</p>
-<p>
-    Die Lokalisierung wird unter <i>Sprache</i> vorgenommen. Sie können die
-    Zeichenketten in Ihre eigene Sprache übersetzen, falls keine entsprechende
-    Sprachdatei zur Verfügung steht, oder sie entsprechend Ihren Anforderungen
-    anpassen.
-</p>
-<p>
-    Das Aussehen von Imagescroller_XH kann unter <i>Stylesheet</i> angepasst
-    werden.
-</p>
-</section>
-
-<section id="usage">
-<h2>Verwendung</h2>
-<p>
-    Um einen Imagescroller mit allen Bildern des Ordners 
-    <code>./userfiles/images/my_gallery/</code> anzuzeigen, fügen Sie auf einer
-    Seite ein:
-</p>
-<pre>{{{imagescroller('meine_galerie')}}}</pre>
-<p>
-    Um den Imagescroller auf allen Seiten anzuzeigen, müssen sie die
-    <code>autoload</code> Konfigurationsoption aktivieren, und im Template
-    einfügen:
-</p>
-<pre>&lt;?=imagescroller('meine_galerie')?&gt;</pre>
-<p>
-    Wenn Sie die Bilder verlinken möchten, oder Titel und Beschreibungen
-    hinzufügen möchten, müssen Sie eine Info-Datei anlegen. Diese muss in 
-    <code>content/imagescroller/</code> abgelegt werden, und kann einen
-    beliebigen Namen haben, wobei die Dateierweiterung <code>.txt</code> lauten
-    muss. Um diese Datei zu bearbeiten können Sie einen beliebigen Texteditor
-    verwenden, aber es ist wichtig, dass die Datei UTF-8 kodiert ist.
-</p>
-<p>
-    Die Datei enthält einen Datensatz für jedes Bild, das angezeigt werden soll;
-    die Datensätze werden durch eine Zeile, die nur zwei Prozentzeichen (`%%`)
-    enthält, getrennt. Die Datensätze können folgende Felder enthalten:
-    <code>Image</code> (Bild), <code>URL</code>, <code>Title</code> (Titel) and
-    <code>Description</code> (Beschreibung); nur <code>Image</code> ist
-    erfoderlich, die anderen Felder sind optional. Die Felder des Datensatzes
-    werden in eigene Zeilen geschrieben, die mit dem Feldnamen beginnen, gefolgt
-    von einem Doppelpunkt und dem Wert des Feldes. Die Reihenfolge der Zeilen
-    spielt keine Rolle. Der Dateiname des Bildes muss relativ zu
-    <code>userfiles/images/</code> angegeben werden; die URL kann relativ zur
-    CMSimple_XH-Site oder absolut sein. Eine Beispieldatei sieht wie folgt aus: 
-</p>
-<pre>
-Image: bild1.jpg
+<h2 id="einstellungen">Einstellungen</h2>
+<p>Die Konfiguration des Plugins erfolgt wie bei vielen anderen CMSimple_XH Plugins auch im Administrationsbereich der Website. Navigieren Sie zu <code>Plugins</code> → <code>Imagescroller</code>.</p>
+<p>Sie können die Original-Einstellungen von Imagescroller_XH unter <code>Konfiguration</code> ändern. Beim Überfahren der Hilfe-Icons mit der Maus werden Hinweise zu den Einstellungen angezeigt.</p>
+<p>Die Lokalisierung wird unter <code>Sprache</code> vorgenommen. Sie können die Zeichenketten in Ihre eigene Sprache übersetzen, falls keine entsprechende Sprachdatei zur Verfügung steht, oder sie entsprechend Ihren Anforderungen anpassen.</p>
+<p>Das Aussehen von Imagescroller_XH kann unter <code>Stylesheet</code> angepasst werden.</p>
+<h2 id="verwendung">Verwendung</h2>
+<p>Um einen Imagescroller mit allen Bildern des Ordners <code>userfiles/images/meine_galerie/</code> anzuzeigen, fügen Sie auf einer Seite ein:</p>
+<pre><code>{{{imagescroller(&#39;meine_galerie&#39;)}}}</code></pre>
+<p>Um den Imagescroller auf allen Seiten anzuzeigen, müssen sie die <code>autoload</code> Konfigurationsoption aktivieren, und im Template einfügen:</p>
+<pre><code>&lt;?=imagescroller(&#39;meine_galerie&#39;)?&gt;</code></pre>
+<p>Wenn Sie die Bilder verlinken möchten, oder Titel und Beschreibungen hinzufügen möchten, müssen Sie eine Info-Datei anlegen. Diese muss im Ordner <code>content/imagescroller/</code> abgelegt werden, und kann einen beliebigen Namen haben, wobei die Dateierweiterung <code>.txt</code> lauten muss. Um diese Datei zu bearbeiten, können Sie einen beliebigen Texteditor verwenden, aber es ist wichtig, dass die Datei UTF-8 kodiert ist.</p>
+<p>Die Datei enthält einen Datensatz für jedes Bild, das angezeigt werden soll; die Datensätze werden durch eine Zeile, die nur zwei Prozentzeichen (<code>%%</code>) enthält, getrennt. Die Datensätze können folgende Felder enthalten: <code>Image</code> (Bild), <code>URL</code>, <code>Title</code> (Titel) und <code>Description</code> (Beschreibung); nur <code>Image</code> ist erfoderlich, die anderen Felder sind optional. Die Felder des Datensatzes werden in eigene Zeilen geschrieben, die mit dem Feldnamen beginnen, gefolgt von einem Doppelpunkt und dem Wert des Feldes. Die Reihenfolge der Zeilen spielt keine Rolle. Der Dateiname des Bildes muss relativ zu <code>userfiles/images/</code> angegeben werden; die URL kann relativ zur CMSimple_XH Site oder absolut sein. Eine Beispieldatei sieht wie folgt aus:</p>
+<pre><code>Image: bild1.jpg
 URL: http://www.example.com/
 Title: Erstes Foto
 Description: Dies ist das erste Foto für den Imagescroller.
@@ -150,80 +75,29 @@ Image: bild37.jpg
 URL: ?Eine_CMSimple_Seite
 %%
 Image: bild2.jpg
-URL: ?&amp;mailform
+URL: ?&amp;amp;mailform
 Title: Kontakt
 %%
 Image: bild3.jpg
 URL: http://3-magi.net/de/
-Description: Meine Lieblings-Homepage ;)
-</pre>
-<p>
-    Um den Imagescroller anzuzeigen, muss nur imagescroller mit dem Namen der
-    Info-Datei (ohne die Dateierweiterung) aufgerufen werden, z.B.
-</p>
-<pre>{{{imagescroller('info')}}}</pre>
-<p>
-    Es ist zu beachten, dass alle Bilder die selbe Größe (d.h. Abmessungen)
-    haben sollten. Andernfalls werden sie auf die Größe des ersten Bildes der
-    Gallerie skaliert, und im Administrationsbereich wird eine Warnung
-    angezeigt.
-</p>
-</section>
-
-<!--
-<section id="limitations">
-<h2>Beschränkungen</h2>
-</section>
--->
-
-<section id="license">
-<h2>Lizenz</h2>
-<p>
-    Imagescroller_XH kann unter Einhaltung der <a
-    href="http://www.gnu.org/licenses/gpl.html">GPLv3</a> verwendet werden.
-</p>
-<p>
-    Copyright © 2012-2017 Christoph M. Becker
-</p>
-<p>
-    Slowakische Übersetzung © 2012 Dr. Martin Sereday<br>
-    Estnische Übersetzung © 2012 Alo Tänavots
-</p>
-</section>
-
-<section id="credits">
-<h2>Danksagung</h2>
-<p>
-    Imagescroller_XH verwendet <a
-    href="https://github.com/flesler/jquery.serialScroll">jQuery.serialScroll</a>.
-    Vielen Dank an Ariel Flesler für die Veröffentlichung dieses netten
-    jQuery-Plugins unter MIT Lizenz.
-</p>
-<p>
-    Das Pluginlogo wurde von <a href="http://www.everaldo.com/">Everaldo
-    Coelho</a> gestaltet. Vielen Dank für die Veröffentlichung dieses Icons unter
-    GPL.
-</p>
-<p>
-    Diese Plugin verwendet Oxygen-Icons des <a
-    href="https://github.com/KDE/oxygen-icons">Oxygen-Themes</a>. Vielen Dank
-    für die Veröffentlichung dieser Icons unter LGPLv3.
-</p>
-<p>
-    Vielen Dank an die Community im <a
-    href="http://www.cmsimpleforum.com/">CMSimple_XH-Forum</a> für Tipps,
-    Anregungen und das Testen.
-</p>
-<p>
-    Zu guter letzt vielen Dank an <a href="http://www.harteg.dk/">Peter
-    Harteg</a> und alle Entwickler von <a
-    href="http://www.cmsimple-xh.org/">CMSimple_XH</a>, ohne die dieses
-    fantastische CMS nicht existieren würde.
-</p>
-</section>
-
-</article>
-
+Description: Meine Lieblings-Homepage ;)</code></pre>
+<p>Um den Imagescroller anzuzeigen, muss nur <code>imagescroller()</code> mit dem Namen der Info-Datei (ohne die Dateierweiterung) aufgerufen werden, z.B.</p>
+<pre><code>{{{imagescroller(&#39;info&#39;)}}}</code></pre>
+<p>Es ist zu beachten, dass alle Bilder die selbe Größe (d.h. Abmessungen) haben sollten. Andernfalls werden sie auf die Größe des ersten Bildes der Gallerie skaliert, und im Administrationsbereich wird eine Warnung angezeigt.</p>
+<h2 id="problembehebung">Problembehebung</h2>
+<p>Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf <a href="https://github.com/cmb69/imagescroller_xh/issues">Github</a> oder im <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
+<h2 id="lizenz">Lizenz</h2>
+<p>Imagescroller_XH ist freie Software. Sie können es unter den Bedingungen der GNU General Public License, wie von der Free Software Foundation veröffentlicht, weitergeben und/oder modifizieren, entweder gemäß Version 3 der Lizenz oder (nach Ihrer Option) jeder späteren Version.</p>
+<p>Die Veröffentlichung von Imagescroller_XH erfolgt in der Hoffnung, dass es Ihnen von Nutzen sein wird, aber <em>ohne irgendeine Garantie</em>, sogar ohne die implizite Garantie der <em>Marktreife</em> oder der <em>Verwendbarkeit für einen bestimmten Zweck</em>. Details finden Sie in der GNU General Public License.</p>
+<p>Sie sollten ein Exemplar der GNU General Public License zusammen mit Imagescroller_XH erhalten haben. Falls nicht, siehe <a href="https://www.gnu.org/licenses/" class="uri">https://www.gnu.org/licenses/</a>.</p>
+<p>Copyright © 2012-2017 Christoph M. Becker</p>
+<p>Slowakische Übersetzung © 2012 Dr. Martin Sereday<br />
+Estnische Übersetzung © 2012 Alo Tänavots</p>
+<h2 id="danksagung">Danksagung</h2>
+<p>Imagescroller_XH verwendet <a href="https://github.com/flesler/jquery.serialScroll">jQuery.serialScroll</a>. Vielen Dank an Ariel Flesler für die Veröffentlichung dieses netten jQuery-Plugins unter MIT Lizenz.</p>
+<p>Das Pluginlogo wurde von <a href="https://www.everaldo.com/">Everaldo Coelho</a> gestaltet. Vielen Dank für die Veröffentlichung dieses Icons unter GPL.</p>
+<p>Dieses Plugin verwendet Oxygen-Icons des <a href="https://github.com/KDE/oxygen-icons">Oxygen-Themes</a>. Vielen Dank für die Veröffentlichung dieser Icons unter LGPLv3.</p>
+<p>Vielen Dank an die Community im <a href="http://www.cmsimpleforum.com/">CMSimple_XH Forum</a> für Tipps, Anregungen und das Testen.</p>
+<p>Und zu guter letzt vielen Dank an <a href="http://www.harteg.dk/">Peter Harteg</a>, den „Vater“ von CMSimple, und allen Entwicklern von <a href="https://www.cmsimple-xh.org/de/">CMSimple_XH</a> ohne die es dieses phantastische CMS nicht gäbe.</p>
 </body>
-
 </html>

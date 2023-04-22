@@ -1,139 +1,72 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Imagescroller_XH – User Manual</title>
-<link rel="stylesheet" type="text/css" href="./stylesheet.css">
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Imagescroller_XH – User Manual</title>
+  <style type="text/css">
+    body {
+        font-family: Georgia, serif;
+        line-height: 1.5;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+        background: #ffffe1;
+        max-width: 32em;
+    }
+    p {
+        text-align: justify;
+    }
+    pre {
+        color: black;
+        background: #ffe;
+        overflow: auto;
+        padding: 0.2em 0.5em;
+        border: 1px solid silver;
+    }
+  </style>
 </head>
-
 <body>
-
-<article>
-<h1>Imagescroller_XH – User Manual</h1>
-<img src="../imagescroller.png" style="float: left; margin: 0 1.5em 0.5em 0; width: 128px; height: 128px" alt="Moving Arrow">
-<p>
-    Imagescroller_XH facilitates displaying a scrolling slideshow of images
-    (optionally with links and with a description). It has no back-end
-    functionality to manage the galleries. Instead the images have to be
-    uploaded via FTP or the CMSimple_XH file manager. Additional information for
-    the links and the description has to be entered manually in a special text
-    file.
-</p>
-
-<nav id="nav">
-<h2>Table of Contents</h2>
+<h1 id="imagescroller_xh">Imagescroller_XH</h1>
+<p>Imagescroller_XH facilitates displaying a scrolling slideshow of images (optionally with links and with a description). It has no back-end functionality to manage the galleries. Instead the images have to be uploaded via FTP or the CMSimple_XH file manager. Additional information for the links and the description has to be entered manually in a special text file.</p>
 <ul>
-<li><a href="#notice">Important Notice</a></li>
 <li><a href="#requirements">Requirements</a></li>
+<li><a href="#download">Download</a></li>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#settings">Settings</a></li>
 <li><a href="#usage">Usage</a></li>
-<!-- <li><a href="#limitations">Limitations</a></li> -->
+<li><a href="#troubleshooting">Troubleshooting</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#credits">Credits</a></li>
 </ul>
-</nav>
-
-<section id="notice">
-<h2>Important Notice</h2>
-<p class="important">
-    Imagescroller_XH couldn't be tested so far in various environments. It is a
-    so called beta version. Use with caution!
-</p>
-</section>
-
-<section id="requirements">
-<h2>Requirements</h2>
-<p>
-    Imagescroller_XH  requires CMSimple_XH ≥ 1.6.3, and PHP ≥
-    5.4.0 with the <i>JSON</i> extension.
-</p>
-</section>
-
-<section id="installation">
-<h2>Installation</h2>
-<p>
-    The installation is done as with many other CMSimple_XH plugins. See the <a
-    href="http://www.cmsimple-xh.org/wiki/doku.php/installation"> CMSimple_XH
-    wiki</a> for further details.
-</p>
-<ol>
-<li class="important">
-    Backup the data on your server.
-</li>
-<li>
-    Unzip the distribution on your computer.
-</li>
-<li>
-    Upload the whole directory <code>imagescroller/</code> to your server to
-    CMSimple_XH's <code>plugins/</code> directory.
-</li>
-<li>
-    Set write permissions to the subdirectories <code>config/</code>,
-    <code>css/</code> and <code>languages/</code>.
-</li>
-<li class="important">
-    Browse to <i>Plugins</i> → <i>Imagescroller</i> to check if all requirements
-    are fulfilled.
-</li>
+<h1 id="requirements">Requirements</h1>
+<p>Imagescroller_XH is a plugin for <a href="https://cmsimple-xh.org/">CMSimple_XH</a>. It requires CMSimple_XH ≥ 1.6.3, and PHP ≥ 5.4.0 with the JSON extension.</p>
+<h2 id="download">Download</h2>
+<p>The <a href="https://github.com/cmb69/imagescroller_xh/releases/latest">lastest release</a> is available for download on Github.</p>
+<h2 id="installation">Installation</h2>
+<p>The installation is done as with many other CMSimple_XH plugins. See the <a href="https://wiki.cmsimple-xh.org/?for-users/working-with-the-cms/plugins">CMSimple_XH Wiki</a> for further details.</p>
+<ol type="1">
+<li><strong>Backup the data on your server.</strong></li>
+<li>Unzip the distribution on your computer.</li>
+<li>Upload the whole folder <code>imagescroller/</code> to your server into the <code>plugins/</code> folder of CMSimple_XH.</li>
+<li>Set write permissions for the subfolders <code>config/</code>, <code>css/</code> and <code>languages/</code>.</li>
+<li>Browse to <code>Plugins</code> → <code>Imagescroller</code> to check if all requirements are fulfilled.</li>
 </ol>
-</section>
-
-<section id="settings">
-<h2>Settings</h2>
-<p>
-    The plugin's configuration is done as with many other CMSimple_XH plugins in
-    the website's back-end. Select <i>Plugins</i> → <i>Imagescroller</i>.
-</p>
-<p>
-    You can change the default settings of Imagescroller_XH under <i>Config</i>.
-    Hints for the options will be displayed when hovering over the help icon
-    with your mouse.
-</p>
-<p>
-    Localization is done under <i>Language</i>. You can translate the character
-    strings to your own language if there is no appropriate language file
-    available, or customize them according to your needs.
-</p>
-<p>
-    The look of Imagescroller_XH can be customized under <i>Stylesheet</i>.
-</p>
-</section>
-
-<section id="usage">
-<h2>Usage</h2>
-<p>
-    To display an image scroller with all all images in the folder
-    <code>./userfiles/images/my_gallery/</code>, insert into a page:
-</p>
-<pre>{{{imagescroller('my_gallery')}}}</pre>
-<p>
-    To display the image scroller on all pages, you have to set the autoload
-    configuration option to <code>1</code>, and to insert in the template:
-</p>
-<pre>&lt;?=imagescroller('my_gallery')?&gt;</pre>
-<p>
-    If you want to link the images or add titles or descriptions, you have to
-    create an info file. This has to be placed in
-    <code>content/imagescroller/</code>, and can have any name you prefer with
-    the file extension <code>.txt</code>. To edit this file you can use any text
-    editor you prefer, but it is important that the file is UTF-8 encoded.
-</p>
-<p>
-    The file contains a record for each image you want to show; records are
-    seperated by a line containing only two percent signs (`%%`).  The records
-    can have the following fields: <code>Image</code>, <code>URL</code>,
-    <code>Title</code> and <code>Description</code>; only <code>Image</code> is
-    required, the other fields are optional.  The fields of the record are
-    written on separate lines which start with the field name, followed by a
-    colon and the field value.  The order of the lines does not matter. The
-    filename of the image has to be relative to
-    <code>userfiles/images/</code>; the URL can be relative to the current
-    CMSimple_XH (sub-)site or absolute. An example info file looks like:
-</p>
-<pre>
-Image: image1.jpg
+<h2 id="settings">Settings</h2>
+<p>The configuration of the plugin is done as for many other CMSimple_XH plugins in the back-end of the Website. Select <code>Plugins</code> → <code>Imagescroller</code>.</p>
+<p>You can change the default settings of Imagescroller_XH under <code>Config</code>. Hints for the options will be displayed when hovering over the help icon with your mouse.</p>
+<p>Localization is done under <code>Language</code>. You can translate the character strings to your own language if there is no appropriate language file available, or customize them according to your needs.</p>
+<p>The look of Imagescroller_XH can be customized under <code>Stylesheet</code>.</p>
+<h2 id="usage">Usage</h2>
+<p>To display an image scroller with all all images in the folder <code>userfiles/images/my_gallery/</code>, insert into a page:</p>
+<pre><code>{{{imagescroller(&#39;my_gallery&#39;)}}}</code></pre>
+<p>To display the image scroller on all pages, you have to enable the <code>autoload</code> configuration option, and insert in the template:</p>
+<pre><code>&lt;?=imagescroller(&#39;my_gallery&#39;)?&gt;</code></pre>
+<p>If you want to link the images or add titles or descriptions, you have to create an info file. This has to be placed in <code>content/imagescroller/</code>, and can have any name you prefer with the file extension <code>.txt</code>. To edit this file you can use any text editor you prefer, but it is important that the file is UTF-8 encoded.</p>
+<p>The file contains a record for each image you want to show; records are seperated by a line containing only two percent signs (<code>%%</code>). The records can have the following fields: <code>Image</code>, <code>URL</code>, <code>Title</code> and <code>Description</code>; only <code>Image</code> is required, the other fields are optional. The fields of the record are written on separate lines which start with the field name, followed by a colon and the field value. The order of the lines does not matter. The filename of the image has to be relative to <code>userfiles/images/</code>; the URL can be relative to the current CMSimple_XH Site or absolute. An example info file looks like:</p>
+<pre><code>Image: image1.jpg
 URL: http://www.example.com/
 Title: First Photo
 Description: This is the first photo for the image scroller.
@@ -142,78 +75,29 @@ Image: image37.jpg
 URL: ?A_CMSimple_Page
 %%
 Image: image2.jpg
-URL: ?&amp;mailform
+URL: ?&amp;amp;mailform
 Title: Contact
 %%
 Image: image3.jpg
 URL: http://3-magi.net/
-Description: My favorite website ;)
-</pre>
-<p>
-    To display the image scroller just call imagescroller with the name of the
-    info file (without file extension), e.g.
-</p>
-<pre>{{{imagescroller('info')}}}</pre>
-<p>
-    Note that all images should have the same size (i.e. dimensions). Otherwise
-    they will be resized to the size of the first image in the gallery, and in
-    the back-end a warning will be shown.
-</p>
-</section>
-
-<!--
-<section id="limitations">
-<h2>Limitations</h2>
-</section>
--->
-
-<section id="license">
-<h2>License</h2>
-<p>
-    Imagescroller_XH is licensed under <a
-    href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.
-</p>
-<p>
-    Copyright © 2012-2017 Christoph M. Becker
-</p>
-<p>
-    Slovak translation © 2012 Dr. Martin Sereday<br>
-    Estonian translation © 2012 Alo Tänavots
-</p>
-</section>
-
-<section id="credits">
-<h2>Credits</h2>
-<p>
-    Imagescroller is powered by <a
-    href="https://github.com/flesler/jquery.serialScroll">jQuery.serialScroll</a>.
-    Many thanks to Ariel Flesler for publishing this nice jQuery plugin under
-    MIT license.
-</p>
-<p>
-    The plugin logo is designed by <a href="http://www.everaldo.com/">Everaldo
-    Coelho</a>. Many thanks for publishing this icon under GPL.
-</p>
-<p>
-    This plugin uses Oxygen icons from the <a
-    href="https://github.com/KDE/oxygen-icons">Oxygen Theme</a>. Many thanks for
-    publishing these icons under LGPLv3.
-</p>
-<p>
-    Many thanks to the community at the <a
-    href="http://www.cmsimpleforum.com/">CMSimple_XH forum</a> for tips,
-    suggestions and testing.
-</p>
-<p>
-    And last but not least many thanks to <a href="http://harteg.dk/">Peter
-    Harteg</a>, the father of CMSimple, and all developers of <a
-    href="http://www.cmsimple-xh.org">CMSimple_XH</a> without whom this amazing
-    CMS wouldn't exist.
-</p>
-</section>
-
-</article>
-
+Description: My favorite website ;)</code></pre>
+<p>To display the image scroller just call <code>imagescroller()</code> with the name of the info file (without file extension), e.g.:</p>
+<pre><code>{{{imagescroller(&#39;info&#39;)}}}</code></pre>
+<p>Note that all images should have the same size (i.e. dimensions). Otherwise they will be resized to the size of the first image in the gallery, and in the back-end a warning will be shown.</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>Report bugs and ask for support either on <a href="https://github.com/cmb69/imagescroller_xh/issues">Github</a> or in the <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
+<h2 id="license">License</h2>
+<p>Imagescroller_XH is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</p>
+<p>Imagescroller_XH is distributed in the hope that it will be useful, but <em>without any warranty</em>; without even the implied warranty of <em>merchantibility</em> or <em>fitness for a particular purpose</em>. See the GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License along with Imagescroller_XH. If not, see <a href="https://www.gnu.org/licenses/" class="uri">https://www.gnu.org/licenses/</a>.</p>
+<p>Copyright © 2012-2017 Christoph M. Becker</p>
+<p>Slovak translation © 2012 Dr. Martin Sereday<br />
+Estonian translation © 2012 Alo Tänavots</p>
+<h2 id="credits">Credits</h2>
+<p>Imagescroller is powered by <a href="https://github.com/flesler/jquery.serialScroll">jQuery.serialScroll</a>. Many thanks to Ariel Flesler for publishing this nice jQuery plugin under MIT license.</p>
+<p>The plugin logo is designed by <a href="https://www.everaldo.com/">Everaldo Coelho</a>. Many thanks for publishing this icon under GPL.</p>
+<p>This plugin uses Oxygen icons from the <a href="https://github.com/KDE/oxygen-icons">Oxygen Theme</a>. Many thanks for publishing these icons under LGPLv3.</p>
+<p>Many thanks to the community at the <a href="https://www.cmsimpleforum.com/">CMSimple_XH Forum</a> for tips, suggestions and testing.</p>
+<p>And last but not least many thanks to <a href="https://www.harteg.dk/">Peter Harteg</a>, the “father” of CMSimple, and all developers of <a href="https://www.cmsimple-xh.org/">CMSimple_XH</a> without whom this amazing CMS would not exist.</p>
 </body>
-
 </html>
