@@ -56,7 +56,7 @@ class Dic
 
         return new InfoController(
             $pth["folder"]["plugins"] . "imagescroller/",
-            new SystemChecker,
+            new SystemChecker(),
             self::makeView()
         );
     }

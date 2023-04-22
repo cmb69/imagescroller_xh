@@ -1,7 +1,5 @@
-/coverage
-vendor
-/imagescroller.min.js
-/README.htm
-/composer.lock
 /.phpunit.cache
+/coverage
+/vendor
 /tools
+/composer.lock

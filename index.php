@@ -19,6 +19,8 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+// phpcs:disable PSR1.Files.SideEffects
+
 use Imagescroller\Dic;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\Responder;

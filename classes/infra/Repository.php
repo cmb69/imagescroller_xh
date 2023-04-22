@@ -78,7 +78,7 @@ class Repository
     public function find(string $filename): ?array
     {
         if (is_file($this->contentFolder . $filename . ".txt")) {
-            return $this->findByFile($this->contentFolder . $filename. ".txt");
+            return $this->findByFile($this->contentFolder . $filename . ".txt");
         } elseif (is_dir($this->imageFolder . $filename)) {
             return $this->findByFolder($this->imageFolder . $filename);
         } else {

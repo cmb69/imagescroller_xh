@@ -45,7 +45,7 @@ class View
     /** @param mixed $data */
     public function json($data): string
     {
-        return json_encode($data, JSON_HEX_APOS|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+        return json_encode($data, JSON_HEX_APOS | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /** @param scalar $args */
