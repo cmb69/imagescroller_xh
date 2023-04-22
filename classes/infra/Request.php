@@ -21,6 +21,8 @@
 
 namespace Imagescroller\Infra;
 
+use Imagescroller\Value\Url;
+
 class Request
 {
     /** @codeCoverageIgnore */
@@ -35,15 +37,66 @@ class Request
         return defined("XH_ADM") && XH_ADM;
     }
 
+    public function url(): Url
+    {
+        $rest = $this->query();
+        if ($rest !== "") {
+            $rest = "?" . $rest;
+        }
+        return Url::from(CMSIMPLE_URL . $rest);
+    }
+
     public function action(): string
     {
-        global $action;
+        $action = $this->url()->param("action");
+        if (!is_string($action)) {
+            return "";
+        }
         if (!strncmp($action, "do_", strlen("do_"))) {
             return "";
         }
-        if (isset($_POST["imagescroller_do"])) {
+        $post = $this->post();
+        if (isset($post["imagescroller_do"])) {
             $action = "do_" . $action;
         }
         return $action;
+    }
+
+    public function gallery(): string
+    {
+        $gallery = $this->url()->param("imagescroller_gallery");
+        if (!is_string($gallery)) {
+            return "";
+        }
+        return $gallery;
+    }
+
+    /** @return array{contents:string} */
+    public function contentsPost(): array
+    {
+        return [
+            "contents" => $this->trimmedPostString("imagescroller_contents"),
+        ];
+    }
+
+    private function trimmedPostString(string $name): string
+    {
+        $post = $this->post();
+        return isset($post[$name]) && is_string($post[$name]) ? trim($post[$name]) : "";
+    }
+
+    /** @codeCoverageIgnore */
+    protected function query(): string
+    {
+        return $_SERVER["QUERY_STRING"];
+    }
+
+    /**
+     * @return array<string,string|array<string>>
+     * @codeCoverageIgnore
+     */
+    protected function post(): array
+    {
+        return $_POST;
     }
 }

@@ -22,8 +22,8 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
+use Imagescroller\Infra\FakeRequest;
 use Imagescroller\Infra\Repository;
-use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
 use PHPUnit\Framework\TestCase;
@@ -32,34 +32,45 @@ class MainAdminControllerTest extends TestCase
 {
     public function testRendersOverview(): void
     {
-        $_GET = ["imagescroller_gallery" => "gallery2"];
         $sut = $this->sut();
-        $response = $sut($this->request(""));
+        $request = new FakeRequest(["query" => "imagescroller&admin=plugin_main"]);
+        $response = $sut($request);
         Approvals::verifyHtml($response->output());
     }
 
     public function testRendersCreateForm(): void
     {
         $sut = $this->sut();
-        $response = $sut($this->request("edit"));
+        $request = new FakeRequest(["query" => "imagescroller&admin=plugin_main&action=edit"]);
+        $response = $sut($request);
         Approvals::verifyHtml($response->output());
     }
 
     public function testRedirectsAfterSaving(): void
     {
         $sut = $this->sut();
-        $_GET = ["imagescroller_gallery" => "gallery2"];
-        $_POST = ["imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3"];
-        $response = $sut($this->request("do_edit"));
-        $this->assertEquals("http://example.com/?imagescroller&admin=plugin_main", $response->location());
+        $request = new FakeRequest([
+            "query" => "imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
+            "post" => [
+                "imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3",
+                "imagescroller_do" => "",
+            ],
+        ]);
+        $response = $sut($request);
+        $this->assertEquals("http://example.com/?imagescroller&admin=plugin_main&imagescroller_gallery=gallery2", $response->location());
     }
 
     public function testReportsFailureToSave(): void
     {
         $sut = $this->sut(["saveGallery" => false]);
-        $_GET = ["imagescroller_gallery" => "gallery2"];
-        $_POST = ["imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3"];
-        $response = $sut($this->request("do_edit"));
+        $request = new FakeRequest([
+            "query" => "imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
+            "post" => [
+                "imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3",
+                "imagescroller_do" => "",
+            ],
+        ]);
+        $response = $sut($request);
         Approvals::verifyHtml($response->output());
     }
 
@@ -81,12 +92,5 @@ class MainAdminControllerTest extends TestCase
             new Image("image2"),
             new Image("image3"),
         ];
-    }
-
-    private function request($action)
-    {
-        $request = $this->createMock(Request::class);
-        $request->method("action")->willReturn($action);
-        return $request;
     }
 }

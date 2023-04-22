@@ -47,9 +47,9 @@ class MainAdminController
             default:
                 return $this->overview();
             case "edit":
-                return $this->edit();
+                return $this->edit($request);
             case "do_edit":
-                return $this->save();
+                return $this->save($request);
         }
     }
 
@@ -63,22 +63,22 @@ class MainAdminController
         ]));
     }
 
-    public function edit(): Response
+    public function edit(Request $request): Response
     {
-        $gallery = $_GET["imagescroller_gallery"] ?? "";
+        $gallery = $request->gallery();
         $images = $this->repository->find($gallery);
         $contents = Util::recordJarFromImages($images, $this->repository->imageFolder());
         return Response::create($this->renderGalleryForm($contents));
     }
 
-    public function save(): Response
+    public function save(Request $request): Response
     {
-        $contents = $_POST["imagescroller_contents"];
-        $gallery = $_GET["imagescroller_gallery"];
+        $contents = $request->contentsPost()["contents"];
+        $gallery = $request->gallery();
         if (!$this->repository->saveGallery($gallery, $contents)) {
             return Response::create($this->renderGalleryForm($contents, [["error_save", $gallery]]));
         }
-        return Response::redirect(CMSIMPLE_URL . "?imagescroller&admin=plugin_main");
+        return Response::redirect($request->url()->without("action")->absolute());
     }
 
     /** @param list<array{string}> $errors */

@@ -21,27 +21,27 @@
 
 namespace Imagescroller\Infra;
 
-use PHPUnit\Framework\TestCase;
-
-class RequestTest extends TestCase
+class FakeRequest extends Request
 {
-    /** @dataProvider actions */
-    public function testAction(string $action, ?string $do, string $expected): void
+    private $options;
+
+    public function __construct(array $options = [])
     {
-        $GLOBALS["action"] = $action;
-        $_POST = ["imagescroller_do" => $do];
-        $sut = new Request;
-        $result = $sut->action();
-        $this->assertEquals($expected, $result);
+        $this->options = $options;
     }
 
-    public function actions(): array
+    public function adm(): bool
     {
-        return [
-            ["", null, ""],
-            ["create", null, "create"],
-            ["create", "", "do_create"],
-            ["do_create", null, ""],
-        ];
+        return $this->options["adm"] ?? false;
+    }
+
+    protected function query(): string
+    {
+        return $this->options["query"] ?? "";
+    }
+
+    protected function post(): array
+    {
+        return $this->options["post"] ?? [];
     }
 }

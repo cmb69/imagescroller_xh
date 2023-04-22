@@ -22,9 +22,9 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
+use Imagescroller\Infra\FakeRequest;
 use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
-use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
 use PHPUnit\Framework\TestCase;
@@ -42,8 +42,7 @@ class MainControllerTest extends TestCase
         $jquery = $this->createMock(Jquery::class);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
         $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $jquery, $view);
-        $request = $this->createMock(Request::class);
-        $request->method("adm")->willReturn(true);
+        $request = new FakeRequest(["adm" => true]);
         $response = $sut($request, "test");
         Approvals::verifyHtml($response->output());
     }
@@ -55,7 +54,7 @@ class MainControllerTest extends TestCase
         $jquery = $this->createMock(Jquery::class);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
         $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $jquery, $view);
-        $request = $this->createMock(Request::class);
+        $request = new FakeRequest();
         $response = $sut($request, "missing");
         Approvals::verifyHtml($response->output());
     }
