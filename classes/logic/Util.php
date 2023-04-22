@@ -25,34 +25,6 @@ use Imagescroller\Value\Image;
 
 class Util
 {
-    /** @return list<Image> */
-    public static function parseRecordJar(string $contents, string $imageFolder): array
-    {
-        $images = [];
-        $records = preg_split('/\R%%\R/', $contents);
-        foreach ($records as $record) {
-            $lines = array_map("trim", preg_split('/\R/', $record));
-            $record = [];
-            foreach ($lines as $line) {
-                if ($line !== "") {
-                    [$name, $value] = array_map("trim", explode(":", $line, 2));
-                    $record[strtolower($name)] = $value;
-                }
-            }
-            if (!isset($record['image'])) {
-                continue;
-            }
-            $record["image"] = $imageFolder . $record["image"];
-            $images[] = new Image(
-                $record["image"],
-                $record["url"] ?? "",
-                $record["title"] ?? "",
-                $record["description"] ?? ""
-            );
-        }
-        return $images;
-    }
-
     /** @param list<Image> $images */
     public static function recordJarFromImages(array $images, string $imageFolder): string
     {

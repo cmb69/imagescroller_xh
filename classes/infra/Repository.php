@@ -21,7 +21,6 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Logic\Util;
 use Imagescroller\Value\Image;
 
 class Repository
@@ -118,7 +117,29 @@ class Repository
      */
     private function findByFile($filename)
     {
-        return Util::parseRecordJar(file_get_contents($filename), $this->imageFolder);
+        $images = [];
+        $records = preg_split('/\R%%\R/', file_get_contents($filename));
+        foreach ($records as $record) {
+            $lines = array_map("trim", preg_split('/\R/', $record));
+            $record = [];
+            foreach ($lines as $line) {
+                if ($line !== "") {
+                    [$name, $value] = array_map("trim", explode(":", $line, 2));
+                    $record[strtolower($name)] = $value;
+                }
+            }
+            if (!isset($record['image'])) {
+                continue;
+            }
+            $record["image"] = $this->imageFolder . $record["image"];
+            $images[] = new Image(
+                $record["image"],
+                $record["url"] ?? "",
+                $record["title"] ?? "",
+                $record["description"] ?? ""
+            );
+        }
+        return $images;
     }
 
     /**
