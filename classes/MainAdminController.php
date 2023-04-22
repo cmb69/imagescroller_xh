@@ -62,7 +62,7 @@ class MainAdminController
     {
         $galleries = $this->repository->findAllGalleries();
         $folders = array_diff($this->repository->findAll(), $galleries);
-        return Response::create($this->view->render("overview", [
+        return $this->respondWith($this->view->render("overview", [
             "galleries" => $galleries,
             "folders" => $folders,
         ]));
@@ -73,18 +73,18 @@ class MainAdminController
         $gallery = $request->gallery();
         $images = $this->repository->find($gallery);
         $contents = Util::recordJarFromImages($images, $this->repository->imageFolder());
-        return Response::create($this->renderGalleryForm($contents));
+        return $this->respondWith($this->renderGalleryForm($contents));
     }
 
     public function save(Request $request): Response
     {
         if (!$this->csrfProtector->check()) {
-            return Response::create($this->view->error("error_unauthorized"));
+            return $this->respondWith($this->view->error("error_unauthorized"));
         }
         $contents = $request->contentsPost()["contents"];
         $gallery = $request->gallery();
         if (!$this->repository->saveGallery($gallery, $contents)) {
-            return Response::create($this->renderGalleryForm($contents, [["error_save", $gallery]]));
+            return $this->respondWith($this->renderGalleryForm($contents, [["error_save", $gallery]]));
         }
         return Response::redirect($request->url()->without("action")->absolute());
     }
@@ -97,5 +97,10 @@ class MainAdminController
             "contents" => $contents,
             "errors" => $errors,
         ]);
+    }
+
+    private function respondWith(string $output): Response
+    {
+        return Response::create($output)->withTitle("Imagescroller – " . $this->view->text("label_galleries"));
     }
 }

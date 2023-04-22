@@ -71,6 +71,7 @@ class MainAdminControllerTest extends TestCase
     {
         $request = new FakeRequest(["query" => "imagescroller&admin=plugin_main&action=edit"]);
         $response = $this->sut()($request);
+        $this->assertEquals("Imagescroller – Galleries", $response->title());
         Approvals::verifyHtml($response->output());
     }
     
@@ -85,6 +86,7 @@ class MainAdminControllerTest extends TestCase
             ],
         ]);
         $response = $this->sut()($request);
+        $this->assertEquals("Imagescroller – Galleries", $response->title());
         $this->assertStringContainsString("You are not authorized for this action!", $response->output());
     }
 
@@ -117,6 +119,7 @@ class MainAdminControllerTest extends TestCase
             ],
         ]);
         $response = $this->sut()($request);
+        $this->assertEquals("Imagescroller – Galleries", $response->title());
         Approvals::verifyHtml($response->output());
     }
 }
