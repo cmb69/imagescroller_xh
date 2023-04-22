@@ -13,7 +13,9 @@ $plugin_tx['imagescroller']['error_image_size_new']="%s has size %2\$dx%3\$d, bu
 $plugin_tx['imagescroller']['error_save']="Gallery %s couldn't be saved!";
 
 $plugin_tx['imagescroller']['menu_main']="Galleries";
-$plugin_tx['imagescroller']['label_create_folder']="Create gallery from folder";
+$plugin_tx['imagescroller']['label_galleries']="Galleries";
+$plugin_tx['imagescroller']['label_folders']="Folders";
+$plugin_tx['imagescroller']['label_edit']="Edit gallery";
 $plugin_tx['imagescroller']['label_save']="Save gallery";
 
 $plugin_tx['imagescroller']['syscheck_extension']="PHP extension '%s' is loaded: ";

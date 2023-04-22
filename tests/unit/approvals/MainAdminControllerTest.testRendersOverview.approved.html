@@ -4,22 +4,42 @@
   <form method="get">
     <input type="hidden" name="selected" value="imagescroller">
     <input type="hidden" name="admin" value="plugin_main">
-    <table>
-      <tr>
-        <td><input type="radio" name="imagescroller_gallery" value="gallery1"></td>
-        <td>gallery1</td>
-      </tr>
-      <tr>
-        <td><input type="radio" name="imagescroller_gallery" value="gallery2"></td>
-        <td>gallery2</td>
-      </tr>
-      <tr>
-        <td><input type="radio" name="imagescroller_gallery" value="gallery3"></td>
-        <td>gallery3</td>
-      </tr>
-    </table>
+    <fieldset>
+      <legend>Galleries</legend>
+      <table>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend>Folders</legend>
+      <table>
+        <tr>
+          <td>
+            <label>
+              <input type="radio" name="imagescroller_gallery" value="gallery1">
+              <span>gallery1</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>
+              <input type="radio" name="imagescroller_gallery" value="gallery2">
+              <span>gallery2</span>
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>
+              <input type="radio" name="imagescroller_gallery" value="gallery3">
+              <span>gallery3</span>
+            </label>
+          </td>
+        </tr>
+      </table>
+    </fieldset>
     <p>
-      <button name="action" value="create">Create gallery from folder</button>
+      <button name="action" value="edit">Edit gallery</button>
     </p>
   </form>
 </section>

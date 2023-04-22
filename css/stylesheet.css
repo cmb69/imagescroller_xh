@@ -44,6 +44,9 @@
     width: 100%;
     height: 25em;
 }
+#imagescroller_admin fieldset {
+    margin: 1em 0;
+}
 
 /*
  * Info box

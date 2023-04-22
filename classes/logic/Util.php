@@ -54,10 +54,21 @@ class Util
     }
 
     /** @param list<Image> $images */
-    public static function recordJarFromImages(string $gallery, array $images): string
+    public static function recordJarFromImages(array $images, string $imageFolder): string
     {
-        return implode("\n%%\n", array_map(function (Image $image) use ($gallery) {
-            return "Image: " . $gallery . "/" . basename($image->filename());
+        return implode("\n%%\n", array_map(function (Image $image) use ($imageFolder) {
+            $lines = [];
+            $lines[] = "Image: " . substr($image->filename(), strlen($imageFolder));
+            if ($image->url()) {
+                $lines[] = "URL: " . $image->url();
+            }
+            if ($image->title()) {
+                $lines[] = "Title: " . $image->title();
+            }
+            if ($image->description()) {
+                $lines[] = "Description: " . $image->description();
+            }
+            return implode("\n", $lines);
         }, $images));
     }
 }

@@ -25,7 +25,6 @@ use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
 use Imagescroller\Logic\Util;
-use Imagescroller\Value\Image;
 use Imagescroller\Value\Response;
 
 class MainAdminController
@@ -47,29 +46,32 @@ class MainAdminController
         switch ($request->action()) {
             default:
                 return $this->overview();
-            case "create":
-                return $this->create();
-            case "do_create":
-                return $this->doCreate();
+            case "edit":
+                return $this->edit();
+            case "do_edit":
+                return $this->save();
         }
     }
 
     public function overview(): Response
     {
+        $galleries = $this->repository->findAllGalleries();
+        $folders = array_diff($this->repository->findAll(), $galleries);
         return Response::create($this->view->render("overview", [
-            "folders" => $this->repository->findAll(),
+            "galleries" => $galleries,
+            "folders" => $folders,
         ]));
     }
 
-    public function create(): Response
+    public function edit(): Response
     {
         $gallery = $_GET["imagescroller_gallery"] ?? "";
         $images = $this->repository->find($gallery);
-        $contents = Util::recordJarFromImages($gallery, $images);
+        $contents = Util::recordJarFromImages($images, $this->repository->imageFolder());
         return Response::create($this->renderGalleryForm($contents));
     }
 
-    public function doCreate(): Response
+    public function save(): Response
     {
         $contents = $_POST["imagescroller_contents"];
         $gallery = $_GET["imagescroller_gallery"];

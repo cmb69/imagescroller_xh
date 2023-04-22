@@ -38,14 +38,35 @@ class Repository
         $this->contentFolder = $contentFolder;
     }
 
+    public function imageFolder(): string
+    {
+        return $this->imageFolder;
+    }
+
     /** @return list<string> */
     public function findAll(): array
     {
         $galleries = [];
         if (($dir = opendir($this->imageFolder))) {
             while (($filename = readdir($dir)) !== false) {
-                if ($filename[0] != '.' && is_dir($this->imageFolder .$filename)) {
+                if ($filename[0] != '.' && is_dir($this->imageFolder . $filename)) {
                     $galleries[] = $filename;
+                }
+            }
+            closedir($dir);
+        }
+        natcasesort($galleries);
+        return array_values($galleries);
+    }
+
+    /** @return list<string> */
+    public function findAllGalleries(): array
+    {
+        $galleries = [];
+        if (($dir = opendir($this->contentFolder))) {
+            while (($filename = readdir($dir)) !== false) {
+                if ($filename[0] != '.' && preg_match('/^(.*)\.txt$/', $filename, $matches)) {
+                    $galleries[] = $matches[1];
                 }
             }
             closedir($dir);
@@ -57,10 +78,10 @@ class Repository
     /** @return list<Image>|null */
     public function find(string $filename): ?array
     {
-        if (is_dir($this->imageFolder . $filename)) {
+        if (is_file($this->contentFolder . $filename . ".txt")) {
+            return $this->findByFile($this->contentFolder . $filename. ".txt");
+        } elseif (is_dir($this->imageFolder . $filename)) {
             return $this->findByFolder($this->imageFolder . $filename);
-        } elseif (is_file($this->contentFolder . $filename)) {
-            return $this->findByFile($this->contentFolder . $filename);
         } else {
             return null;
         }

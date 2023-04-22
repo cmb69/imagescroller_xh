@@ -6,6 +6,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
 /**
  * @var View $this
+ * @var list<string> $galleries
  * @var list<string> $folders
  */
 ?>
@@ -15,16 +16,38 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
   <form method="get">
     <input type="hidden" name="selected" value="imagescroller">
     <input type="hidden" name="admin" value="plugin_main">
-    <table>
-<?foreach ($folders as $folder):?>
-      <tr>
-        <td><input type="radio" name="imagescroller_gallery" value="<?=$folder?>"></td>
-        <td><?=$folder?></td>
-      </tr>
+    <fieldset>
+      <legend><?=$this->text('label_galleries')?></legend>
+      <table>
+<?foreach ($galleries as $gallery):?>
+        <tr>
+          <td>
+            <label>
+              <input type="radio" name="imagescroller_gallery" value="<?=$gallery?>">
+              <span><?=$gallery?></span>
+            </label>
+          </td>
+        </tr>
 <?endforeach?>
-    </table>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend><?=$this->text('label_folders')?></legend>
+      <table>
+<?foreach ($folders as $folder):?>
+        <tr>
+          <td>
+            <label>
+              <input type="radio" name="imagescroller_gallery" value="<?=$folder?>">
+              <span><?=$folder?></span>
+            </label>
+          </td>
+        </tr>
+<?endforeach?>
+      </table>
+    </fieldset>
     <p>
-      <button name="action" value="create"><?=$this->text('label_create_folder')?></button>
+      <button name="action" value="edit"><?=$this->text('label_edit')?></button>
     </p>
   </form>
 </section>

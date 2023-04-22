@@ -41,7 +41,7 @@ class MainAdminControllerTest extends TestCase
     public function testRendersCreateForm(): void
     {
         $sut = $this->sut();
-        $response = $sut($this->request("create"));
+        $response = $sut($this->request("edit"));
         Approvals::verifyHtml($response->output());
     }
 
@@ -50,7 +50,7 @@ class MainAdminControllerTest extends TestCase
         $sut = $this->sut();
         $_GET = ["imagescroller_gallery" => "gallery2"];
         $_POST = ["imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3"];
-        $response = $sut($this->request("do_create"));
+        $response = $sut($this->request("do_edit"));
         $this->assertEquals("http://example.com/?imagescroller&admin=plugin_main", $response->location());
     }
 
@@ -59,7 +59,7 @@ class MainAdminControllerTest extends TestCase
         $sut = $this->sut(["saveGallery" => false]);
         $_GET = ["imagescroller_gallery" => "gallery2"];
         $_POST = ["imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3"];
-        $response = $sut($this->request("do_create"));
+        $response = $sut($this->request("do_edit"));
         Approvals::verifyHtml($response->output());
     }
 

@@ -27,7 +27,7 @@ use PHPUnit\Framework\TestCase;
 
 class RepositoryTest extends TestCase
 {
-    public function testFindsAllGalleries(): void
+    public function testFindsAllGalleryFolders(): void
     {
         vfsStream::setup("root");
         mkdir("vfs://root/userfiles/images/one/", 0777, true);
@@ -36,6 +36,19 @@ class RepositoryTest extends TestCase
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $galleries = $sut->findAll();
         $this->assertEquals(["one", "three", "two"], $galleries);
+    }
+
+    public function testFindsAllGalleries(): void
+    {
+        vfsStream::setup("root");
+        mkdir("vfs://root/content/imagescroller/", 0777, true);
+        touch("vfs://root/content/imagescroller/gallery1.txt");
+        touch("vfs://root/content/imagescroller/gallery2.txt");
+        touch("vfs://root/content/imagescroller/gallery3.txt");
+        touch("vfs://root/content/imagescroller/gallery4");
+        $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $galleries = $sut->findAllGalleries();
+        $this->assertEquals(["gallery1", "gallery2", "gallery3"], $galleries);
     }
 
     public function testFindsImagesByFolder(): void
@@ -61,7 +74,7 @@ class RepositoryTest extends TestCase
         mkdir("vfs://root/content/imagescroller/", 0777, true);
         file_put_contents("vfs://root/content/imagescroller/gallery.txt", $this->gallery());
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
-        $images = $sut->find("gallery.txt");
+        $images = $sut->find("gallery");
         $expected = [
             new Image(
                 "vfs://root/userfiles/images/image1.jpg",

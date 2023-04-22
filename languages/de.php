@@ -13,7 +13,9 @@ $plugin_tx['imagescroller']['error_image_size_new']="%s hat die Größe %2\$dx%3
 $plugin_tx['imagescroller']['error_save']="Die Galerie %s konnte nicht gespeichert werden!";
 
 $plugin_tx['imagescroller']['menu_main']="Galleries";
-$plugin_tx['imagescroller']['label_create_folder']="Galerie aus Ordner erzeugen";
+$plugin_tx['imagescroller']['label_galleries']="Galerien";
+$plugin_tx['imagescroller']['label_folders']="Ordner";
+$plugin_tx['imagescroller']['label_edit']="Galerie bearbeiten";
 $plugin_tx['imagescroller']['label_save']="Galerie speichern";
 
 $plugin_tx['imagescroller']['syscheck_extension']="PHP-Extension '%s' wurde geladen: ";
