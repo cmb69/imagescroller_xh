@@ -72,6 +72,7 @@ class MainAdminController
     {
         $gallery = $request->gallery();
         $images = $this->repository->find($gallery);
+        assert($images !== null); // TODO: invalid assertion
         $contents = Util::recordJarFromImages($images, $this->repository->imageFolder());
         return $this->respondWith($this->renderGalleryForm($contents));
     }

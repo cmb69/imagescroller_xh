@@ -45,7 +45,7 @@ class View
     /** @param mixed $data */
     public function json($data): string
     {
-        return json_encode($data, JSON_HEX_APOS | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        return (string) json_encode($data, JSON_HEX_APOS | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 
     /** @param scalar $args */
@@ -65,7 +65,7 @@ class View
         extract($_data);
         ob_start();
         include $this->templateFolder . $_template . ".php";
-        return ob_get_clean();
+        return (string) ob_get_clean();
     }
 
     public function esc(string $string): string

@@ -118,9 +118,12 @@ class Repository
     private function findByFile($filename)
     {
         $images = [];
-        $records = preg_split('/\R%%\R/', file_get_contents($filename));
+        $records = preg_split('/\R%%\R/', (string) file_get_contents($filename));
+        assert($records !== false); // TODO: invalid assertion?
         foreach ($records as $record) {
-            $lines = array_map("trim", preg_split('/\R/', $record));
+            $lines = preg_split('/\R/', $record);
+            assert($lines !== false); // TODO: invalid assertion?
+            $lines = array_map("trim", $lines);
             $record = [];
             foreach ($lines as $line) {
                 if ($line !== "") {
@@ -160,7 +163,9 @@ class Repository
                 [$width, $height] = $size;
             } else {
                 if ($size[0] !== $width || $size[1] !== $height) {
-                    $errors[] = ["error_image_size_new", $filename, $size[0], $size[1], $width, $height];
+                    $error = ["error_image_size_new", $filename, $size[0], $size[1], $width, $height];
+                    /** @var array{string} $error */
+                    $errors[] = $error;
                 }
             }
         }
