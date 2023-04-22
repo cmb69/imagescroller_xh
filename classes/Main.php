@@ -21,6 +21,7 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Jquery;
 use Imagescroller\Value\Response;
 
 class Main
@@ -31,18 +32,24 @@ class Main
     /** @var array<string,string> */
     private $conf;
 
+    /** @var Jquery */
+    private $jquery;
+
     /** @param array<string,string> $conf */
-    public function __construct(string $pluginFolder, array $conf)
+    public function __construct(string $pluginFolder, array $conf, Jquery $jquery)
     {
         $this->pluginFolder = $pluginFolder;
         $this->conf = $conf;
+        $this->jquery = $jquery;
     }
 
-    public function __invoke(): Response
+    /** @return void */
+    public function __invoke()
     {
-        if ($this->conf['autoload']) {
-            return Response::create()->withJs($this->pluginFolder);
+        if ($this->conf["autoload"]) {
+            $this->jquery->include();
+            $this->jquery->includePlugin("scrollTo", $this->pluginFolder . "lib/jquery.scrollTo.min.js");
+            $this->jquery->includePlugin("serialScroll", $this->pluginFolder . "lib/jquery.serialScroll.min.js");
         }
-        return Response::create();
     }
 }

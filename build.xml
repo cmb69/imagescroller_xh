@@ -39,6 +39,13 @@
     </exec>
     <unzip file="export.zip" todir="export"/>
     <delete file="export.zip"/>
+    <exec executable="uglifyjs" checkreturn="true">
+      <arg file="export/imagescroller.js"/>
+      <arg value="--compress"/>
+      <arg value="--mangle"/>
+      <arg value="--output"/>
+      <arg file="export/imagescroller.js"/>
+    </exec>
     <move todir="dist">
       <fileset dir="export">
         <include name="views/*.php"/>

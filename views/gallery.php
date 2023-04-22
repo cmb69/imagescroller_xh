@@ -6,6 +6,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
 /**
  * @var View $this
+ * @var string $script
  * @var array<string,mixed> $config
  * @var int $width
  * @var int $height
@@ -16,6 +17,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
  */
 ?>
 <!-- imagescroller gallery -->
+<script type="module" src="<?=$script?>"></script>
 <?foreach ($errors as $error):?>
 <p class="xh_warning"><?=$this->text(...$error)?></p>
 <?endforeach?>

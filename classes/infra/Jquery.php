@@ -21,24 +21,28 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Value\Response;
-
-class Responder
+/** @codeCoverageIgnore */
+class Jquery
 {
-    public static function respond(Response $response): string
-    {
-        global $title;
+    /** @var string */
+    private $jqueryFolder;
 
-        if ($response->location() !== null) {
-            while (ob_get_level()) {
-                ob_end_clean();
-            }
-            header("Location: " . $response->location(), true, 303);
-            exit;
-        }
-        if ($response->title() !== null) {
-            $title = $response->title();
-        }
-        return $response->output();
+    public function __construct(string $jqueryFolder)
+    {
+        $this->jqueryFolder = $jqueryFolder;
+    }
+
+    /** @return void */
+    public function include()
+    {
+        include_once $this->jqueryFolder . "jquery.inc.php";
+        include_jQuery();
+    }
+
+    /** @return void */
+    public function includePlugin(string $name, string $path)
+    {
+        include_once $this->jqueryFolder . "jquery.inc.php";
+        include_jQueryPlugin($name, $path);
     }
 }

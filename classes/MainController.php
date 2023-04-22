@@ -21,6 +21,7 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
@@ -38,6 +39,9 @@ class MainController
     /** @var Repository */
     private $repository;
 
+    /** @var Jquery */
+    private $jquery;
+
     /** @var View */
     private $view;
 
@@ -46,11 +50,13 @@ class MainController
         string $pluginFolder,
         array $conf,
         Repository $repository,
+        Jquery $jquery,
         View $view
     ) {
         $this->pluginFolder = $pluginFolder;
         $this->conf = $conf;
         $this->repository = $repository;
+        $this->jquery = $jquery;
         $this->view = $view;
     }
 
@@ -61,6 +67,9 @@ class MainController
             return Response::create($this->view->error("error_gallery_missing", $filename));
         }
         [$width, $height, $errors] = $this->repository->dimensionsOf($images);
+        $this->jquery->include();
+        $this->jquery->includePlugin("scrollTo", $this->pluginFolder . "lib/jquery.scrollTo.min.js");
+        $this->jquery->includePlugin("serialScroll", $this->pluginFolder . "lib/jquery.serialScroll.min.js");
         return Response::create($this->view->render("gallery", [
             "images" => $this->imageRecords($images),
             "width" => $width,
@@ -68,8 +77,9 @@ class MainController
             "totalWidth" => count($images) * $width,
             "buttons" => $this->buttonRecords(),
             "config" => $this->jsConf(),
+            "script" => $this->pluginFolder . "imagescroller.min.js",
             "errors" => $request->adm() ? $errors : [],
-        ]))->withJs($this->pluginFolder);
+        ]));
     }
 
     /**

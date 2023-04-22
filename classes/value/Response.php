@@ -44,22 +44,12 @@ class Response
     private $title = null;
 
     /** @var string|null */
-    private $js = null;
-
-    /** @var string|null */
     private $location;
 
     public function withTitle(string $title): self
     {
         $that = clone $this;
         $that->title = $title;
-        return $that;
-    }
-
-    public function withJs(string $pluginFolder): self
-    {
-        $that = clone $this;
-        $that->js = $pluginFolder;
         return $that;
     }
 
@@ -71,11 +61,6 @@ class Response
     public function title(): ?string
     {
         return $this->title;
-    }
-
-    public function js(): ?string
-    {
-        return $this->js;
     }
 
     public function location(): ?string

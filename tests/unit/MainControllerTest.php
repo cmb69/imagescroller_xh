@@ -22,6 +22,7 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
+use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
@@ -38,12 +39,12 @@ class MainControllerTest extends TestCase
         $repository->method("dimensionsOf")->willReturn([800, 600, [
             ["error_no_image_new", "./userfiles/images/image.jpg"]]
         ]);
+        $jquery = $this->createMock(Jquery::class);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
-        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $view);
+        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $jquery, $view);
         $request = $this->createMock(Request::class);
         $request->method("adm")->willReturn(true);
         $response = $sut($request, "test");
-        $this->assertEquals("./plugins/imagescroller/", $response->js());
         Approvals::verifyHtml($response->output());
     }
 
@@ -51,11 +52,11 @@ class MainControllerTest extends TestCase
     {
         $conf = XH_includeVar("./config/config.php", "plugin_cf")["imagescroller"];
         $repository = $this->createMock(Repository::class);
+        $jquery = $this->createMock(Jquery::class);
         $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
-        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $view);
+        $sut = new MainController("./plugins/imagescroller/", $conf, $repository, $jquery, $view);
         $request = $this->createMock(Request::class);
         $response = $sut($request, "missing");
-        $this->assertNull($response->js());
         Approvals::verifyHtml($response->output());
     }
 

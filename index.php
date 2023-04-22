@@ -39,4 +39,4 @@ function imagescroller($path)
     return Responder::respond(Dic::makeMainController()(Request::current(), $path));
 }
 
-Responder::respond(Dic::makeMain()());
+Dic::makeMain()();
