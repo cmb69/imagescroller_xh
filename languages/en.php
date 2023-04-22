@@ -11,6 +11,7 @@ $plugin_tx['imagescroller']['error_image_size']="Image size %1dx%2d (expected %3
 $plugin_tx['imagescroller']['error_no_image_new']="%s is not an image!";
 $plugin_tx['imagescroller']['error_image_size_new']="%s has size %2\$dx%3\$d, but expected %4\$dx%5\$d!";
 $plugin_tx['imagescroller']['error_save']="Gallery %s couldn't be saved!";
+$plugin_tx['imagescroller']['error_unauthorized']="You are not authorized for this action!";
 
 $plugin_tx['imagescroller']['menu_main']="Galleries";
 $plugin_tx['imagescroller']['label_galleries']="Galleries";

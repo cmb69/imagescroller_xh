@@ -21,6 +21,7 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\SystemChecker;
@@ -63,7 +64,11 @@ class Dic
 
     public static function makeMainAdminController(): MainAdminController
     {
-        return new MainAdminController(self::makeRepository(), self::makeView());
+        return new MainAdminController(
+            new CsrfProtector(),
+            self::makeRepository(),
+            self::makeView()
+        );
     }
 
     private static function makeRepository(): Repository

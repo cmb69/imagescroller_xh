@@ -11,6 +11,7 @@ $plugin_tx['imagescroller']['error_image_size']="Bildgröße %1dx%2d (erwartet %
 $plugin_tx['imagescroller']['error_no_image_new']="%s ist kein Bild!";
 $plugin_tx['imagescroller']['error_image_size_new']="%s hat die Größe %2\$dx%3\$d, aber %4\$dx%5\$d erwartet!";
 $plugin_tx['imagescroller']['error_save']="Die Galerie %s konnte nicht gespeichert werden!";
+$plugin_tx['imagescroller']['error_unauthorized']="Sie sind nicht befugt diese Aktion durchzuführen!";
 
 $plugin_tx['imagescroller']['menu_main']="Galleries";
 $plugin_tx['imagescroller']['label_galleries']="Galerien";

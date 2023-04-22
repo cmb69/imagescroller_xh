@@ -21,6 +21,7 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\View;
@@ -29,14 +30,18 @@ use Imagescroller\Value\Response;
 
 class MainAdminController
 {
+    /** @var CsrfProtector */
+    private $csrfProtector;
+
     /** @var Repository */
     private $repository;
 
     /** @var View */
     private $view;
 
-    public function __construct(Repository $repository, View $view)
+    public function __construct(CsrfProtector $csrfProtector, Repository $repository, View $view)
     {
+        $this->csrfProtector = $csrfProtector;
         $this->repository = $repository;
         $this->view = $view;
     }
@@ -73,6 +78,9 @@ class MainAdminController
 
     public function save(Request $request): Response
     {
+        if (!$this->csrfProtector->check()) {
+            return Response::create($this->view->error("error_unauthorized"));
+        }
         $contents = $request->contentsPost()["contents"];
         $gallery = $request->gallery();
         if (!$this->repository->saveGallery($gallery, $contents)) {
@@ -85,6 +93,7 @@ class MainAdminController
     private function renderGalleryForm(string $contents, array $errors = []): string
     {
         return $this->view->render("gallery_form", [
+            "token" => $this->csrfProtector->token(),
             "contents" => $contents,
             "errors" => $errors,
         ]);
