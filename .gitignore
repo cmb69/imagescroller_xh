@@ -1,4 +1,4 @@
-tests/coverage
+/coverage
 vendor
 /imagescroller.min.js
 /README.htm

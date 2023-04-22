@@ -22,33 +22,56 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
+use Imagescroller\Infra\FakeRepository;
 use Imagescroller\Infra\FakeRequest;
-use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\View;
-use Imagescroller\Value\Image;
+use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
 class MainAdminControllerTest extends TestCase
 {
+    private $repository;
+    private $view;
+
+    public function setUp(): void
+    {
+        vfsStream::setup("root");
+        mkdir("vfs://root/userfiles/images/", 0777, true);
+        mkdir("vfs://root/userfiles/images/gallery1", 0777, true);
+        mkdir("vfs://root/userfiles/images/gallery2", 0777, true);
+        mkdir("vfs://root/userfiles/images/gallery3", 0777, true);
+        touch("vfs://root/userfiles/images/image1.jpg");
+        touch("vfs://root/userfiles/images/image2.jpg");
+        touch("vfs://root/userfiles/images/image3.jpg");
+        mkdir("vfs://root/content/imagescroller/", 0777, true);
+        $this->repository = new FakeRepository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
+    }
+
+    private function sut(): MainAdminController
+    {
+        return new MainAdminController(
+            $this->repository,
+            $this->view
+        );
+    }
+
     public function testRendersOverview(): void
     {
-        $sut = $this->sut();
         $request = new FakeRequest(["query" => "imagescroller&admin=plugin_main"]);
-        $response = $sut($request);
+        $response = $this->sut()($request);
         Approvals::verifyHtml($response->output());
     }
 
     public function testRendersCreateForm(): void
     {
-        $sut = $this->sut();
         $request = new FakeRequest(["query" => "imagescroller&admin=plugin_main&action=edit"]);
-        $response = $sut($request);
+        $response = $this->sut()($request);
         Approvals::verifyHtml($response->output());
     }
 
     public function testRedirectsAfterSaving(): void
     {
-        $sut = $this->sut();
         $request = new FakeRequest([
             "query" => "imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
             "post" => [
@@ -56,13 +79,16 @@ class MainAdminControllerTest extends TestCase
                 "imagescroller_do" => "",
             ],
         ]);
-        $response = $sut($request);
-        $this->assertEquals("http://example.com/?imagescroller&admin=plugin_main&imagescroller_gallery=gallery2", $response->location());
+        $response = $this->sut()($request);
+        $this->assertEquals(
+            "http://example.com/?imagescroller&admin=plugin_main&imagescroller_gallery=gallery2",
+            $response->location()
+        );
     }
 
     public function testReportsFailureToSave(): void
     {
-        $sut = $this->sut(["saveGallery" => false]);
+        $this->repository->options(["saveGallery" => false]);
         $request = new FakeRequest([
             "query" => "imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
             "post" => [
@@ -70,27 +96,7 @@ class MainAdminControllerTest extends TestCase
                 "imagescroller_do" => "",
             ],
         ]);
-        $response = $sut($request);
+        $response = $this->sut()($request);
         Approvals::verifyHtml($response->output());
-    }
-
-    private function sut(array $opts = [])
-    {
-        $opts += ["saveGallery" => true];
-        $repository = $this->createMock(Repository::class);
-        $repository->method("find")->willReturn($this->images());
-        $repository->method("findAll")->willReturn(["gallery1", "gallery2", "gallery3"]);
-        $repository->method("saveGallery")->willReturn($opts["saveGallery"]);
-        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
-        return new MainAdminController($repository, $view);
-    }
-
-    private function images(): array
-    {
-        return [
-            new Image("image1"),
-            new Image("image2"),
-            new Image("image3"),
-        ];
     }
 }

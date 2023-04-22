@@ -1,17 +1,20 @@
 <!-- imagescroller gallery -->
 <script type="module" src="./plugins/imagescroller/imagescroller.min.js"></script>
-<p class="xh_warning">./userfiles/images/image.jpg is not an image!</p>
+<p class="xh_warning">vfs://root/userfiles/images/image.jpg is not an image!</p>
 <div class="imagescroller_container" data-config='{"duration":1000,"interval":5000,"constant":false,"dynamicControls":true}'
    style="width: 800px; height: 600px">
   <div class="imagescroller" style="width: 800px; height: 600px">
-    <div style="width: 2400px; height: 600px">
+    <div style="width: 3200px; height: 600px">
+      <div class="imagescroller_item">
+          <img src="vfs://root/userfiles/images/image.jpg" alt="" width="800" height="600">
+      </div>
       <div class="imagescroller_item">
         <a href="http://example.com/">
-          <img src="image1.jpg" alt="" width="800" height="600">
+          <img src="vfs://root/userfiles/images/image1.jpg" alt="" width="800" height="600">
         </a>
       </div>
       <div class="imagescroller_item">
-          <img src="image2.jpg" alt="" width="800" height="600">
+          <img src="vfs://root/userfiles/images/image2.jpg" alt="" width="800" height="600">
         <div class="imagescroller_info">
           <h6>
               Nice image          </h6>
@@ -20,7 +23,7 @@
       </div>
       <div class="imagescroller_item">
         <a href="/?InternalPage">
-          <img src="image3.jpg" alt="" width="800" height="600">
+          <img src="vfs://root/userfiles/images/image3.jpg" alt="" width="800" height="600">
         </a>
         <div class="imagescroller_info">
           <h6>

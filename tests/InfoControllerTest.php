@@ -28,16 +28,33 @@ use PHPUnit\Framework\TestCase;
 
 class InfoControllerTest extends TestCase
 {
+    private $pluginFolder;
+    private $systemChecker;
+    private $view;
+
+    public function setUp(): void
+    {
+        $this->pluginFolder = "./plugins/imagescroller/";
+        $this->systemChecker = $this->createMock(SystemChecker::class);
+        $this->systemChecker->method("checkVersion")->willReturn(false);
+        $this->systemChecker->method("checkExtension")->willReturn(false);
+        $this->systemChecker->method("checkPlugin")->willReturn(false);
+        $this->systemChecker->method("checkWritability")->willReturn(false);
+        $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
+    }
+
+    private function sut(): InfoController
+    {
+        return new InfoController(
+            $this->pluginFolder,
+            $this->systemChecker,
+            $this->view
+        );
+    }
+
     public function testRendersPluginInfo(): void
     {
-        $systemChecker = $this->createMock(SystemChecker::class);
-        $systemChecker->method("checkVersion")->willReturn(false);
-        $systemChecker->method("checkExtension")->willReturn(false);
-        $systemChecker->method("checkPlugin")->willReturn(false);
-        $systemChecker->method("checkWritability")->willReturn(false);
-        $view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
-        $sut = new InfoController("./plugins/imagescroller/", $systemChecker, $view);
-        $response = $sut();
+        $response = $this->sut()();
         $this->assertEquals("Imagescroller – 1.0beta3", $response->title());
         Approvals::verifyHtml($response->output());
     }
