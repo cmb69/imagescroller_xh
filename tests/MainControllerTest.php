@@ -25,7 +25,7 @@ use ApprovalTests\Approvals;
 use Imagescroller\Infra\FakeRepository;
 use Imagescroller\Infra\FakeRequest;
 use Imagescroller\Infra\Image;
-use Imagescroller\Infra\Jquery;
+use Imagescroller\Infra\JqueryFake;
 use Imagescroller\Infra\View;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
@@ -51,7 +51,7 @@ class MainControllerTest extends TestCase
         $this->pluginFolder = "./plugins/imagescroller/";
         $this->conf = XH_includeVar("./config/config.php", "plugin_cf")["imagescroller"];
         $this->repository = new FakeRepository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
-        $this->jquery = $this->createMock(Jquery::class);
+        $this->jquery = new JqueryFake();
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
     }
 
