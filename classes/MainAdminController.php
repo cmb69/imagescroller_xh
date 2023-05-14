@@ -24,9 +24,9 @@ namespace Imagescroller;
 use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
+use Imagescroller\Infra\Response;
 use Imagescroller\Infra\View;
 use Imagescroller\Logic\Util;
-use Imagescroller\Value\Response;
 
 class MainAdminController
 {

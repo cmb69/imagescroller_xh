@@ -19,7 +19,7 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Imagescroller\Value;
+namespace Imagescroller\Infra;
 
 class Url
 {

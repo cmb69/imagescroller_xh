@@ -21,7 +21,7 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Value\Response;
+use Imagescroller\Infra\Response;
 
 class Responder
 {

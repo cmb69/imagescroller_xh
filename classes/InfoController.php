@@ -21,9 +21,9 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Response;
 use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;
-use Imagescroller\Value\Response;
 
 class InfoController
 {

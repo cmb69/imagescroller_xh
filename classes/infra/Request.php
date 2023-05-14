@@ -21,8 +21,6 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Value\Url;
-
 class Request
 {
     /** @codeCoverageIgnore */

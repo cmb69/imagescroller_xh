@@ -24,9 +24,9 @@ namespace Imagescroller;
 use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
+use Imagescroller\Infra\Response;
 use Imagescroller\Infra\View;
 use Imagescroller\Value\Image;
-use Imagescroller\Value\Response;
 
 class MainController
 {

@@ -21,8 +21,8 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Response;
 use Imagescroller\Infra\Jquery;
-use Imagescroller\Value\Response;
 
 class Main
 {
