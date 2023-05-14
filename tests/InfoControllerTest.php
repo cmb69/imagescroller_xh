@@ -22,7 +22,7 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\SystemChecker;
+use Imagescroller\Infra\SystemCheckerFake;
 use Imagescroller\Infra\View;
 use PHPUnit\Framework\TestCase;
 
@@ -35,11 +35,7 @@ class InfoControllerTest extends TestCase
     public function setUp(): void
     {
         $this->pluginFolder = "./plugins/imagescroller/";
-        $this->systemChecker = $this->createMock(SystemChecker::class);
-        $this->systemChecker->method("checkVersion")->willReturn(false);
-        $this->systemChecker->method("checkExtension")->willReturn(false);
-        $this->systemChecker->method("checkPlugin")->willReturn(false);
-        $this->systemChecker->method("checkWritability")->willReturn(false);
+        $this->systemChecker = new SystemCheckerFake();
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
     }
 
