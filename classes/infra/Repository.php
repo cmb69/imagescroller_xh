@@ -21,8 +21,6 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Value\Image;
-
 class Repository
 {
     /** @var string */
@@ -175,5 +173,24 @@ class Repository
     public function saveGallery(string $gallery, string $contents): bool
     {
         return file_put_contents($this->contentFolder . $gallery . ".txt", $contents) !== false;
+    }
+
+    /** @param list<Image> $images */
+    public static function recordJarFromImages(array $images, string $imageFolder): string
+    {
+        return implode("\n%%\n", array_map(function (Image $image) use ($imageFolder) {
+            $lines = [];
+            $lines[] = "Image: " . substr($image->filename(), strlen($imageFolder));
+            if ($image->url()) {
+                $lines[] = "URL: " . $image->url();
+            }
+            if ($image->title()) {
+                $lines[] = "Title: " . $image->title();
+            }
+            if ($image->description()) {
+                $lines[] = "Description: " . $image->description();
+            }
+            return implode("\n", $lines);
+        }, $images));
     }
 }

@@ -21,12 +21,12 @@
 
 namespace Imagescroller;
 
+use Imagescroller\Infra\Image;
 use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\Response;
 use Imagescroller\Infra\View;
-use Imagescroller\Value\Image;
 
 class MainController
 {

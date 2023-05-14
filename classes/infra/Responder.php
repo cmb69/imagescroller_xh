@@ -21,8 +21,6 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Infra\Response;
-
 class Responder
 {
     public static function respond(Response $response): string

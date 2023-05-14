@@ -26,7 +26,6 @@ use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\Response;
 use Imagescroller\Infra\View;
-use Imagescroller\Logic\Util;
 
 class MainAdminController
 {
@@ -73,7 +72,7 @@ class MainAdminController
         $gallery = $request->gallery();
         $images = $this->repository->find($gallery);
         assert($images !== null); // TODO: invalid assertion
-        $contents = Util::recordJarFromImages($images, $this->repository->imageFolder());
+        $contents = $this->repository->recordJarFromImages($images, $this->repository->imageFolder());
         return $this->respondWith($this->renderGalleryForm($contents));
     }
 

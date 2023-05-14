@@ -21,7 +21,6 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Value\Image;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
