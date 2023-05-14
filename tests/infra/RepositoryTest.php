@@ -28,10 +28,7 @@ class RepositoryTest extends TestCase
 {
     public function testFindsAllGalleryFolders(): void
     {
-        vfsStream::setup("root");
-        mkdir("vfs://root/userfiles/images/one/", 0777, true);
-        mkdir("vfs://root/userfiles/images/two/", 0777, true);
-        mkdir("vfs://root/userfiles/images/three/", 0777, true);
+        vfsStream::setup("root", null, ["userfiles" => ["images" => ["one" => [], "two" => [], "three" => []]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $galleries = $sut->findAll();
         $this->assertEquals(["one", "three", "two"], $galleries);
@@ -39,12 +36,12 @@ class RepositoryTest extends TestCase
 
     public function testFindsAllGalleries(): void
     {
-        vfsStream::setup("root");
-        mkdir("vfs://root/content/imagescroller/", 0777, true);
-        touch("vfs://root/content/imagescroller/gallery1.txt");
-        touch("vfs://root/content/imagescroller/gallery2.txt");
-        touch("vfs://root/content/imagescroller/gallery3.txt");
-        touch("vfs://root/content/imagescroller/gallery4");
+        vfsStream::setup("root", null, ["content" => ["imagescroller" => [
+            "gallery1.txt" => "",
+            "gallery2.txt" => "",
+            "gallery3.txt" => "",
+            "gallery4" => "",
+        ]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $galleries = $sut->findAllGalleries();
         $this->assertEquals(["gallery1", "gallery2", "gallery3"], $galleries);
@@ -52,11 +49,11 @@ class RepositoryTest extends TestCase
 
     public function testFindsImagesByFolder(): void
     {
-        vfsStream::setup("root");
-        mkdir("vfs://root/userfiles/images/test/", 0777, true);
-        touch("vfs://root/userfiles/images/test/one.jpg");
-        touch("vfs://root/userfiles/images/test/two.jpg");
-        touch("vfs://root/userfiles/images/test/three.jpg");
+        vfsStream::setup("root", null, ["userfiles" => ["images" => ["test" => [
+            "one.jpg" => "",
+            "two.jpg" => "",
+            "three.jpg" => "",
+        ]]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("test");
         $expected = [
@@ -69,9 +66,7 @@ class RepositoryTest extends TestCase
 
     public function testFindsImagesByFile(): void
     {
-        vfsStream::setup("root");
-        mkdir("vfs://root/content/imagescroller/", 0777, true);
-        file_put_contents("vfs://root/content/imagescroller/gallery.txt", $this->gallery());
+        vfsStream::setup("root", null, ["content" => ["imagescroller" => ["gallery.txt" => $this->gallery()]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("gallery");
         $expected = [
@@ -102,11 +97,11 @@ class RepositoryTest extends TestCase
 
     public function testDimensionsOf(): void
     {
-        vfsStream::setup("root");
-        mkdir("vfs://root/userfiles/images/test/", 0777, true);
-        imagejpeg(imagecreate(100, 50), "vfs://root/userfiles/images/test/one.jpg");
-        file_put_contents("vfs://root/userfiles/images/test/two.jpg", "blah");
-        imagejpeg(imagecreate(50, 100), "vfs://root/userfiles/images/test/three.jpg");
+        vfsStream::setup("root", null, ["userfiles" => ["images" => ["test" => [
+            "one.jpg" => $this->jpegImage(100, 50),
+            "two.jpg" => "blah",
+            "three.jpg" => $this->jpegImage(50, 100),
+        ]]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("test");
         [$width, $height, $errors] = $sut->dimensionsOf($images);
@@ -121,8 +116,7 @@ class RepositoryTest extends TestCase
 
     public function testSavesGallery(): void
     {
-        vfsStream::setup("root");
-        mkdir("vfs://root/content/imagescroller/", 0777, true);
+        vfsStream::setup("root", null, ["content" => ["imagescroller" => []]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $sut->saveGallery("test", $this->gallery());
         $this->assertStringEqualsFile("vfs://root/content/imagescroller/test.txt", $this->gallery());
@@ -147,5 +141,12 @@ class RepositoryTest extends TestCase
         URL: http://3-magi.net/
         Description: My favorite website ;)
         EOT;
+    }
+
+    private function jpegImage(int $width, int $height): string
+    {
+        ob_start();
+        imagejpeg(imagecreate($width, $height));
+        return ob_get_clean();
     }
 }
