@@ -22,9 +22,9 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\SystemCheckerFake;
 use Imagescroller\Infra\View;
 use PHPUnit\Framework\TestCase;
+use Plib\FakeSystemChecker;
 
 class InfoControllerTest extends TestCase
 {
@@ -35,7 +35,7 @@ class InfoControllerTest extends TestCase
     public function setUp(): void
     {
         $this->pluginFolder = "./plugins/imagescroller/";
-        $this->systemChecker = new SystemCheckerFake();
+        $this->systemChecker = new FakeSystemChecker();
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
     }
 

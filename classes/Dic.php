@@ -21,11 +21,11 @@
 
 namespace Imagescroller;
 
-use Plib\Jquery;
 use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
-use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;
+use Plib\Jquery;
+use Plib\SystemChecker;
 
 class Dic
 {

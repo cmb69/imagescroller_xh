@@ -22,8 +22,8 @@
 namespace Imagescroller;
 
 use Imagescroller\Infra\Response;
-use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;
+use Plib\SystemChecker;
 
 class InfoController
 {
