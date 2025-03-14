@@ -48,7 +48,7 @@ class InfoController
         return Response::create($this->view->render("info", [
             "version" => IMAGESCROLLER_VERSION,
             "checks" => [
-                $this->checkPhpVersion("5.4.0"),
+                $this->checkPhpVersion("7.1.0"),
                 $this->checkExtension("json"),
                 $this->checkXhVersion("1.6.3"),
                 $this->checkPlugin("jquery"),

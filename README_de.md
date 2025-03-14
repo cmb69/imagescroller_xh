@@ -19,7 +19,7 @@ einer speziellen Textdatei eingegeben werden.
 ## Voraussetzungen
 
 Imagescroller_XH ist ein Plugin für [CMSimple_XH](https://cmsimple-xh.org/de/).
-Es benötigt CMSimple_XH ≥ 1.6.3, und PHP ≥5.4.0 mit der JSON Extension.
+Es benötigt CMSimple_XH ≥ 1.6.3, und PHP ≥ 7.1.0 mit der JSON Extension.
 
 ## Download
 
