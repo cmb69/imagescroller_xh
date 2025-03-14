@@ -21,8 +21,8 @@
 
 namespace Imagescroller;
 
+use Plib\Jquery;
 use Imagescroller\Infra\CsrfProtector;
-use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\SystemChecker;
 use Imagescroller\Infra\View;

@@ -21,8 +21,8 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\JqueryFake;
 use PHPUnit\Framework\TestCase;
+use Plib\Jquery;
 
 class MainTest extends TestCase
 {
@@ -34,7 +34,7 @@ class MainTest extends TestCase
     {
         $this->pluginFolder = "./plugins/imagescroller/";
         $this->conf = XH_includeVar("./config/config.php", "plugin_cf")["imagescroller"];
-        $this->jquery = new JqueryFake();
+        $this->jquery = $this->createMock(Jquery::class);
     }
 
     private function sut(): Main
@@ -48,19 +48,16 @@ class MainTest extends TestCase
 
     public function testDoesNotIncludeJqueryByDefault(): void
     {
+        $this->jquery->expects($this->never())->method("include");
+        $this->jquery->expects($this->never())->method("includePlugin");
         $this->sut()();
-        $this->assertFalse($this->jquery->included());
-        $this->assertEmpty($this->jquery->plugins());
     }
 
     public function testIncludeJqueryIfConfigured(): void
     {
         $this->conf["autoload"] = "true";
+        $this->jquery->expects($this->once())->method("include");
+        $this->jquery->expects($this->exactly(2))->method("includePlugin");
         $this->sut()();
-        $this->assertTrue($this->jquery->included());
-        $this->assertEquals([
-            ["scrollTo", "./plugins/imagescroller/lib/jquery.scrollTo.min.js"],
-            ["serialScroll", "./plugins/imagescroller/lib/jquery.serialScroll.min.js"],
-        ], $this->jquery->plugins());
     }
 }

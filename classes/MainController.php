@@ -21,8 +21,8 @@
 
 namespace Imagescroller;
 
+use Plib\Jquery;
 use Imagescroller\Infra\Image;
-use Imagescroller\Infra\Jquery;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\Response;
