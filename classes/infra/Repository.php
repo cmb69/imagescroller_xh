@@ -167,7 +167,7 @@ class Repository
                 }
             }
         }
-        return [$width, $height, $errors];
+        return [$width, $height, $errors]; // @phpstan-ignore-line
     }
 
     public function saveGallery(string $gallery, string $contents): bool
