@@ -21,12 +21,12 @@
 
 namespace Imagescroller;
 
-use Plib\Jquery;
 use Imagescroller\Infra\Image;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\Response;
-use Imagescroller\Infra\View;
+use Plib\Jquery;
+use Plib\View;
 
 class MainController
 {
@@ -64,7 +64,7 @@ class MainController
     {
         $images = $this->repository->find($filename);
         if ($images === null) {
-            return Response::create($this->view->error("error_gallery_missing", $filename));
+            return Response::create($this->view->message("fail", "error_gallery_missing", $filename));
         }
         [$width, $height, $errors] = $this->repository->dimensionsOf($images);
         $this->jquery->include();

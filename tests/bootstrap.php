@@ -5,6 +5,7 @@ require_once "../../cmsimple/functions.php";
 
 require_once "../plib/classes/Jquery.php";
 require_once "../plib/classes/SystemChecker.php";
+require_once "../plib/classes/View.php";
 require_once "../plib/classes/FakeSystemChecker.php";
 
 const CMSIMPLE_XH_VERSION = "CMSimple_XH 1.7.5";

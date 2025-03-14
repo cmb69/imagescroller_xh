@@ -1,6 +1,6 @@
 <?php
 
-use Imagescroller\Infra\View;
+use Plib\View;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
@@ -18,7 +18,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
   <p class="xh_fail"><?=$this->text(...$error)?></p>
 <?endforeach?>
   <form method="post">
-    <input type="hidden" name="imagescroller_token" value="<?=$token?>">
+    <input type="hidden" name="imagescroller_token" value="<?=$this->esc($token)?>">
     <p>
       <textarea name="imagescroller_contents"><?=$contents?></textarea>
     </p>

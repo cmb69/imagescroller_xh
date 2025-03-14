@@ -23,9 +23,9 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
-use Imagescroller\Infra\View;
 use Plib\Jquery;
 use Plib\SystemChecker;
+use Plib\View;
 
 class Dic
 {

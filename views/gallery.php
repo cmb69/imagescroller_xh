@@ -1,6 +1,6 @@
 <?php
 
-use Imagescroller\Infra\View;
+use Plib\View;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
@@ -17,7 +17,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
  */
 ?>
 <!-- imagescroller gallery -->
-<script type="module" src="<?=$script?>"></script>
+<script type="module" src="<?=$this->esc($script)?>"></script>
 <?foreach ($errors as $error):?>
 <p class="xh_warning"><?=$this->text(...$error)?></p>
 <?endforeach?>
@@ -28,9 +28,9 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 <?foreach ($images as $image):?>
       <div class="imagescroller_item">
 <?  if ($image['url'] != ''):?>
-        <a href="<?=$image['url']?>">
+        <a href="<?=$this->esc($image['url'])?>">
 <?  endif?>
-          <img src="<?=$image['filename']?>" alt="" width="<?=$width?>" height="<?=$height?>">
+          <img src="<?=$this->esc($image['filename'])?>" alt="" width="<?=$width?>" height="<?=$height?>">
 <?  if ($image['url'] != ''):?>
         </a>
 <?  endif?>
@@ -38,14 +38,14 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
         <div class="imagescroller_info">
           <h6>
 <?    if ($image['url'] != ''):?>
-            <a href="<?=$image['url']?>">
+            <a href="<?=$this->esc($image['url'])?>">
 <?    endif?>
-              <?=$image['title']?>
+              <?=$this->esc($image['title'] ?? "")?>
 <?    if ($image['url'] != ''):?>
             </a>
 <?    endif?>
           </h6>
-          <p><?=$image['description']?></p>
+          <p><?=$this->esc($image['description'] ?? "")?></p>
         </div>
 <?  endif?>
       </div>
@@ -54,7 +54,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
   </div>
   <div class="imagescroller_controls" style="width: <?=$width?>px; height: <?=$height?>px;">
 <?foreach ($buttons as $button):?>
-    <img class="<?=$button['class']?>" src="<?=$button['src']?>" alt="<?=$this->text($button['altkey'])?>">
+    <img class="<?=$this->esc($button['class'])?>" src="<?=$this->esc($button['src'])?>" alt="<?=$this->text($button['altkey'])?>">
 <?endforeach?>
   </div>
 </div>

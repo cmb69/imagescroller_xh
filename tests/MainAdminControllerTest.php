@@ -25,9 +25,9 @@ use ApprovalTests\Approvals;
 use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\FakeRepository;
 use Imagescroller\Infra\FakeRequest;
-use Imagescroller\Infra\View;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Plib\View;
 
 class MainAdminControllerTest extends TestCase
 {

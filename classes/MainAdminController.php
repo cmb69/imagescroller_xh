@@ -25,7 +25,7 @@ use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
 use Imagescroller\Infra\Response;
-use Imagescroller\Infra\View;
+use Plib\View;
 
 class MainAdminController
 {
@@ -79,7 +79,7 @@ class MainAdminController
     public function save(Request $request): Response
     {
         if (!$this->csrfProtector->check()) {
-            return $this->respondWith($this->view->error("error_unauthorized"));
+            return $this->respondWith($this->view->message("fail", "error_unauthorized"));
         }
         $contents = $request->contentsPost()["contents"];
         $gallery = $request->gallery();

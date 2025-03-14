@@ -25,10 +25,10 @@ use ApprovalTests\Approvals;
 use Imagescroller\Infra\FakeRepository;
 use Imagescroller\Infra\FakeRequest;
 use Imagescroller\Infra\Image;
-use Imagescroller\Infra\View;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Plib\Jquery;
+use Plib\View;
 
 class MainControllerTest extends TestCase
 {

@@ -22,9 +22,9 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\View;
 use PHPUnit\Framework\TestCase;
 use Plib\FakeSystemChecker;
+use Plib\View;
 
 class InfoControllerTest extends TestCase
 {

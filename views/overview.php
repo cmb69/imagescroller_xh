@@ -1,6 +1,6 @@
 <?php
 
-use Imagescroller\Infra\View;
+use Plib\View;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
 
@@ -23,8 +23,8 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
         <tr>
           <td>
             <label>
-              <input type="radio" name="imagescroller_gallery" value="<?=$gallery?>">
-              <span><?=$gallery?></span>
+              <input type="radio" name="imagescroller_gallery" value="<?=$this->esc($gallery)?>">
+              <span><?=$this->esc($gallery)?></span>
             </label>
           </td>
         </tr>
@@ -38,8 +38,8 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
         <tr>
           <td>
             <label>
-              <input type="radio" name="imagescroller_gallery" value="<?=$folder?>">
-              <span><?=$folder?></span>
+              <input type="radio" name="imagescroller_gallery" value="<?=$this->esc($folder)?>">
+              <span><?=$this->esc($folder)?></span>
             </label>
           </td>
         </tr>
