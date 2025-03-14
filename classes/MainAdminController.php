@@ -24,7 +24,7 @@ namespace Imagescroller;
 use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
 use Imagescroller\Infra\Request;
-use Imagescroller\Infra\Response;
+use Plib\Response;
 use Plib\View;
 
 class MainAdminController

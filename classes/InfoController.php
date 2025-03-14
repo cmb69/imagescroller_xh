@@ -21,7 +21,7 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\Response;
+use Plib\Response;
 use Plib\SystemChecker;
 use Plib\View;
 
