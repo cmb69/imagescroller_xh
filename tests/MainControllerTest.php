@@ -23,10 +23,10 @@ namespace Imagescroller;
 
 use ApprovalTests\Approvals;
 use Imagescroller\Infra\FakeRepository;
-use Imagescroller\Infra\FakeRequest;
 use Imagescroller\Infra\Image;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Plib\FakeRequest;
 use Plib\Jquery;
 use Plib\View;
 
@@ -69,7 +69,7 @@ class MainControllerTest extends TestCase
     public function testRendersGallery(): void
     {
         $this->repository->saveGallery("test", $this->repository->recordJarFromImages($this->images(), "vfs://root/userfiles/images/"));
-        $request = new FakeRequest(["adm" => true]);
+        $request = new FakeRequest(["admin" => true]);
         $response = $this->sut()($request, "test");
         Approvals::verifyHtml($response->output());
     }

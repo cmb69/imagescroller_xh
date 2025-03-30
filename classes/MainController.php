@@ -23,9 +23,9 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\Image;
 use Imagescroller\Infra\Repository;
-use Imagescroller\Infra\Request;
 use Plib\Response;
 use Plib\Jquery;
+use Plib\Request;
 use Plib\View;
 
 class MainController
@@ -78,7 +78,7 @@ class MainController
             "buttons" => $this->buttonRecords(),
             "config" => $this->jsConf(),
             "script" => $this->pluginFolder . "imagescroller.min.js",
-            "errors" => $request->adm() ? $errors : [],
+            "errors" => $request->admin() ? $errors : [],
         ]));
     }
 

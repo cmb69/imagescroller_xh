@@ -24,9 +24,9 @@ namespace Imagescroller;
 use ApprovalTests\Approvals;
 use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\FakeRepository;
-use Imagescroller\Infra\FakeRequest;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Plib\FakeRequest;
 use Plib\View;
 
 class MainAdminControllerTest extends TestCase
@@ -62,14 +62,14 @@ class MainAdminControllerTest extends TestCase
 
     public function testRendersOverview(): void
     {
-        $request = new FakeRequest(["query" => "imagescroller&admin=plugin_main"]);
+        $request = new FakeRequest();
         $response = $this->sut()($request);
         Approvals::verifyHtml($response->output());
     }
 
     public function testRendersCreateForm(): void
     {
-        $request = new FakeRequest(["query" => "imagescroller&admin=plugin_main&action=edit"]);
+        $request = new FakeRequest(["url" => "http://example.com/?imagescroller&admin=plugin_main&action=edit"]);
         $response = $this->sut()($request);
         $this->assertEquals("Imagescroller – Galleries", $response->title());
         Approvals::verifyHtml($response->output());
@@ -79,7 +79,7 @@ class MainAdminControllerTest extends TestCase
     {
         $this->csrfProtector->expects($this->once())->method("check")->willReturn(false);
         $request = new FakeRequest([
-            "query" => "imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
+            "url" => "http://example.com/?imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
             "post" => [
                 "imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3",
                 "imagescroller_do" => "",
@@ -94,7 +94,7 @@ class MainAdminControllerTest extends TestCase
     {
         $this->csrfProtector->expects($this->once())->method("check")->willReturn(true);
         $request = new FakeRequest([
-            "query" => "imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
+            "url" => "http://example.com/?imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
             "post" => [
                 "imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3",
                 "imagescroller_do" => "",
@@ -112,7 +112,7 @@ class MainAdminControllerTest extends TestCase
         $this->csrfProtector->expects($this->once())->method("check")->willReturn(true);
         $this->repository->options(["saveGallery" => false]);
         $request = new FakeRequest([
-            "query" => "imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
+            "url" => "http://example.com/?imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
             "post" => [
                 "imagescroller_contents" => "Image: image1\n%%\nImage: image2\n%%\nImage: image3",
                 "imagescroller_do" => "",

@@ -23,7 +23,7 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
-use Imagescroller\Infra\Request;
+use Plib\Request;
 use Plib\Response;
 use Plib\View;
 
@@ -47,7 +47,7 @@ class MainAdminController
 
     public function __invoke(Request $request): Response
     {
-        switch ($request->action()) {
+        switch ($this->action($request)) {
             default:
                 return $this->overview();
             case "edit":
@@ -55,6 +55,21 @@ class MainAdminController
             case "do_edit":
                 return $this->save($request);
         }
+    }
+
+    private function action(Request $request): string
+    {
+        $action = $request->get("action");
+        if (!is_string($action)) {
+            return "";
+        }
+        if (!strncmp($action, "do_", strlen("do_"))) {
+            return "";
+        }
+        if ($request->post("imagescroller_do") !== null) {
+            $action = "do_" . $action;
+        }
+        return $action;
     }
 
     public function overview(): Response
@@ -69,7 +84,7 @@ class MainAdminController
 
     public function edit(Request $request): Response
     {
-        $gallery = $request->gallery();
+        $gallery = $request->get("imagescroller_gallery") ?? "";
         $images = $this->repository->find($gallery);
         assert($images !== null); // TODO: invalid assertion
         $contents = $this->repository->recordJarFromImages($images, $this->repository->imageFolder());
@@ -81,8 +96,8 @@ class MainAdminController
         if (!$this->csrfProtector->check()) {
             return $this->respondWith($this->view->message("fail", "error_unauthorized"));
         }
-        $contents = $request->contentsPost()["contents"];
-        $gallery = $request->gallery();
+        $contents = $request->post("imagescroller_contents") ?? "";
+        $gallery = $request->get("imagescroller_gallery") ?? "";
         if (!$this->repository->saveGallery($gallery, $contents)) {
             return $this->respondWith($this->renderGalleryForm($contents, [["error_save", $gallery]]));
         }
