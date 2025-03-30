@@ -19,32 +19,42 @@
  * along with Imagescroller_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Imagescroller\Infra;
+namespace Imagescroller\Model;
 
 class Image
 {
     /** @var string */
     private $filename;
 
-    /** @var string|null */
-    private $url;
+    /** @var ?string */
+    private $url = null;
 
-    /** @var string|null */
-    private $title;
+    /** @var ?string */
+    private $title = null;
 
-    /** @var string|null */
-    private $description;
+    /** @var ?string */
+    private $description = null;
 
-    public function __construct(
-        string $filename,
-        ?string $url = null,
-        ?string $title = null,
-        ?string $description = null
-    ) {
-        $this->filename = $filename;
-        $this->url = $url;
-        $this->title = $title;
-        $this->description = $description;
+    public static function fromFilename(string $filename): self
+    {
+        $that = new self();
+        $that->filename = $filename;
+        return $that;
+    }
+
+    /** @param array{filename:string,url:string,title:string,description:string} $record */
+    public static function fromRecord(array $record): self
+    {
+        $that = new self();
+        $that->filename = $record["filename"];
+        $that->url = $record["url"];
+        $that->title = $record["title"];
+        $that->description = $record["description"];
+        return $that;
+    }
+
+    private function __construct()
+    {
     }
 
     public function filename(): string

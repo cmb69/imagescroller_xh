@@ -21,8 +21,8 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\Image;
 use Imagescroller\Infra\Repository;
+use Imagescroller\Model\Gallery;
 use Plib\Response;
 use Plib\Jquery;
 use Plib\Request;
@@ -62,19 +62,19 @@ class MainController
 
     public function __invoke(Request $request, string $filename): Response
     {
-        $images = $this->repository->find($filename);
-        if ($images === null) {
+        $gallery = $this->repository->find($filename);
+        if ($gallery === null) {
             return Response::create($this->view->message("fail", "error_gallery_missing", $filename));
         }
-        [$width, $height, $errors] = $this->repository->dimensionsOf($images);
+        [$width, $height, $errors] = $this->repository->dimensionsOf($gallery);
         $this->jquery->include();
         $this->jquery->includePlugin("scrollTo", $this->pluginFolder . "lib/jquery.scrollTo.min.js");
         $this->jquery->includePlugin("serialScroll", $this->pluginFolder . "lib/jquery.serialScroll.min.js");
         return Response::create($this->view->render("gallery", [
-            "images" => $this->imageRecords($images),
+            "images" => $this->imageRecords($gallery),
             "width" => $width,
             "height" => $height,
-            "totalWidth" => count($images) * $width,
+            "totalWidth" => count($gallery->images()) * $width,
             "buttons" => $this->buttonRecords(),
             "config" => $this->jsConf(),
             "script" => $this->pluginFolder . "imagescroller.min.js",
@@ -82,20 +82,19 @@ class MainController
         ]));
     }
 
-    /**
-     * @param list<Image> $images
-     * @return list<array{filename:string,url:?string,title:?string,description:?string}>
-     */
-    private function imageRecords(array $images): array
+    /** @return list<array{filename:string,url:?string,title:?string,description:?string}> */
+    private function imageRecords(Gallery $gallery): array
     {
-        return array_map(function (Image $image) {
-            return [
+        $res = [];
+        foreach ($gallery->images() as $image) {
+            $res[] = [
                 "filename" => $image->filename(),
                 "url" => $image->url(),
                 "title" => $image->title(),
                 "description" => $image->description(),
             ];
-        }, $images);
+        }
+        return $res;
     }
 
     /** @return list<array{class:string,src:string,altkey:string}> */

@@ -21,6 +21,8 @@
 
 namespace Imagescroller\Infra;
 
+use Imagescroller\Model\Gallery;
+
 class Repository
 {
     /** @var string */
@@ -72,8 +74,7 @@ class Repository
         return array_values($galleries);
     }
 
-    /** @return list<Image>|null */
-    public function find(string $filename): ?array
+    public function find(string $filename): ?Gallery
     {
         if (is_file($this->contentFolder . $filename . ".txt")) {
             return $this->findByFile($this->contentFolder . $filename . ".txt");
@@ -84,8 +85,7 @@ class Repository
         }
     }
 
-    /** @return list<Image> */
-    private function findByFolder(string $foldername): array
+    private function findByFolder(string $foldername): Gallery
     {
         $foldername = rtrim($foldername, "/") . "/";
         $images = [];
@@ -93,13 +93,13 @@ class Repository
             while (($filename = readdir($dir)) !== false) {
                 $fullFilename = $foldername . $filename;
                 if ($this->isImage($fullFilename)) {
-                    $images[] = new Image($fullFilename);
+                    $images[] = $fullFilename;
                 }
             }
             closedir($dir);
         }
         //natcasesort($imgs); // TODO: add back sorting
-        return $images;
+        return Gallery::fromFolder($images);
     }
 
     private function isImage(string $filename): bool
@@ -109,11 +109,7 @@ class Repository
             && in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $imageexts);
     }
 
-    /**
-     * @param string $filename
-     * @return list<Image>
-     */
-    private function findByFile($filename)
+    private function findByFile(string $filename): Gallery
     {
         $images = [];
         $records = preg_split('/\R%%\R/', (string) file_get_contents($filename));
@@ -133,25 +129,22 @@ class Repository
                 continue;
             }
             $record["image"] = $this->imageFolder . $record["image"];
-            $images[] = new Image(
-                $record["image"],
-                $record["url"] ?? "",
-                $record["title"] ?? "",
-                $record["description"] ?? ""
-            );
+            $images[] = [
+                "filename" => $record["image"],
+                "url" => $record["url"] ?? "",
+                "title" => $record["title"] ?? "",
+                "description" => $record["description"] ?? "",
+            ];
         }
-        return $images;
+        return Gallery::fromFile($images);
     }
 
-    /**
-     * @param list<Image> $images
-     * @return array{int,int,list<array{string}>}
-     */
-    public function dimensionsOf(array $images): array
+    /** @return array{int,int,list<array{string}>} */
+    public function dimensionsOf(Gallery $gallery): array
     {
         $width = $height = 0;
         $errors = [];
-        foreach ($images as $image) {
+        foreach ($gallery->images() as $image) {
             $filename = $image->filename();
             if (!is_readable($filename) || !($size = @getimagesize($filename))) {
                 $errors[] = ["error_no_image_new", $filename];
@@ -175,10 +168,10 @@ class Repository
         return file_put_contents($this->contentFolder . $gallery . ".txt", $contents) !== false;
     }
 
-    /** @param list<Image> $images */
-    public static function recordJarFromImages(array $images, string $imageFolder): string
+    public static function recordJarFromImages(Gallery $gallery, string $imageFolder): string
     {
-        return implode("\n%%\n", array_map(function (Image $image) use ($imageFolder) {
+        $res = [];
+        foreach ($gallery->images() as $image) {
             $lines = [];
             $lines[] = "Image: " . substr($image->filename(), strlen($imageFolder));
             if ($image->url()) {
@@ -190,7 +183,8 @@ class Repository
             if ($image->description()) {
                 $lines[] = "Description: " . $image->description();
             }
-            return implode("\n", $lines);
-        }, $images));
+            $res[] = implode("\n", $lines);
+        }
+        return implode("\n%%\n", $res);
     }
 }

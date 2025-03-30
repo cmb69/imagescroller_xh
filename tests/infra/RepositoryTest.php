@@ -2,6 +2,7 @@
 
 namespace Imagescroller\Infra;
 
+use Imagescroller\Model\Gallery;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
@@ -37,11 +38,11 @@ class RepositoryTest extends TestCase
         ]]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("test");
-        $expected = [
-            new Image("vfs://root/userfiles/images/test/one.jpg"),
-            new Image("vfs://root/userfiles/images/test/two.jpg"),
-            new Image("vfs://root/userfiles/images/test/three.jpg"),
-        ];
+        $expected = Gallery::fromFolder([
+            "vfs://root/userfiles/images/test/one.jpg",
+            "vfs://root/userfiles/images/test/two.jpg",
+            "vfs://root/userfiles/images/test/three.jpg",
+        ]);
         $this->assertEquals($expected, $images);
     }
 
@@ -50,29 +51,32 @@ class RepositoryTest extends TestCase
         vfsStream::setup("root", null, ["content" => ["imagescroller" => ["gallery.txt" => $this->gallery()]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("gallery");
-        $expected = [
-            new Image(
-                "vfs://root/userfiles/images/image1.jpg",
-                "http://www.example.com/",
-                "First Photo",
-                "This is the first photo for the image scroller."
-            ),
-            new Image(
-                "vfs://root/userfiles/images/image37.jpg",
-                "?A_CMSimple_Page"
-            ),
-            new Image(
-                "vfs://root/userfiles/images/image2.jpg",
-                "?&mailform",
-                "Contact"
-            ),
-            new Image(
-                "vfs://root/userfiles/images/image3.jpg",
-                "http://3-magi.net/",
-                null,
-                "My favorite website ;)"
-            ),
-        ];
+        $expected = Gallery::fromFile([
+            [
+                "filename" => "vfs://root/userfiles/images/image1.jpg",
+                "url" => "http://www.example.com/",
+                "title" => "First Photo",
+                "description" => "This is the first photo for the image scroller.",
+            ],
+            [
+                "filename" => "vfs://root/userfiles/images/image37.jpg",
+                "url" => "?A_CMSimple_Page",
+                "title" => "",
+                "description" => "",
+            ],
+            [
+                "filename" => "vfs://root/userfiles/images/image2.jpg",
+                "url" => "?&mailform",
+                "title" => "Contact",
+                "description" => "",
+            ],
+            [
+                "filename" => "vfs://root/userfiles/images/image3.jpg",
+                "url" => "http://3-magi.net/",
+                "title" => "",
+                "description" => "My favorite website ;)",
+            ],
+        ]);
         $this->assertEquals($expected, $images);
     }
 

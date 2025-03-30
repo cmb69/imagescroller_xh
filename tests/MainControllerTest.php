@@ -4,7 +4,7 @@ namespace Imagescroller;
 
 use ApprovalTests\Approvals;
 use Imagescroller\Infra\FakeRepository;
-use Imagescroller\Infra\Image;
+use Imagescroller\Model\Gallery;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Plib\FakeRequest;
@@ -49,7 +49,7 @@ class MainControllerTest extends TestCase
 
     public function testRendersGallery(): void
     {
-        $this->repository->saveGallery("test", $this->repository->recordJarFromImages($this->images(), "vfs://root/userfiles/images/"));
+        $this->repository->saveGallery("test", $this->repository->recordJarFromImages($this->gallery(), "vfs://root/userfiles/images/"));
         $request = new FakeRequest(["admin" => true]);
         $response = $this->sut()($request, "test");
         Approvals::verifyHtml($response->output());
@@ -62,13 +62,33 @@ class MainControllerTest extends TestCase
         Approvals::verifyHtml($response->output());
     }
 
-    private function images(): array
+    private function gallery(): Gallery
     {
-        return [
-            new Image("vfs://root/userfiles/images/image.jpg"),
-            new Image("vfs://root/userfiles/images/image1.jpg", "http://example.com/"),
-            new Image("vfs://root/userfiles/images/image2.jpg", null, "Nice image"),
-            new Image("vfs://root/userfiles/images/image3.jpg", "/?InternalPage", null, "some image description"),
-        ];
+        return Gallery::fromFile([
+            [
+                "filename" => "vfs://root/userfiles/images/image.jpg",
+                "url" => "",
+                "title" => "",
+                "description" => "",
+            ],
+            [
+                "filename" => "vfs://root/userfiles/images/image1.jpg",
+                "url" => "http://example.com/",
+                "title" => "",
+                "description" => "",
+            ],
+            [
+                "filename" => "vfs://root/userfiles/images/image2.jpg",
+                "url" => "",
+                "title" => "Nice image",
+                "description" => "",
+            ],
+            [
+                "filename" => "vfs://root/userfiles/images/image3.jpg",
+                "url" => "/?InternalPage",
+                "title" => "",
+                "description" => "some image description",
+            ],
+        ]);
     }
 }
