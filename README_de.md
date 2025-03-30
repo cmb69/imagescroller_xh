@@ -139,10 +139,10 @@ bestimmten Zweck*. Details finden Sie in der GNU General Public License.
 Sie sollten ein Exemplar der GNU General Public License zusammen mit
 Imagescroller_XH erhalten haben. Falls nicht, siehe <https://www.gnu.org/licenses/>.
 
-Copyright © 2012-2017 Christoph M. Becker
+Copyright © Christoph M. Becker
 
-Slowakische Übersetzung © 2012 Dr. Martin Sereday  
-Estnische Übersetzung © 2012 Alo Tänavots
+Slowakische Übersetzung © Dr. Martin Sereday<br>
+Estnische Übersetzung © Alo Tänavots
 
 ## Danksagung
 

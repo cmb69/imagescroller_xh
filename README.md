@@ -135,10 +135,10 @@ You should have received a copy of the GNU General Public License
 along with Imagescroller_XH.  If not, see <https://www.gnu.org/licenses/>.
 
 
-Copyright © 2012-2017 Christoph M. Becker
+Copyright © Christoph M. Becker
 
-Slovak translation © 2012 Dr. Martin Sereday  
-Estonian translation © 2012 Alo Tänavots
+Slovak translation © Dr. Martin Sereday<br>
+Estonian translation © Alo Tänavots
 
 ## Credits
 

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2023 M. Becker
+ * Copyright (c) Christoph M. Becker
  *
  * This file is part of Imagescroller_XH.
  *
