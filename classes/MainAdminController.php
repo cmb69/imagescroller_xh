@@ -84,10 +84,10 @@ class MainAdminController
 
     public function edit(Request $request): Response
     {
-        $gallery = $request->get("imagescroller_gallery") ?? "";
-        $images = $this->repository->find($gallery);
-        assert($images !== null); // TODO: invalid assertion
-        $contents = $this->repository->recordJarFromImages($images, $this->repository->imageFolder());
+        $galleryname = $request->get("imagescroller_gallery") ?? "";
+        $gallery = $this->repository->find($galleryname);
+        assert($gallery !== null); // TODO: invalid assertion
+        $contents = $gallery->toRecordJar($this->repository->imageFolder());
         return $this->respondWith($this->renderGalleryForm($contents));
     }
 

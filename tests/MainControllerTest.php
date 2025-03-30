@@ -49,7 +49,7 @@ class MainControllerTest extends TestCase
 
     public function testRendersGallery(): void
     {
-        $this->repository->saveGallery("test", $this->repository->recordJarFromImages($this->gallery(), "vfs://root/userfiles/images/"));
+        $this->repository->saveGallery("test", $this->gallery()->toRecordJar("vfs://root/userfiles/images/"));
         $request = new FakeRequest(["admin" => true]);
         $response = $this->sut()($request, "test");
         Approvals::verifyHtml($response->output());
@@ -64,31 +64,18 @@ class MainControllerTest extends TestCase
 
     private function gallery(): Gallery
     {
-        return Gallery::fromFile([
-            [
-                "filename" => "vfs://root/userfiles/images/image.jpg",
-                "url" => "",
-                "title" => "",
-                "description" => "",
-            ],
-            [
-                "filename" => "vfs://root/userfiles/images/image1.jpg",
-                "url" => "http://example.com/",
-                "title" => "",
-                "description" => "",
-            ],
-            [
-                "filename" => "vfs://root/userfiles/images/image2.jpg",
-                "url" => "",
-                "title" => "Nice image",
-                "description" => "",
-            ],
-            [
-                "filename" => "vfs://root/userfiles/images/image3.jpg",
-                "url" => "/?InternalPage",
-                "title" => "",
-                "description" => "some image description",
-            ],
-        ]);
+        return Gallery::fromRecordJar("vfs://root/userfiles/images/", <<<'EOS'
+            Image: image.jpg
+            %%
+            Image: image1.jpg
+            URL: http://example.com/
+            %%
+            Image: image2.jpg
+            Title: Nice image
+            %%
+            Image: image3.jpg
+            URL: /?InternalPage
+            Description: some image description
+            EOS);
     }
 }

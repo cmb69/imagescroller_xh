@@ -51,32 +51,23 @@ class RepositoryTest extends TestCase
         vfsStream::setup("root", null, ["content" => ["imagescroller" => ["gallery.txt" => $this->gallery()]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("gallery");
-        $expected = Gallery::fromFile([
-            [
-                "filename" => "vfs://root/userfiles/images/image1.jpg",
-                "url" => "http://www.example.com/",
-                "title" => "First Photo",
-                "description" => "This is the first photo for the image scroller.",
-            ],
-            [
-                "filename" => "vfs://root/userfiles/images/image37.jpg",
-                "url" => "?A_CMSimple_Page",
-                "title" => "",
-                "description" => "",
-            ],
-            [
-                "filename" => "vfs://root/userfiles/images/image2.jpg",
-                "url" => "?&mailform",
-                "title" => "Contact",
-                "description" => "",
-            ],
-            [
-                "filename" => "vfs://root/userfiles/images/image3.jpg",
-                "url" => "http://3-magi.net/",
-                "title" => "",
-                "description" => "My favorite website ;)",
-            ],
-        ]);
+        $expected = Gallery::fromRecordJar("vfs://root/userfiles/images/", <<<'EOS'
+            Image: image1.jpg
+            URL: http://www.example.com/
+            Title: First Photo
+            Description: This is the first photo for the image scroller.
+            %%
+            Image: image37.jpg
+            URL: ?A_CMSimple_Page
+            %%
+            Image: image2.jpg
+            URL: ?&mailform
+            Title: Contact
+            %%
+            Image: image3.jpg
+            URL: http://3-magi.net/
+            Description: My favorite website ;)
+            EOS);
         $this->assertEquals($expected, $images);
     }
 

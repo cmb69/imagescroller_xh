@@ -42,14 +42,14 @@ class Image
         return $that;
     }
 
-    /** @param array{filename:string,url:string,title:string,description:string} $record */
+    /** @param array{filename:string,url?:string,title?:string,description?:string} $record */
     public static function fromRecord(array $record): self
     {
         $that = new self();
         $that->filename = $record["filename"];
-        $that->url = $record["url"];
-        $that->title = $record["title"];
-        $that->description = $record["description"];
+        $that->url = $record["url"] ?? "";
+        $that->title = $record["title"] ?? "";
+        $that->description = $record["description"] ?? "";
         return $that;
     }
 

@@ -111,32 +111,7 @@ class Repository
 
     private function findByFile(string $filename): Gallery
     {
-        $images = [];
-        $records = preg_split('/\R%%\R/', (string) file_get_contents($filename));
-        assert($records !== false); // TODO: invalid assertion?
-        foreach ($records as $record) {
-            $lines = preg_split('/\R/', $record);
-            assert($lines !== false); // TODO: invalid assertion?
-            $lines = array_map("trim", $lines);
-            $record = [];
-            foreach ($lines as $line) {
-                if ($line !== "") {
-                    [$name, $value] = array_map("trim", explode(":", $line, 2));
-                    $record[strtolower($name)] = $value;
-                }
-            }
-            if (!isset($record['image'])) {
-                continue;
-            }
-            $record["image"] = $this->imageFolder . $record["image"];
-            $images[] = [
-                "filename" => $record["image"],
-                "url" => $record["url"] ?? "",
-                "title" => $record["title"] ?? "",
-                "description" => $record["description"] ?? "",
-            ];
-        }
-        return Gallery::fromFile($images);
+        return Gallery::fromRecordJar($this->imageFolder, (string) file_get_contents($filename));
     }
 
     /** @return array{int,int,list<array{string}>} */
@@ -166,25 +141,5 @@ class Repository
     public function saveGallery(string $gallery, string $contents): bool
     {
         return file_put_contents($this->contentFolder . $gallery . ".txt", $contents) !== false;
-    }
-
-    public static function recordJarFromImages(Gallery $gallery, string $imageFolder): string
-    {
-        $res = [];
-        foreach ($gallery->images() as $image) {
-            $lines = [];
-            $lines[] = "Image: " . substr($image->filename(), strlen($imageFolder));
-            if ($image->url()) {
-                $lines[] = "URL: " . $image->url();
-            }
-            if ($image->title()) {
-                $lines[] = "Title: " . $image->title();
-            }
-            if ($image->description()) {
-                $lines[] = "Description: " . $image->description();
-            }
-            $res[] = implode("\n", $lines);
-        }
-        return implode("\n%%\n", $res);
     }
 }

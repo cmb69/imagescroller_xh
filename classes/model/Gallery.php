@@ -37,12 +37,27 @@ class Gallery
         return $that;
     }
 
-    /** @param list<array{filename:string,url:string,title:string,description:string}> $records */
-    public static function fromFile(array $records): self
+    public static function fromRecordJar(string $imageFolder, string $contents): self
     {
         $that = new self();
         $that->images = [];
+        $records = preg_split('/\R%%\R/', $contents);
+        assert($records !== false); // TODO: invalid assertion?
         foreach ($records as $record) {
+            $lines = preg_split('/\R/', $record);
+            assert($lines !== false); // TODO: invalid assertion?
+            $lines = array_map("trim", $lines);
+            $record = [];
+            foreach ($lines as $line) {
+                if ($line !== "") {
+                    [$name, $value] = array_map("trim", explode(":", $line, 2));
+                    $record[strtolower($name)] = $value;
+                }
+            }
+            if (!isset($record['image'])) {
+                continue;
+            }
+            $record["filename"] = $imageFolder . $record["image"];
             $that->images[] = Image::fromRecord($record);
         }
         return $that;
@@ -56,5 +71,25 @@ class Gallery
     public function images(): array
     {
         return $this->images;
+    }
+
+    public function toRecordJar(string $imageFolder): string
+    {
+        $res = [];
+        foreach ($this->images() as $image) {
+            $lines = [];
+            $lines[] = "Image: " . substr($image->filename(), strlen($imageFolder));
+            if ($image->url()) {
+                $lines[] = "URL: " . $image->url();
+            }
+            if ($image->title()) {
+                $lines[] = "Title: " . $image->title();
+            }
+            if ($image->description()) {
+                $lines[] = "Description: " . $image->description();
+            }
+            $res[] = implode("\n", $lines);
+        }
+        return implode("\n%%\n", $res);
     }
 }
