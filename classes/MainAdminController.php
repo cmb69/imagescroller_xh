@@ -21,8 +21,8 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\Repository;
+use Plib\CsrfProtector;
 use Plib\Request;
 use Plib\Response;
 use Plib\View;
@@ -93,7 +93,7 @@ class MainAdminController
 
     public function save(Request $request): Response
     {
-        if (!$this->csrfProtector->check()) {
+        if (!$this->csrfProtector->check($request->post("imagescroller_token"))) {
             return $this->respondWith($this->view->message("fail", "error_unauthorized"));
         }
         $contents = $request->post("imagescroller_contents") ?? "";

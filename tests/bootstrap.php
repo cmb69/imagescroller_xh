@@ -3,6 +3,7 @@
 require_once './vendor/autoload.php';
 require_once "../../cmsimple/functions.php";
 
+require_once "../plib/classes/CsrfProtector.php";
 require_once "../plib/classes/Jquery.php";
 require_once "../plib/classes/Request.php";
 require_once "../plib/classes/Response.php";

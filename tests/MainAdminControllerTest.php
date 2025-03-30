@@ -22,10 +22,10 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\CsrfProtector;
 use Imagescroller\Infra\FakeRepository;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Plib\CsrfProtector;
 use Plib\FakeRequest;
 use Plib\View;
 
