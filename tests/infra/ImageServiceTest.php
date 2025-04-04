@@ -2,17 +2,16 @@
 
 namespace Imagescroller\Infra;
 
-use Imagescroller\Model\Gallery;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
-class RepositoryTest extends TestCase
+class ImageServiceTest extends TestCase
 {
     public function testFindsAllGalleryFolders(): void
     {
         vfsStream::setup("root", null, ["userfiles" => ["images" => ["one" => [], "two" => [], "three" => []]]]);
-        $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
-        $galleries = $sut->findAll();
+        $sut = new ImageService("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $galleries = $sut->findFolders();
         $this->assertEquals(["one", "three", "two"], $galleries);
     }
 
@@ -23,14 +22,14 @@ class RepositoryTest extends TestCase
             "two.jpg" => "blah",
             "three.jpg" => $this->jpegImage(50, 100),
         ]]]]);
-        $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
-        $images = $sut->find("test");
+        $sut = new ImageService("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $images = $sut->galleryFromFolder("test");
         [$width, $height, $errors] = $sut->dimensionsOf($images);
         $this->assertEquals(100, $width);
         $this->assertEquals(50, $height);
         $expected = [
-            ["error_no_image_new", "vfs://root/userfiles/images/test/two.jpg"],
             ["error_image_size_new", "vfs://root/userfiles/images/test/three.jpg", 50, 100, 100, 50],
+            ["error_no_image_new", "vfs://root/userfiles/images/test/two.jpg"],
         ];
         $this->assertEquals($expected, $errors);
     }

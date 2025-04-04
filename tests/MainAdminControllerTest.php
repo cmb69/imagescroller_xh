@@ -3,7 +3,7 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\ImageService;
 use Imagescroller\Model\Gallery;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +31,7 @@ class MainAdminControllerTest extends TestCase
         touch("vfs://root/userfiles/images/image3.jpg");
         mkdir("vfs://root/content/imagescroller/", 0777, true);
         $this->csrfProtector = $this->createMock(CsrfProtector::class);
-        $this->repository = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $this->repository = new ImageService("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $this->store = $this->createMock(DocumentStore::class);
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
     }

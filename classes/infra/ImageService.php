@@ -23,7 +23,7 @@ namespace Imagescroller\Infra;
 
 use Imagescroller\Model\Gallery;
 
-class Repository
+class ImageService
 {
     /** @var string */
     private $imageFolder;
@@ -33,13 +33,8 @@ class Repository
         $this->imageFolder = $imageFolder;
     }
 
-    public function imageFolder(): string
-    {
-        return $this->imageFolder;
-    }
-
     /** @return list<string> */
-    public function findAll(): array
+    public function findFolders(): array
     {
         $galleries = [];
         if (($dir = opendir($this->imageFolder))) {
@@ -54,7 +49,7 @@ class Repository
         return array_values($galleries);
     }
 
-    public function find(string $foldername): ?Gallery
+    public function galleryFromFolder(string $foldername): ?Gallery
     {
         $foldername = rtrim($this->imageFolder . $foldername, "/") . "/";
         if (!is_dir($foldername)) {
@@ -70,8 +65,8 @@ class Repository
             }
             closedir($dir);
         }
-        //natcasesort($imgs); // TODO: add back sorting
-        return Gallery::fromFolder($images);
+        natcasesort($images);
+        return Gallery::fromFolder(array_values($images));
     }
 
     private function isImage(string $filename): bool
@@ -87,7 +82,7 @@ class Repository
         $width = $height = 0;
         $errors = [];
         foreach ($gallery->images() as $image) {
-            $filename = $this->imageFolder() . $image->filename();
+            $filename = $this->imageFolder . $image->filename();
             if (!is_readable($filename) || !($size = @getimagesize($filename))) {
                 $errors[] = ["error_no_image_new", $filename];
                 continue;

@@ -21,7 +21,7 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\ImageService;
 use Imagescroller\Model\Gallery;
 use Plib\DocumentStore;
 use Plib\Response;
@@ -40,8 +40,8 @@ class MainController
     /** @var array<string,string> */
     private $conf;
 
-    /** @var Repository */
-    private $repository;
+    /** @var ImageService */
+    private $imageService;
 
     /** @var DocumentStore */
     private $store;
@@ -57,7 +57,7 @@ class MainController
         string $pluginFolder,
         string $imageFolder,
         array $conf,
-        Repository $repository,
+        ImageService $imageService,
         DocumentStore $store,
         Jquery $jquery,
         View $view
@@ -65,7 +65,7 @@ class MainController
         $this->pluginFolder = $pluginFolder;
         $this->imageFolder = $imageFolder;
         $this->conf = $conf;
-        $this->repository = $repository;
+        $this->imageService = $imageService;
         $this->store = $store;
         $this->jquery = $jquery;
         $this->view = $view;
@@ -76,12 +76,12 @@ class MainController
         $gallery = $this->store->retrieve($filename . ".txt", Gallery::class);
         assert($gallery instanceof Gallery);
         if ($gallery->empty()) {
-            $gallery = $this->repository->find($filename);
+            $gallery = $this->imageService->galleryFromFolder($filename);
         }
         if ($gallery === null) {
             return Response::create($this->view->message("fail", "error_gallery_missing", $filename));
         }
-        [$width, $height, $errors] = $this->repository->dimensionsOf($gallery);
+        [$width, $height, $errors] = $this->imageService->dimensionsOf($gallery);
         $this->jquery->include();
         $this->jquery->includePlugin("scrollTo", $this->pluginFolder . "lib/jquery.scrollTo.min.js");
         $this->jquery->includePlugin("serialScroll", $this->pluginFolder . "lib/jquery.serialScroll.min.js");

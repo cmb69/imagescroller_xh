@@ -21,7 +21,7 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\ImageService;
 use Plib\CsrfProtector;
 use Plib\DocumentStore;
 use Plib\Jquery;
@@ -75,11 +75,11 @@ class Dic
         );
     }
 
-    private static function makeRepository(): Repository
+    private static function makeRepository(): ImageService
     {
         global $pth;
 
-        return new Repository($pth['folder']['images']);
+        return new ImageService($pth['folder']['images']);
     }
 
     private static function makeStore(): DocumentStore

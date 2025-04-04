@@ -21,7 +21,7 @@
 
 namespace Imagescroller;
 
-use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\ImageService;
 use Imagescroller\Model\Gallery;
 use Plib\CsrfProtector;
 use Plib\DocumentStore;
@@ -34,8 +34,8 @@ class MainAdminController
     /** @var CsrfProtector */
     private $csrfProtector;
 
-    /** @var Repository */
-    private $repository;
+    /** @var ImageService */
+    private $imageService;
 
     /** @var DocumentStore */
     private $store;
@@ -45,12 +45,12 @@ class MainAdminController
 
     public function __construct(
         CsrfProtector $csrfProtector,
-        Repository $repository,
+        ImageService $imageService,
         DocumentStore $store,
         View $view
     ) {
         $this->csrfProtector = $csrfProtector;
-        $this->repository = $repository;
+        $this->imageService = $imageService;
         $this->store = $store;
         $this->view = $view;
     }
@@ -89,7 +89,7 @@ class MainAdminController
         }, $this->store->find('/^[^\/]*\.txt$/'));
         natcasesort($galleries);
         $galleries = array_values($galleries);
-        $folders = array_diff($this->repository->findAll(), $galleries);
+        $folders = array_diff($this->imageService->findFolders(), $galleries);
         return $this->respondWith($this->view->render("overview", [
             "galleries" => $galleries,
             "folders" => $folders,
@@ -102,7 +102,7 @@ class MainAdminController
         $gallery = $this->store->retrieve($galleryname . ".txt", Gallery::class);
         assert($gallery instanceof Gallery);
         if ($gallery->empty()) {
-            $gallery = $this->repository->find($galleryname);
+            $gallery = $this->imageService->galleryFromFolder($galleryname);
         }
         assert($gallery !== null); // TODO: invalid assertion
         $contents = $gallery->toString();

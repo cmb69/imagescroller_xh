@@ -3,7 +3,7 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\Repository;
+use Imagescroller\Infra\ImageService;
 use Imagescroller\Model\Gallery;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
@@ -35,7 +35,7 @@ class MainControllerTest extends TestCase
         $this->pluginFolder = "./plugins/imagescroller/";
         $this->imageFolder = "vfs://root/userfiles/images/";
         $this->conf = XH_includeVar("./config/config.php", "plugin_cf")["imagescroller"];
-        $this->repository = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $this->repository = new ImageService("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $this->store = $this->createMock(DocumentStore::class);
         $this->jquery = $this->createMock(Jquery::class);
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
