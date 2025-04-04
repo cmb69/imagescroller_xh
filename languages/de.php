@@ -21,6 +21,7 @@ $plugin_tx['imagescroller']['label_save']="Galerie speichern";
 
 $plugin_tx['imagescroller']['syscheck_fail']="Fehlschlag";
 $plugin_tx['imagescroller']['syscheck_phpversion']="PHP-Version ist mindestens %s: ";
+$plugin_tx['imagescroller']['syscheck_plibversion']="Plib_XH-Version ist mindestens %s: ";
 $plugin_tx['imagescroller']['syscheck_plugin']="CMSimple_XH-Plugin '%s' ist installiert: ";
 $plugin_tx['imagescroller']['syscheck_success']="Okay";
 $plugin_tx['imagescroller']['syscheck_title']="System-Prüfung";
