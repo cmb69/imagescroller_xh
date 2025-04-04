@@ -19,7 +19,6 @@ $plugin_tx['imagescroller']['label_folders']="Folders";
 $plugin_tx['imagescroller']['label_edit']="Edit gallery";
 $plugin_tx['imagescroller']['label_save']="Save gallery";
 
-$plugin_tx['imagescroller']['syscheck_extension']="PHP extension '%s' is loaded: ";
 $plugin_tx['imagescroller']['syscheck_fail']="failure";
 $plugin_tx['imagescroller']['syscheck_phpversion']="PHP version is at least %s: ";
 $plugin_tx['imagescroller']['syscheck_plugin']="CMSimple_XH plugin '%s' is installed: ";

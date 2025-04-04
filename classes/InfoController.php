@@ -49,7 +49,6 @@ class InfoController
             "version" => IMAGESCROLLER_VERSION,
             "checks" => [
                 $this->checkPhpVersion("7.1.0"),
-                $this->checkExtension("json"),
                 $this->checkXhVersion("1.7.0"),
                 $this->checkPlugin("jquery"),
                 $this->checkWritability($this->pluginFolder . "config/"),
@@ -67,18 +66,6 @@ class InfoController
             "class" => "xh_$state",
             "key" => "syscheck_phpversion",
             "arg" => $version,
-            "statekey" => "syscheck_$state",
-        ];
-    }
-
-    /** @return array{class:string,key:string,arg:string,statekey:string} */
-    private function checkExtension(string $name): array
-    {
-        $state = $this->systemChecker->checkExtension($name) ? "success" : "fail";
-        return [
-            "class" => "xh_$state",
-            "key" => "syscheck_extension",
-            "arg" => $name,
             "statekey" => "syscheck_$state",
         ];
     }
