@@ -64,8 +64,8 @@
 <pre><code>{{{imagescroller(&#39;meine_galerie&#39;)}}}</code></pre>
 <p>Um den Imagescroller auf allen Seiten anzuzeigen, müssen sie die <code>autoload</code> Konfigurationsoption aktivieren, und im Template einfügen:</p>
 <pre><code>&lt;?=imagescroller(&#39;meine_galerie&#39;)?&gt;</code></pre>
-<p>Wenn Sie die Bilder verlinken möchten, oder Titel und Beschreibungen hinzufügen möchten, müssen Sie eine Info-Datei anlegen. Diese muss im Ordner <code>content/imagescroller/</code> abgelegt werden, und kann einen beliebigen Namen haben, wobei die Dateierweiterung <code>.txt</code> lauten muss. Um diese Datei zu bearbeiten, können Sie einen beliebigen Texteditor verwenden, aber es ist wichtig, dass die Datei UTF-8 kodiert ist.</p>
-<p>Die Datei enthält einen Datensatz für jedes Bild, das angezeigt werden soll; die Datensätze werden durch eine Zeile, die nur zwei Prozentzeichen (<code>%%</code>) enthält, getrennt. Die Datensätze können folgende Felder enthalten: <code>Image</code> (Bild), <code>URL</code>, <code>Title</code> (Titel) und <code>Description</code> (Beschreibung); nur <code>Image</code> ist erfoderlich, die anderen Felder sind optional. Die Felder des Datensatzes werden in eigene Zeilen geschrieben, die mit dem Feldnamen beginnen, gefolgt von einem Doppelpunkt und dem Wert des Feldes. Die Reihenfolge der Zeilen spielt keine Rolle. Der Dateiname des Bildes muss relativ zu <code>userfiles/images/</code> angegeben werden; die URL kann relativ zur CMSimple_XH Site oder absolut sein. Eine Beispieldatei sieht wie folgt aus:</p>
+<p>Wenn Sie die Bilder verlinken, oder Titel und Beschreibungen hinzufügen möchten, müssen Sie eine Galerie im Backend erstellen. Unter <code>Plugins</code> → <code>Imagescroller</code> → <code>Galleries</code> wird eine Liste von verfügbaren <code>Ordner</code>n angezeigt; wählen Sie einen und drücken Sie <code>Galerie bearbeiten</code>, und die Galerie wird mit allen unterstützten Bildern aus diesem Ordner intialisiert. Bearbeiten Sie die Galerie nach Ihren Wünschen, und drücken Sie <code>Galerie speichern</code>. Dann wird die Galerie unter <code>Galerien</code> angezeigt, und der Ordner wird nicht länger unter <code>Ordner</code> aufgeführt. Sie können eine angelegte Galerie jederzeit erneut bearbeiten.</p>
+<p>Die Galeriedefinition enthält einen Datensatz für jedes Bild, das angezeigt werden soll; die Datensätze werden durch eine Zeile, die nur zwei Prozentzeichen (<code>%%</code>) enthält, getrennt. Die Datensätze können folgende Felder enthalten: <code>Image</code> (Bild), <code>URL</code>, <code>Title</code> (Titel) und <code>Description</code> (Beschreibung); nur <code>Image</code> ist erfoderlich, die anderen Felder sind optional. Die Felder des Datensatzes werden in eigene Zeilen geschrieben, die mit dem Feldnamen beginnen, gefolgt von einem Doppelpunkt und dem Wert des Feldes. Die Reihenfolge der Zeilen spielt keine Rolle. Der Dateiname des Bildes muss relativ zu <code>userfiles/images/</code> angegeben werden; die URL kann relativ zur CMSimple_XH Site oder absolut sein. Eine Beispiel-Galeriedefinition sieht wie folgt aus:</p>
 <pre><code>Image: bild1.jpg
 URL: http://www.example.com/
 Title: Erstes Foto
@@ -81,7 +81,7 @@ Title: Kontakt
 Image: bild3.jpg
 URL: http://3-magi.net/de/
 Description: Meine Lieblings-Homepage ;)</code></pre>
-<p>Um den Imagescroller anzuzeigen, muss nur <code>imagescroller()</code> mit dem Namen der Info-Datei (ohne die Dateierweiterung) aufgerufen werden, z.B.</p>
+<p>Um den Imagescroller anzuzeigen, muss nur <code>imagescroller()</code> mit dem Namen der Galerie aufgerufen werden, z.B.</p>
 <pre><code>{{{imagescroller(&#39;info&#39;)}}}</code></pre>
 <p>Es ist zu beachten, dass alle Bilder die selbe Größe (d.h. Abmessungen) haben sollten. Andernfalls werden sie auf die Größe des ersten Bildes der Gallerie skaliert, und im Administrationsbereich wird eine Warnung angezeigt.</p>
 <h2 id="problembehebung">Problembehebung</h2>

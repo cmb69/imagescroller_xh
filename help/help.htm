@@ -64,8 +64,8 @@
 <pre><code>{{{imagescroller(&#39;my_gallery&#39;)}}}</code></pre>
 <p>To display the image scroller on all pages, you have to enable the <code>autoload</code> configuration option, and insert in the template:</p>
 <pre><code>&lt;?=imagescroller(&#39;my_gallery&#39;)?&gt;</code></pre>
-<p>If you want to link the images or add titles or descriptions, you have to create an info file. This has to be placed in <code>content/imagescroller/</code>, and can have any name you prefer with the file extension <code>.txt</code>. To edit this file you can use any text editor you prefer, but it is important that the file is UTF-8 encoded.</p>
-<p>The file contains a record for each image you want to show; records are seperated by a line containing only two percent signs (<code>%%</code>). The records can have the following fields: <code>Image</code>, <code>URL</code>, <code>Title</code> and <code>Description</code>; only <code>Image</code> is required, the other fields are optional. The fields of the record are written on separate lines which start with the field name, followed by a colon and the field value. The order of the lines does not matter. The filename of the image has to be relative to <code>userfiles/images/</code>; the URL can be relative to the current CMSimple_XH Site or absolute. An example info file looks like:</p>
+<p>If you want to link the images or add titles or descriptions, you have to create a gallery in the back-end. Under <code>Plugins</code> → <code>Imagescroller</code> → <code>Galleries</code>, a list of available image <code>Folders</code> is presented; choose one and press <code>Edit gallery</code>, and the gallery will be initialized with all supported images from that folder. Edit the gallery to your liking, and <code>Save gallery</code>. Then the gallery will be presented under <code>Galleries</code>, and the folder is no longer listed under <code>Folders</code>. You can edit the created galerie anytime again.</p>
+<p>The gallery definition contains a record for each image you want to show; records are seperated by a line containing only two percent signs (<code>%%</code>). The records can have the following fields: <code>Image</code>, <code>URL</code>, <code>Title</code> and <code>Description</code>; only <code>Image</code> is required, the other fields are optional. The fields of the record are written on separate lines which start with the field name, followed by a colon and the field value. The order of the lines does not matter. The filename of the image has to be relative to <code>userfiles/images/</code>; the URL can be relative to the current CMSimple_XH Site or absolute. An example gallery definition looks like:</p>
 <pre><code>Image: image1.jpg
 URL: http://www.example.com/
 Title: First Photo
@@ -81,7 +81,7 @@ Title: Contact
 Image: image3.jpg
 URL: http://3-magi.net/
 Description: My favorite website ;)</code></pre>
-<p>To display the image scroller just call <code>imagescroller()</code> with the name of the info file (without file extension), e.g.:</p>
+<p>To display the image scroller just call <code>imagescroller()</code> with the name of the galerie, e.g.:</p>
 <pre><code>{{{imagescroller(&#39;info&#39;)}}}</code></pre>
 <p>Note that all images should have the same size (i.e. dimensions). Otherwise they will be resized to the size of the first image in the gallery, and in the back-end a warning will be shown.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>

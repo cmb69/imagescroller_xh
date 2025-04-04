@@ -72,12 +72,16 @@ configuration option, and insert in the template:
     <?=imagescroller('my_gallery')?>
 
 If you want to link the images or add titles or descriptions, you have to
-create an info file. This has to be placed in `content/imagescroller/`,
-and can have any name you prefer with the file extension `.txt`.
-To edit this file you can use any text editor you prefer,
-but it is important that the file is UTF-8 encoded.
+create a gallery in the back-end.
+Under `Plugins` → `Imagescroller` → `Galleries`, a list of available image
+`Folders` is presented; choose one and press `Edit gallery`, and
+the gallery will be initialized with all supported images from that folder.
+Edit the gallery to your liking, and `Save gallery`.
+Then the gallery will be presented under `Galleries`,
+and the folder is no longer listed under `Folders`.
+You can edit the created galerie anytime again.
 
-The file contains a record for each image you want to show; records are
+The gallery definition contains a record for each image you want to show; records are
 seperated by a line containing only two percent signs (`%%`).  The records
 can have the following fields: `Image`, `URL`, `Title` and `Description`;
 only `Image` is required, the other fields are optional.
@@ -86,7 +90,7 @@ with the field name, followed by a colon and the field value.
 The order of the lines does not matter.
 The filename of the image has to be relative to `userfiles/images/`;
 the URL can be relative to the current CMSimple_XH Site or absolute.
-An example info file looks like:
+An example gallery definition looks like:
 
     Image: image1.jpg
     URL: http://www.example.com/
@@ -105,7 +109,7 @@ An example info file looks like:
     Description: My favorite website ;)
 
 To display the image scroller just call `imagescroller()` with the name of the
-info file (without file extension), e.g.:
+galerie, e.g.:
 
     {{{imagescroller('info')}}}
 

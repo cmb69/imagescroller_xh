@@ -73,14 +73,18 @@ Um den Imagescroller auf allen Seiten anzuzeigen, müssen sie die
 
     <?=imagescroller('meine_galerie')?>
 
-Wenn Sie die Bilder verlinken möchten, oder Titel und Beschreibungen
-hinzufügen möchten, müssen Sie eine Info-Datei anlegen. Diese muss im Ordner
-`content/imagescroller/` abgelegt werden, und kann einen beliebigen Namen haben,
-wobei die Dateierweiterung `.txt` lauten muss.
-Um diese Datei zu bearbeiten, können Sie einen beliebigen Texteditor
-verwenden, aber es ist wichtig, dass die Datei UTF-8 kodiert ist.
+Wenn Sie die Bilder verlinken, oder Titel und Beschreibungen
+hinzufügen möchten, müssen Sie eine Galerie im Backend erstellen.
+Unter `Plugins` → `Imagescroller` → `Galleries` wird eine Liste von
+verfügbaren `Ordner`n angezeigt; wählen Sie einen und drücken Sie
+`Galerie bearbeiten`, und die Galerie wird mit allen unterstützten
+Bildern aus diesem Ordner intialisiert. Bearbeiten Sie die Galerie
+nach Ihren Wünschen, und drücken Sie `Galerie speichern`.
+Dann wird die Galerie unter `Galerien` angezeigt,
+und der Ordner wird nicht länger unter `Ordner` aufgeführt.
+Sie können eine angelegte Galerie jederzeit erneut bearbeiten.
 
-Die Datei enthält einen Datensatz für jedes Bild, das angezeigt werden soll;
+Die Galeriedefinition enthält einen Datensatz für jedes Bild, das angezeigt werden soll;
 die Datensätze werden durch eine Zeile, die nur zwei Prozentzeichen (`%%`)
 enthält, getrennt. Die Datensätze können folgende Felder enthalten:
 `Image` (Bild), `URL`, `Title` (Titel) und `Description` (Beschreibung);
@@ -90,7 +94,7 @@ die mit dem Feldnamen beginnen, gefolgt von einem Doppelpunkt und dem Wert des F
 Die Reihenfolge der Zeilen spielt keine Rolle.
 Der Dateiname des Bildes muss relativ zu `userfiles/images/` angegeben werden;
 die URL kann relativ zur CMSimple_XH Site oder absolut sein.
-Eine Beispieldatei sieht wie folgt aus: 
+Eine Beispiel-Galeriedefinition sieht wie folgt aus: 
 
     Image: bild1.jpg
     URL: http://www.example.com/
@@ -109,7 +113,7 @@ Eine Beispieldatei sieht wie folgt aus:
     Description: Meine Lieblings-Homepage ;)
 
 Um den Imagescroller anzuzeigen, muss nur `imagescroller()` mit dem Namen der
-Info-Datei (ohne die Dateierweiterung) aufgerufen werden, z.B.
+Galerie aufgerufen werden, z.B.
 
     {{{imagescroller('info')}}}
 
