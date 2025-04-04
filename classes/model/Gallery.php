@@ -43,7 +43,13 @@ final class Gallery implements Document
     public static function fromString(string $contents)
     {
         $that = new static();
-        $that->images = [];
+        $that->parse($contents);
+        return $that;
+    }
+
+    private function parse(string $contents): void
+    {
+        $this->images = [];
         $records = preg_split('/\R%%\R/', $contents);
         assert($records !== false); // TODO: invalid assertion?
         foreach ($records as $record) {
@@ -61,19 +67,28 @@ final class Gallery implements Document
                 continue;
             }
             $record["filename"] = $record["image"];
-            $that->images[] = Image::fromRecord($record);
+            $this->images[] = Image::fromRecord($record);
         }
-        return $that;
     }
 
     private function __construct()
     {
     }
 
+    public function empty(): bool
+    {
+        return empty($this->images);
+    }
+
     /** @return list<Image> */
     public function images(): array
     {
         return $this->images;
+    }
+
+    public function update(string $contents): void
+    {
+        $this->parse($contents);
     }
 
     public function toString(): string

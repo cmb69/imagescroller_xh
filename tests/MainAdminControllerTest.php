@@ -3,10 +3,12 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\FakeRepository;
+use Imagescroller\Infra\Repository;
+use Imagescroller\Model\Gallery;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Plib\CsrfProtector;
+use Plib\DocumentStore;
 use Plib\FakeRequest;
 use Plib\View;
 
@@ -14,6 +16,7 @@ class MainAdminControllerTest extends TestCase
 {
     private $csrfProtector;
     private $repository;
+    private $store;
     private $view;
 
     public function setUp(): void
@@ -28,7 +31,8 @@ class MainAdminControllerTest extends TestCase
         touch("vfs://root/userfiles/images/image3.jpg");
         mkdir("vfs://root/content/imagescroller/", 0777, true);
         $this->csrfProtector = $this->createMock(CsrfProtector::class);
-        $this->repository = new FakeRepository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $this->repository = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $this->store = $this->createMock(DocumentStore::class);
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
     }
 
@@ -37,6 +41,7 @@ class MainAdminControllerTest extends TestCase
         return new MainAdminController(
             $this->csrfProtector,
             $this->repository,
+            $this->store,
             $this->view
         );
     }
@@ -50,6 +55,7 @@ class MainAdminControllerTest extends TestCase
 
     public function testRendersCreateForm(): void
     {
+        $this->store->method("retrieve")->willReturn(Gallery::fromString(""));
         $request = new FakeRequest(["url" => "http://example.com/?imagescroller&admin=plugin_main&action=edit"]);
         $response = $this->sut()($request);
         $this->assertEquals("Imagescroller – Galleries", $response->title());
@@ -74,6 +80,8 @@ class MainAdminControllerTest extends TestCase
     public function testRedirectsAfterSaving(): void
     {
         $this->csrfProtector->expects($this->once())->method("check")->willReturn(true);
+        $this->store->method("update")->willReturn(Gallery::fromString(""));
+        $this->store->expects($this->once())->method("commit")->willReturn(true);
         $request = new FakeRequest([
             "url" => "http://example.com/?imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
             "post" => [
@@ -91,7 +99,8 @@ class MainAdminControllerTest extends TestCase
     public function testReportsFailureToSave(): void
     {
         $this->csrfProtector->expects($this->once())->method("check")->willReturn(true);
-        $this->repository->options(["saveGallery" => false]);
+        $this->store->method("update")->willReturn(Gallery::fromString(""));
+        $this->store->expects($this->once())->method("commit")->willReturn(false);
         $request = new FakeRequest([
             "url" => "http://example.com/?imagescroller&admin=plugin_main&action=edit&imagescroller_gallery=gallery2",
             "post" => [

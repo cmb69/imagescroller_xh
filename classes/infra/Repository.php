@@ -28,13 +28,9 @@ class Repository
     /** @var string */
     private $imageFolder;
 
-    /** @var string */
-    private $contentFolder;
-
-    public function __construct(string $imageFolder, string $contentFolder)
+    public function __construct(string $imageFolder)
     {
         $this->imageFolder = $imageFolder;
-        $this->contentFolder = $contentFolder;
     }
 
     public function imageFolder(): string
@@ -58,36 +54,12 @@ class Repository
         return array_values($galleries);
     }
 
-    /** @return list<string> */
-    public function findAllGalleries(): array
+    public function find(string $foldername): ?Gallery
     {
-        $galleries = [];
-        if (($dir = opendir($this->contentFolder))) {
-            while (($filename = readdir($dir)) !== false) {
-                if ($filename[0] != '.' && preg_match('/^(.*)\.txt$/', $filename, $matches)) {
-                    $galleries[] = $matches[1];
-                }
-            }
-            closedir($dir);
-        }
-        natcasesort($galleries);
-        return array_values($galleries);
-    }
-
-    public function find(string $filename): ?Gallery
-    {
-        if (is_file($this->contentFolder . $filename . ".txt")) {
-            return $this->findByFile($this->contentFolder . $filename . ".txt");
-        } elseif (is_dir($this->imageFolder . $filename)) {
-            return $this->findByFolder($this->imageFolder . $filename);
-        } else {
+        $foldername = rtrim($this->imageFolder . $foldername, "/") . "/";
+        if (!is_dir($foldername)) {
             return null;
         }
-    }
-
-    private function findByFolder(string $foldername): Gallery
-    {
-        $foldername = rtrim($foldername, "/") . "/";
         $images = [];
         if (($dir = opendir($foldername)) !== false) {
             while (($filename = readdir($dir)) !== false) {
@@ -107,11 +79,6 @@ class Repository
         $imageexts = ["gif", "jpg", "jpeg", "png", "svg"];
         return is_file($filename)
             && in_array(strtolower(pathinfo($filename, PATHINFO_EXTENSION)), $imageexts);
-    }
-
-    private function findByFile(string $filename): Gallery
-    {
-        return Gallery::fromString((string) file_get_contents($filename));
     }
 
     /** @return array{int,int,list<array{string}>} */
@@ -136,10 +103,5 @@ class Repository
             }
         }
         return [$width, $height, $errors]; // @phpstan-ignore-line
-    }
-
-    public function saveGallery(string $gallery, string $contents): bool
-    {
-        return file_put_contents($this->contentFolder . $gallery . ".txt", $contents) !== false;
     }
 }

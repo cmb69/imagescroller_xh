@@ -23,6 +23,7 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\Repository;
 use Plib\CsrfProtector;
+use Plib\DocumentStore;
 use Plib\Jquery;
 use Plib\SystemChecker;
 use Plib\View;
@@ -46,9 +47,10 @@ class Dic
             $pth["folder"]["plugins"] . "imagescroller/",
             $pth["folder"]["images"],
             $plugin_cf["imagescroller"],
-            Dic::makeRepository(),
+            self::makeRepository(),
+            self::makeStore(),
             self::makeJquery(),
-            Dic::makeView()
+            self::makeView()
         );
     }
 
@@ -68,6 +70,7 @@ class Dic
         return new MainAdminController(
             new CsrfProtector(),
             self::makeRepository(),
+            self::makeStore(),
             self::makeView()
         );
     }
@@ -76,12 +79,19 @@ class Dic
     {
         global $pth;
 
+        return new Repository($pth['folder']['images']);
+    }
+
+    private static function makeStore(): DocumentStore
+    {
+        global $pth;
+
         $contentfolder = $pth['folder']['content'];
         if ($contentfolder[1] === ".") {
             $contentfolder = dirname($contentfolder) . "/";
         }
         $contentfolder = $contentfolder . "imagescroller/";
-        return new Repository($pth['folder']['images'], $contentfolder);
+        return new DocumentStore($contentfolder);
     }
 
     private static function makeJquery(): Jquery

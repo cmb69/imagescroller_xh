@@ -5,6 +5,7 @@ require_once "../../cmsimple/functions.php";
 
 require_once "../plib/classes/CsrfProtector.php";
 require_once "../plib/classes/Document.php";
+require_once "../plib/classes/DocumentStore.php";
 require_once "../plib/classes/Jquery.php";
 require_once "../plib/classes/Request.php";
 require_once "../plib/classes/Response.php";

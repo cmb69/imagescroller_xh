@@ -23,6 +23,7 @@ namespace Imagescroller;
 
 use Imagescroller\Infra\Repository;
 use Imagescroller\Model\Gallery;
+use Plib\DocumentStore;
 use Plib\Response;
 use Plib\Jquery;
 use Plib\Request;
@@ -42,6 +43,9 @@ class MainController
     /** @var Repository */
     private $repository;
 
+    /** @var DocumentStore */
+    private $store;
+
     /** @var Jquery */
     private $jquery;
 
@@ -54,6 +58,7 @@ class MainController
         string $imageFolder,
         array $conf,
         Repository $repository,
+        DocumentStore $store,
         Jquery $jquery,
         View $view
     ) {
@@ -61,13 +66,18 @@ class MainController
         $this->imageFolder = $imageFolder;
         $this->conf = $conf;
         $this->repository = $repository;
+        $this->store = $store;
         $this->jquery = $jquery;
         $this->view = $view;
     }
 
     public function __invoke(Request $request, string $filename): Response
     {
-        $gallery = $this->repository->find($filename);
+        $gallery = $this->store->retrieve($filename . ".txt", Gallery::class);
+        assert($gallery instanceof Gallery);
+        if ($gallery->empty()) {
+            $gallery = $this->repository->find($filename);
+        }
         if ($gallery === null) {
             return Response::create($this->view->message("fail", "error_gallery_missing", $filename));
         }

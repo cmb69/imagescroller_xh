@@ -22,7 +22,9 @@
 namespace Imagescroller;
 
 use Imagescroller\Infra\Repository;
+use Imagescroller\Model\Gallery;
 use Plib\CsrfProtector;
+use Plib\DocumentStore;
 use Plib\Request;
 use Plib\Response;
 use Plib\View;
@@ -35,13 +37,21 @@ class MainAdminController
     /** @var Repository */
     private $repository;
 
+    /** @var DocumentStore */
+    private $store;
+
     /** @var View */
     private $view;
 
-    public function __construct(CsrfProtector $csrfProtector, Repository $repository, View $view)
-    {
+    public function __construct(
+        CsrfProtector $csrfProtector,
+        Repository $repository,
+        DocumentStore $store,
+        View $view
+    ) {
         $this->csrfProtector = $csrfProtector;
         $this->repository = $repository;
+        $this->store = $store;
         $this->view = $view;
     }
 
@@ -74,7 +84,11 @@ class MainAdminController
 
     public function overview(): Response
     {
-        $galleries = $this->repository->findAllGalleries();
+        $galleries = array_map(function ($key) {
+            return substr($key, 0, -strlen(".txt"));
+        }, $this->store->find('/^[^\/]*\.txt$/'));
+        natcasesort($galleries);
+        $galleries = array_values($galleries);
         $folders = array_diff($this->repository->findAll(), $galleries);
         return $this->respondWith($this->view->render("overview", [
             "galleries" => $galleries,
@@ -85,7 +99,11 @@ class MainAdminController
     public function edit(Request $request): Response
     {
         $galleryname = $request->get("imagescroller_gallery") ?? "";
-        $gallery = $this->repository->find($galleryname);
+        $gallery = $this->store->retrieve($galleryname . ".txt", Gallery::class);
+        assert($gallery instanceof Gallery);
+        if ($gallery->empty()) {
+            $gallery = $this->repository->find($galleryname);
+        }
         assert($gallery !== null); // TODO: invalid assertion
         $contents = $gallery->toString();
         return $this->respondWith($this->renderGalleryForm($contents));
@@ -97,9 +115,11 @@ class MainAdminController
             return $this->respondWith($this->view->message("fail", "error_unauthorized"));
         }
         $contents = $request->post("imagescroller_contents") ?? "";
-        $gallery = $request->get("imagescroller_gallery") ?? "";
-        if (!$this->repository->saveGallery($gallery, $contents)) {
-            return $this->respondWith($this->renderGalleryForm($contents, [["error_save", $gallery]]));
+        $galleryname = $request->get("imagescroller_gallery") ?? "";
+        $gallery = $this->store->update($galleryname . ".txt", Gallery::class);
+        assert($gallery instanceof Gallery);
+        if (!$this->store->commit($gallery)) {
+            return $this->respondWith($this->renderGalleryForm($contents, [["error_save", $galleryname]]));
         }
         return Response::redirect($request->url()->without("action")->absolute());
     }

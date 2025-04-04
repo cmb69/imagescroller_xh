@@ -3,10 +3,11 @@
 namespace Imagescroller;
 
 use ApprovalTests\Approvals;
-use Imagescroller\Infra\FakeRepository;
+use Imagescroller\Infra\Repository;
 use Imagescroller\Model\Gallery;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use Plib\DocumentStore;
 use Plib\FakeRequest;
 use Plib\Jquery;
 use Plib\View;
@@ -17,6 +18,7 @@ class MainControllerTest extends TestCase
     private $imageFolder;
     private $conf;
     private $repository;
+    private $store;
     private $jquery;
     private $view;
 
@@ -33,7 +35,8 @@ class MainControllerTest extends TestCase
         $this->pluginFolder = "./plugins/imagescroller/";
         $this->imageFolder = "vfs://root/userfiles/images/";
         $this->conf = XH_includeVar("./config/config.php", "plugin_cf")["imagescroller"];
-        $this->repository = new FakeRepository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $this->repository = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
+        $this->store = $this->createMock(DocumentStore::class);
         $this->jquery = $this->createMock(Jquery::class);
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["imagescroller"]);
     }
@@ -45,6 +48,7 @@ class MainControllerTest extends TestCase
             $this->imageFolder,
             $this->conf,
             $this->repository,
+            $this->store,
             $this->jquery,
             $this->view
         );
@@ -52,7 +56,7 @@ class MainControllerTest extends TestCase
 
     public function testRendersGallery(): void
     {
-        $this->repository->saveGallery("test", $this->gallery()->toString());
+        $this->store->method("retrieve")->willReturn(Gallery::fromString($this->gallery()));
         $request = new FakeRequest(["admin" => true]);
         $response = $this->sut()($request, "test");
         Approvals::verifyHtml($response->output());
@@ -60,14 +64,15 @@ class MainControllerTest extends TestCase
 
     public function testReportsErrorOnMissingGallery(): void
     {
+        $this->store->method("retrieve")->willReturn(Gallery::fromString(""));
         $request = new FakeRequest();
         $response = $this->sut()($request, "missing");
         Approvals::verifyHtml($response->output());
     }
 
-    private function gallery(): Gallery
+    private function gallery(): string
     {
-        return Gallery::fromString(<<<'EOS'
+        return <<<'EOS'
             Image: image.jpg
             %%
             Image: image1.jpg
@@ -79,6 +84,6 @@ class MainControllerTest extends TestCase
             Image: image3.jpg
             URL: /?InternalPage
             Description: some image description
-            EOS);
+            EOS;
     }
 }
