@@ -118,6 +118,7 @@ class MainAdminController
         $galleryname = $request->get("imagescroller_gallery") ?? "";
         $gallery = $this->store->update($galleryname . ".txt", Gallery::class);
         assert($gallery instanceof Gallery);
+        $gallery->update($contents);
         if (!$this->store->commit($gallery)) {
             return $this->respondWith($this->renderGalleryForm($contents, [["error_save", $galleryname]]));
         }
