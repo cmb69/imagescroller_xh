@@ -111,7 +111,7 @@ class Repository
 
     private function findByFile(string $filename): Gallery
     {
-        return Gallery::fromRecordJar($this->imageFolder, (string) file_get_contents($filename));
+        return Gallery::fromString((string) file_get_contents($filename));
     }
 
     /** @return array{int,int,list<array{string}>} */

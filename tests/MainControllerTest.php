@@ -52,7 +52,7 @@ class MainControllerTest extends TestCase
 
     public function testRendersGallery(): void
     {
-        $this->repository->saveGallery("test", $this->gallery()->toRecordJar("vfs://root/userfiles/images/"));
+        $this->repository->saveGallery("test", $this->gallery()->toString());
         $request = new FakeRequest(["admin" => true]);
         $response = $this->sut()($request, "test");
         Approvals::verifyHtml($response->output());
@@ -67,7 +67,7 @@ class MainControllerTest extends TestCase
 
     private function gallery(): Gallery
     {
-        return Gallery::fromRecordJar("vfs://root/userfiles/images/", <<<'EOS'
+        return Gallery::fromString(<<<'EOS'
             Image: image.jpg
             %%
             Image: image1.jpg

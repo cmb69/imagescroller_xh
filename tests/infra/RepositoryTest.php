@@ -51,7 +51,7 @@ class RepositoryTest extends TestCase
         vfsStream::setup("root", null, ["content" => ["imagescroller" => ["gallery.txt" => $this->gallery()]]]);
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("gallery");
-        $expected = Gallery::fromRecordJar("vfs://root/userfiles/images/", <<<'EOS'
+        $expected = Gallery::fromString(<<<'EOS'
             Image: image1.jpg
             URL: http://www.example.com/
             Title: First Photo

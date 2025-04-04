@@ -21,7 +21,9 @@
 
 namespace Imagescroller\Model;
 
-class Gallery
+use Plib\Document;
+
+final class Gallery implements Document
 {
     /** @var list<Image> */
     private $images;
@@ -37,9 +39,10 @@ class Gallery
         return $that;
     }
 
-    public static function fromRecordJar(string $contents): self
+    /** @return static */
+    public static function fromString(string $contents)
     {
-        $that = new self();
+        $that = new static();
         $that->images = [];
         $records = preg_split('/\R%%\R/', $contents);
         assert($records !== false); // TODO: invalid assertion?
@@ -73,7 +76,7 @@ class Gallery
         return $this->images;
     }
 
-    public function toRecordJar(): string
+    public function toString(): string
     {
         $res = [];
         foreach ($this->images() as $image) {

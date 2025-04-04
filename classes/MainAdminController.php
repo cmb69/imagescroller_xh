@@ -87,7 +87,7 @@ class MainAdminController
         $galleryname = $request->get("imagescroller_gallery") ?? "";
         $gallery = $this->repository->find($galleryname);
         assert($gallery !== null); // TODO: invalid assertion
-        $contents = $gallery->toRecordJar($this->repository->imageFolder());
+        $contents = $gallery->toString();
         return $this->respondWith($this->renderGalleryForm($contents));
     }
 
