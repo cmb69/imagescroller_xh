@@ -104,7 +104,9 @@ class MainAdminController
         if ($gallery->empty()) {
             $gallery = $this->imageService->galleryFromFolder($galleryname);
         }
-        assert($gallery !== null); // TODO: invalid assertion
+        if ($gallery === null) {
+            return $this->respondWith($this->view->message("fail", "error_gallery_missing", $galleryname));
+        }
         $contents = $gallery->toString();
         return $this->respondWith($this->renderGalleryForm($contents));
     }

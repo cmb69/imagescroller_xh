@@ -51,10 +51,14 @@ final class Gallery implements Document
     {
         $this->images = [];
         $records = preg_split('/\R%%\R/', $contents);
-        assert($records !== false); // TODO: invalid assertion?
+        if ($records === false) {
+            return;
+        }
         foreach ($records as $record) {
             $lines = preg_split('/\R/', $record);
-            assert($lines !== false); // TODO: invalid assertion?
+            if ($lines === false) {
+                continue;
+            }
             $lines = array_map("trim", $lines);
             $record = [];
             foreach ($lines as $line) {
