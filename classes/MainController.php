@@ -33,6 +33,9 @@ class MainController
     /** @var string */
     private $pluginFolder;
 
+    /** @var string */
+    private $imageFolder;
+
     /** @var array<string,string> */
     private $conf;
 
@@ -48,12 +51,14 @@ class MainController
     /** @param array<string,string> $conf */
     public function __construct(
         string $pluginFolder,
+        string $imageFolder,
         array $conf,
         Repository $repository,
         Jquery $jquery,
         View $view
     ) {
         $this->pluginFolder = $pluginFolder;
+        $this->imageFolder = $imageFolder;
         $this->conf = $conf;
         $this->repository = $repository;
         $this->jquery = $jquery;
@@ -88,7 +93,7 @@ class MainController
         $res = [];
         foreach ($gallery->images() as $image) {
             $res[] = [
-                "filename" => $image->filename(),
+                "filename" => $this->imageFolder . $image->filename(),
                 "url" => $image->url(),
                 "title" => $image->title(),
                 "description" => $image->description(),

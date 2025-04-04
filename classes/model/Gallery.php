@@ -37,7 +37,7 @@ class Gallery
         return $that;
     }
 
-    public static function fromRecordJar(string $imageFolder, string $contents): self
+    public static function fromRecordJar(string $contents): self
     {
         $that = new self();
         $that->images = [];
@@ -57,7 +57,7 @@ class Gallery
             if (!isset($record['image'])) {
                 continue;
             }
-            $record["filename"] = $imageFolder . $record["image"];
+            $record["filename"] = $record["image"];
             $that->images[] = Image::fromRecord($record);
         }
         return $that;
@@ -73,12 +73,12 @@ class Gallery
         return $this->images;
     }
 
-    public function toRecordJar(string $imageFolder): string
+    public function toRecordJar(): string
     {
         $res = [];
         foreach ($this->images() as $image) {
             $lines = [];
-            $lines[] = "Image: " . substr($image->filename(), strlen($imageFolder));
+            $lines[] = "Image: " . $image->filename();
             if ($image->url()) {
                 $lines[] = "URL: " . $image->url();
             }

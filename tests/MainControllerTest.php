@@ -14,6 +14,7 @@ use Plib\View;
 class MainControllerTest extends TestCase
 {
     private $pluginFolder;
+    private $imageFolder;
     private $conf;
     private $repository;
     private $jquery;
@@ -30,6 +31,7 @@ class MainControllerTest extends TestCase
         imagejpeg($im, "vfs://root/userfiles/images/image2.jpg");
         imagejpeg($im, "vfs://root/userfiles/images/image3.jpg");
         $this->pluginFolder = "./plugins/imagescroller/";
+        $this->imageFolder = "vfs://root/userfiles/images/";
         $this->conf = XH_includeVar("./config/config.php", "plugin_cf")["imagescroller"];
         $this->repository = new FakeRepository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $this->jquery = $this->createMock(Jquery::class);
@@ -40,6 +42,7 @@ class MainControllerTest extends TestCase
     {
         return new MainController(
             $this->pluginFolder,
+            $this->imageFolder,
             $this->conf,
             $this->repository,
             $this->jquery,

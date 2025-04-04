@@ -44,6 +44,7 @@ class Dic
         global $pth, $plugin_cf;
         return new MainController(
             $pth["folder"]["plugins"] . "imagescroller/",
+            $pth["folder"]["images"],
             $plugin_cf["imagescroller"],
             Dic::makeRepository(),
             self::makeJquery(),

@@ -39,9 +39,9 @@ class RepositoryTest extends TestCase
         $sut = new Repository("vfs://root/userfiles/images/", "vfs://root/content/imagescroller/");
         $images = $sut->find("test");
         $expected = Gallery::fromFolder([
-            "vfs://root/userfiles/images/test/one.jpg",
-            "vfs://root/userfiles/images/test/two.jpg",
-            "vfs://root/userfiles/images/test/three.jpg",
+            "test/one.jpg",
+            "test/two.jpg",
+            "test/three.jpg",
         ]);
         $this->assertEquals($expected, $images);
     }

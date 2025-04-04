@@ -93,7 +93,7 @@ class Repository
             while (($filename = readdir($dir)) !== false) {
                 $fullFilename = $foldername . $filename;
                 if ($this->isImage($fullFilename)) {
-                    $images[] = $fullFilename;
+                    $images[] = substr($fullFilename, strlen($this->imageFolder));
                 }
             }
             closedir($dir);
@@ -120,7 +120,7 @@ class Repository
         $width = $height = 0;
         $errors = [];
         foreach ($gallery->images() as $image) {
-            $filename = $image->filename();
+            $filename = $this->imageFolder() . $image->filename();
             if (!is_readable($filename) || !($size = @getimagesize($filename))) {
                 $errors[] = ["error_no_image_new", $filename];
                 continue;
