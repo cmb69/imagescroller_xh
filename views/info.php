@@ -11,7 +11,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {header("HTTP/1.1 403 Forbidden"); exit;}
  */
 ?>
 <!-- imagescroller plugin info -->
-<h1>Imagescroller_XH – <?=$this->esc($version)?></h1>
+<h1>Imagescroller_XH <?=$this->esc($version)?></h1>
 <div>
   <h2><?=$this->text('syscheck_title')?></h2>
 <?foreach ($checks as $check):?>
