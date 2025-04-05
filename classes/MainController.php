@@ -97,12 +97,12 @@ class MainController
         ]));
     }
 
-    /** @return list<array{filename:string,url:?string,title:?string,description:?string}> */
+    /** @return list<object{filename:string,url:?string,title:?string,description:?string}> */
     private function imageRecords(Gallery $gallery): array
     {
         $res = [];
         foreach ($gallery->images() as $image) {
-            $res[] = [
+            $res[] = (object) [
                 "filename" => $this->imageFolder . $image->filename(),
                 "url" => $image->url(),
                 "title" => $image->title(),
@@ -112,7 +112,7 @@ class MainController
         return $res;
     }
 
-    /** @return list<array{class:string,src:string,altkey:string}> */
+    /** @return list<object{class:string,src:string,altkey:string}> */
     private function buttonRecords(): array
     {
         $records = [];
@@ -121,7 +121,7 @@ class MainController
             if (in_array($button, ["prev", "next"], true)) {
                 $class .= " imagescroller_prev_next";
             }
-            $records[] = [
+            $records[] = (object) [
                 "class" => $class,
                 "src" => $this->pluginFolder . "images/$button.svg",
                 "altkey" => "button_$button",

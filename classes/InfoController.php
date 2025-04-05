@@ -59,11 +59,11 @@ class InfoController
         ]))->withTitle($this->view->esc("Imagescroller – 1.0beta3"));
     }
 
-    /** @return array{class:string,key:string,arg:string,statekey:string} */
-    private function checkPhpVersion(string $version): array
+    /** @return object{class:string,key:string,arg:string,statekey:string} */
+    private function checkPhpVersion(string $version): object
     {
         $state = $this->systemChecker->checkVersion(PHP_VERSION, $version) ? "success" : "fail";
-        return [
+        return (object) [
             "class" => "xh_$state",
             "key" => "syscheck_phpversion",
             "arg" => $version,
@@ -71,11 +71,11 @@ class InfoController
         ];
     }
 
-    /** @return array{class:string,key:string,arg:string,statekey:string} */
-    private function checkXhVersion(string $version): array
+    /** @return object{class:string,key:string,arg:string,statekey:string} */
+    private function checkXhVersion(string $version): object
     {
         $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version") ? "success" : "fail";
-        return [
+        return (object) [
             "class" => "xh_$state",
             "key" => "syscheck_xhversion",
             "arg" => $version,
@@ -83,11 +83,11 @@ class InfoController
         ];
     }
 
-    /** @return array{class:string,key:string,arg:string,statekey:string} */
-    private function checkPlibVersion(string $version): array
+    /** @return object{class:string,key:string,arg:string,statekey:string} */
+    private function checkPlibVersion(string $version): object
     {
         $state = $this->systemChecker->checkPlugin("plib", $version) ? "success" : "fail";
-        return [
+        return (object) [
             "class" => "xh_$state",
             "key" => "syscheck_plibversion",
             "arg" => $version,
@@ -95,11 +95,11 @@ class InfoController
         ];
     }
 
-    /** @return array{class:string,key:string,arg:string,statekey:string} */
-    private function checkPlugin(string $name): array
+    /** @return object{class:string,key:string,arg:string,statekey:string} */
+    private function checkPlugin(string $name): object
     {
         $state = $this->systemChecker->checkPlugin($name) ? "success" : "fail";
-        return [
+        return (object) [
             "class" => "xh_$state",
             "key" => "syscheck_plugin",
             "arg" => $name,
@@ -107,11 +107,11 @@ class InfoController
         ];
     }
 
-    /** @return array{class:string,key:string,arg:string,statekey:string} */
-    private function checkWritability(string $folder): array
+    /** @return object{class:string,key:string,arg:string,statekey:string} */
+    private function checkWritability(string $folder): object
     {
         $state = $this->systemChecker->checkWritability($folder) ? "success" : "warning";
-        return [
+        return (object) [
             "class" => "xh_$state",
             "key" => "syscheck_writable",
             "arg" => $folder,
