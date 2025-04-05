@@ -85,6 +85,10 @@ class MainController
         $this->jquery->include();
         $this->jquery->includePlugin("scrollTo", $this->pluginFolder . "lib/jquery.scrollTo.min.js");
         $this->jquery->includePlugin("serialScroll", $this->pluginFolder . "lib/jquery.serialScroll.min.js");
+        $js = $this->pluginFolder . "imagescroller.min.js";
+        if (!is_file($js)) {
+            $js = $this->pluginFolder . "imagescroller.js";
+        }
         return Response::create($this->view->render("gallery", [
             "images" => $this->imageRecords($gallery),
             "width" => $width,
@@ -92,8 +96,7 @@ class MainController
             "totalWidth" => count($gallery->images()) * $width,
             "buttons" => $this->buttonRecords(),
             "config" => $this->jsConf(),
-            "script" => $request->url()->path($this->pluginFolder . "imagescroller.min.js")
-                ->with("v", IMAGESCROLLER_VERSION)->relative(),
+            "script" => $request->url()->path($js)->with("v", IMAGESCROLLER_VERSION)->relative(),
             "errors" => $request->admin() ? $errors : [],
         ]));
     }
