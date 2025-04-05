@@ -17,7 +17,7 @@ require_once "../plib/classes/FakeSystemChecker.php";
 
 const CMSIMPLE_XH_VERSION = "CMSimple_XH 1.7.5";
 const CMSIMPLE_URL = "http://example.com/";
-const IMAGESCROLLER_VERSION = "1.0beta3";
+const IMAGESCROLLER_VERSION = "1.0";
 
 spl_autoload_register(function (string $className) {
     $parts = explode("\\", $className);

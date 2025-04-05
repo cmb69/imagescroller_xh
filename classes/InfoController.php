@@ -56,7 +56,7 @@ class InfoController
                 $this->checkWritability($this->pluginFolder . "css/"),
                 $this->checkWritability($this->pluginFolder . "languages/")
             ],
-        ]))->withTitle($this->view->esc("Imagescroller – 1.0beta3"));
+        ]))->withTitle($this->view->esc("Imagescroller " . IMAGESCROLLER_VERSION));
     }
 
     /** @return object{class:string,key:string,arg:string,statekey:string} */

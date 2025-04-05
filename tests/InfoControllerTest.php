@@ -32,7 +32,7 @@ class InfoControllerTest extends TestCase
     public function testRendersPluginInfo(): void
     {
         $response = $this->sut()();
-        $this->assertEquals("Imagescroller – 1.0beta3", $response->title());
+        $this->assertEquals("Imagescroller 1.0", $response->title());
         Approvals::verifyHtml($response->output());
     }
 }

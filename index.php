@@ -29,7 +29,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
     exit;
 }
 
-const IMAGESCROLLER_VERSION = "1.0beta3";
+const IMAGESCROLLER_VERSION = "1.0";
 
 /**
  * @param string $path
