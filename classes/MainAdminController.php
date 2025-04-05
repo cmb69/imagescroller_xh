@@ -121,7 +121,7 @@ class MainAdminController
         $gallery = $this->store->update($galleryname . ".txt", Gallery::class);
         assert($gallery instanceof Gallery);
         $gallery->update($contents);
-        if (!$this->store->commit($gallery)) {
+        if (!$this->store->commit()) {
             return $this->respondWith($this->renderGalleryForm($contents, [["error_save", $galleryname]]));
         }
         return Response::redirect($request->url()->without("action")->absolute());

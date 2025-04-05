@@ -40,7 +40,7 @@ final class Gallery implements Document
     }
 
     /** @return static */
-    public static function fromString(string $contents)
+    public static function fromString(string $contents, string $key = "")
     {
         $that = new static();
         $that->parse($contents);
