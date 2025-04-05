@@ -92,7 +92,8 @@ class MainController
             "totalWidth" => count($gallery->images()) * $width,
             "buttons" => $this->buttonRecords(),
             "config" => $this->jsConf(),
-            "script" => $this->pluginFolder . "imagescroller.min.js",
+            "script" => $request->url()->path($this->pluginFolder . "imagescroller.min.js")
+                ->with("v", IMAGESCROLLER_VERSION)->relative(),
             "errors" => $request->admin() ? $errors : [],
         ]));
     }
